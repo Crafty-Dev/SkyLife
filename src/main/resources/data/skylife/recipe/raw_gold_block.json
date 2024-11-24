@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "skylife:gold_dust"
+    }
+  },
+  "result": {
+    "id": "minecraft:raw_gold_block",
+    "count": 1
+  }
+}

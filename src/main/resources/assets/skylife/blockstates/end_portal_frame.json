@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "skylife:block/end_portal_frame"
+    },
+    "filled=true": {
+      "model": "skylife:block/end_portal_frame_filled"
+    }
+  }
+}

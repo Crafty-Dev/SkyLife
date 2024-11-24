@@ -1,0 +1,177 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace"
+      },
+      "when": {
+        "active": false,
+        "upgraded": false,
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace",
+        "y": 90
+      },
+      "when": {
+        "active": false,
+        "upgraded": false,
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace",
+        "y": 180
+      },
+      "when": {
+        "active": false,
+        "upgraded": false,
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace",
+        "y": 270
+      },
+      "when": {
+        "active": false,
+        "upgraded": false,
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_active"
+      },
+      "when": {
+        "active": true,
+        "upgraded": false,
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_active",
+        "y": 90
+      },
+      "when": {
+        "active": true,
+        "upgraded": false,
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_active",
+        "y": 180
+      },
+      "when": {
+        "active": true,
+        "upgraded": false,
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_active",
+        "y": 270
+      },
+      "when": {
+        "active": true,
+        "upgraded": false,
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded"
+      },
+      "when": {
+        "active": false,
+        "upgraded": true,
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded",
+        "y": 90
+      },
+      "when": {
+        "active": false,
+        "upgraded": true,
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded",
+        "y": 180
+      },
+      "when": {
+        "active": false,
+        "upgraded": true,
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded",
+        "y": 270
+      },
+      "when": {
+        "active": false,
+        "upgraded": true,
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded_active"
+      },
+      "when": {
+        "active": true,
+        "upgraded": true,
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded_active",
+        "y": 90
+      },
+      "when": {
+        "active": true,
+        "upgraded": true,
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded_active",
+        "y": 180
+      },
+      "when": {
+        "active": true,
+        "upgraded": true,
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/flux_furnace_upgraded_active",
+        "y": 270
+      },
+      "when": {
+        "active": true,
+        "upgraded": true,
+        "facing": "west"
+      }
+    }
+  ]
+}
+

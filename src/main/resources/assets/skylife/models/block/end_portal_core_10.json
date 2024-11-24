@@ -1,0 +1,5 @@
+{   "parent": "skylife:block/end_portal_core",
+  "textures": {
+    "top": "skylife:block/end_portal_core_10"
+  }
+}

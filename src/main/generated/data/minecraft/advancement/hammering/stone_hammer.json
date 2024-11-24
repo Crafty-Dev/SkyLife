@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:hammering/root",
+  "criteria": {
+    "crafted_stone_hammer": {
+      "conditions": {
+        "recipe_id": "skylife:stone_hammer"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.hammering.stone.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "skylife:stone_hammer"
+    },
+    "title": {
+      "translate": "advancements.hammering.stone.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_stone_hammer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "skylife:emerald_ore_dust"
+    }
+  },
+  "result": {
+    "id": "skylife:emerald_dust",
+    "count": 1
+  }
+}

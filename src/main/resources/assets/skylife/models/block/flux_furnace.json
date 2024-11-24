@@ -1,0 +1,6 @@
+{
+  "parent": "skylife:block/flux_furnace_active",
+  "textures": {
+    "0": "skylife:block/voidflux_empty"
+  }
+}

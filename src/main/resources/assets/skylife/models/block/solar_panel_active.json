@@ -1,0 +1,8 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "skylife:block/solar_panel_base",
+	"textures": {
+		"2": "skylife:block/voidflux",
+		"3": "skylife:block/solar_panel"
+	}
+}

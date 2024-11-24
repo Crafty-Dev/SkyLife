@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "skylife",
+	"version": "${version}",
+	"name": "SkyLife",
+	"description": "A Skyblock with the goal to make everything different (at least a bit)",
+	"authors": [
+		"Crafty"
+	],
+	"contact": {
+	},
+	"license": "MIT",
+	"icon": "assets/skylife/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"de.crafty.skylife.SkyLife"
+		],
+		"client": [
+			"de.crafty.skylife.SkyLifeClient"
+		],
+		"server": [
+			"de.crafty.skylife.SkyLifeServer"
+		],
+		"fabric-datagen": [
+			"de.crafty.skylife.SkyLifeDataGenerator"
+		],
+		"jei_mod_plugin": [
+			"de.crafty.skylife.jei.JustEnoughItemsIntegration"
+		]
+	},
+	"accessWidener": "skylife.accesswidener",
+	"mixins": [
+		"skylife.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+	}
+}

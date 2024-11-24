@@ -1,0 +1,7 @@
+{
+	"parent": "skylife:block/energy_cable_core",
+	"textures": {
+		"0": "skylife:block/improved_energy_cable",
+		"particle": "skylife:block/improved_energy_cable"
+	}
+}

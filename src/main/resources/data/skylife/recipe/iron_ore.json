@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "S#S",
+    "SSS"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:stone"
+    },
+    "S": {
+      "item": "skylife:iron_dust"
+    }
+  },
+  "result": {
+    "id": "minecraft:iron_ore",
+    "count": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:hammering/gold_hammer",
+  "criteria": {
+    "crafted_diamond_hammer": {
+      "conditions": {
+        "recipe_id": "skylife:diamond_hammer"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.hammering.diamond.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "skylife:diamond_hammer"
+    },
+    "title": {
+      "translate": "advancements.hammering.diamond.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_diamond_hammer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

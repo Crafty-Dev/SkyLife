@@ -1,0 +1,28 @@
+accessWidener v2 named
+
+#Client UI
+accessible class net/minecraft/client/gui/screens/worldselection/CreateWorldScreen$WorldTab
+accessible class net/minecraft/client/gui/screens/worldselection/SwitchGrid
+
+#World Preset
+accessible class net/minecraft/world/level/levelgen/presets/WorldPresets$Bootstrap
+
+#Chunk Gen
+extendable class net/minecraft/world/level/levelgen/NoiseBasedChunkGenerator
+accessible field net/minecraft/world/level/chunk/ChunkGenerator generationSettingsGetter Ljava/util/function/Function;
+accessible method net/minecraft/world/level/chunk/ChunkGenerator getWritableArea (Lnet/minecraft/world/level/chunk/ChunkAccess;)Lnet/minecraft/world/level/levelgen/structure/BoundingBox;
+
+#Server Properties
+accessible method net/minecraft/server/dedicated/Settings get (Ljava/lang/String;I)I
+
+#Rendering
+accessible class net/minecraft/client/renderer/RenderStateShard$TextureStateShard
+accessible class net/minecraft/client/renderer/RenderType$CompositeState
+
+#Block Entity Rendering Utility
+accessible class net/minecraft/client/renderer/block/ModelBlockRenderer$AmbientOcclusionFace
+accessible method net/minecraft/client/renderer/block/ModelBlockRenderer calculateShape (Lnet/minecraft/world/level/BlockAndTintGetter;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;[ILnet/minecraft/core/Direction;[FLjava/util/BitSet;)V
+accessible field net/minecraft/client/renderer/block/ModelBlockRenderer$AmbientOcclusionFace brightness [F
+accessible field net/minecraft/client/renderer/block/ModelBlockRenderer$AmbientOcclusionFace lightmap [I
+
+accessible class net/minecraft/world/level/block/ComposterBlock$InputContainer

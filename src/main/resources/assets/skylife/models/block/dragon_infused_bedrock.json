@@ -1,0 +1,14 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "top": "skylife:block/dragon_infused_bedrock",
+    "bottom": "minecraft:block/bedrock",
+    "side": "skylife:block/dragon_infused_bedrock_side",
+    "particle": "#side",
+    "up": "#top",
+    "down": "#bottom",
+    "north": "#side",
+    "east": "#side",
+    "south": "#side",
+    "west": "#side"  }
+}

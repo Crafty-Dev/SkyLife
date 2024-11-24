@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "G#G",
+    "III"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:redstone"
+    },
+    "G": {
+      "tag": "c:glass_panes"
+    },
+    "I": {
+      "item": "skylife:sturdy_iron"
+    }
+  },
+  "result": {
+    "id": "skylife:basic_energy_cable",
+    "count": 4
+  }
+}

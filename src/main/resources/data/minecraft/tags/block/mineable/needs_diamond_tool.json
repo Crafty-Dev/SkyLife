@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "skylife:end_diamond_ore",
+    "skylife:end_netherite_ore",
+    "skylife:end_portal_frame"
+  ]
+}

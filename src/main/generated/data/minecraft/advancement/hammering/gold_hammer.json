@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:hammering/iron_hammer",
+  "criteria": {
+    "crafted_gold_hammer": {
+      "conditions": {
+        "recipe_id": "skylife:golden_hammer"
+      },
+      "trigger": "minecraft:recipe_crafted"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.hammering.gold.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "skylife:golden_hammer"
+    },
+    "title": {
+      "translate": "advancements.hammering.gold.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafted_gold_hammer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

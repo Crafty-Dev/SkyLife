@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "I#I",
+    "#M#",
+    "I#I"
+  ],
+  "key": {
+    "#": {
+      "item": "skylife:copper_coil"
+    },
+    "I": {
+      "item": "skylife:sturdy_iron"
+    },
+    "M": {
+      "item": "skylife:io_module"
+    }
+  },
+  "result": {
+    "id": "skylife:lc_vp_storage",
+    "count": 1
+  }
+}

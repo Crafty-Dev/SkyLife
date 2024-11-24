@@ -1,0 +1,14 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "top": "skylife:block/end_portal_core_0",
+    "side": "skylife:block/end_portal_core_side",
+    "particle": "#side",
+    "up": "#top",
+    "down": "#side",
+    "north": "#side",
+    "east": "#side",
+    "south": "#side",
+    "west": "#side"
+  }
+}

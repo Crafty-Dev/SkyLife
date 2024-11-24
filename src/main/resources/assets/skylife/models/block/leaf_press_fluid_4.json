@@ -1,0 +1,18 @@
+{
+  "textures": {
+    "layer": "block/water_still"
+  },
+  "elements": [
+    {
+      "name": "water_layer",
+      "from": [2, 1.95, 2],
+      "to": [14, 1.95, 14],
+      "faces": {
+        "up": {
+          "tintindex": 1,
+          "uv": [2, 2, 14, 14], "texture": "#layer"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "skylife:gold_ore_dust"
+    }
+  },
+  "result": {
+    "id": "skylife:gold_dust",
+    "count": 1
+  }
+}

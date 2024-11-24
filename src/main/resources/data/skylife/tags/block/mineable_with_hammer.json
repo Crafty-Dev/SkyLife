@@ -1,0 +1,38 @@
+{
+  "values": [
+    "minecraft:cobblestone",
+    "minecraft:deepslate",
+    "minecraft:stone",
+    "minecraft:sand",
+    "minecraft:red_sand",
+    "minecraft:deepslate",
+    "minecraft:dirt",
+    "minecraft:rooted_dirt",
+    "minecraft:podzol",
+    "minecraft:netherrack",
+    "minecraft:andesite",
+    "minecraft:mud",
+
+    "minecraft:oak_wood",
+    "minecraft:oak_log",
+    "minecraft:oak_planks",
+    "minecraft:birch_wood",
+    "minecraft:birch_log",
+    "minecraft:birch_planks",
+    "minecraft:spruce_wood",
+    "minecraft:spruce_log",
+    "minecraft:spruce_planks",
+    "minecraft:dark_oak_wood",
+    "minecraft:dark_oak_log",
+    "minecraft:dark_oak_planks",
+    "minecraft:acacia_wood",
+    "minecraft:acacia_log",
+    "minecraft:acacia_planks",
+    "minecraft:jungle_wood",
+    "minecraft:jungle_log",
+    "minecraft:jungle_planks",
+    "minecraft:mangrove_wood",
+    "minecraft:mangrove_log",
+    "minecraft:mangrove_planks"
+  ]
+}

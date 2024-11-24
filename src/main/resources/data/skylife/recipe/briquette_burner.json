@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DOD",
+    "DCD",
+    "D#D"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:coarse_dirt"
+    },
+    "D": {
+      "item": "minecraft:deepslate_tiles"
+    },
+    "O": {
+      "item": "skylife:output_module"
+    },
+    "C": {
+      "item": "minecraft:campfire"
+    }
+  },
+  "result": {
+    "id": "skylife:briquette_generator",
+    "count": 1
+  }
+}

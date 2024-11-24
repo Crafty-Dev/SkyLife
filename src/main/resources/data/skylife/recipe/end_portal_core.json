@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#S#",
+    "SFS",
+    "#S#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:obsidian"
+    },
+    "S": {
+      "item": "minecraft:reinforced_deepslate"
+    },
+    "F": {
+      "item": "skylife:ender_core"
+    }
+  },
+  "result": {
+    "id": "skylife:end_portal_core",
+    "count": 1
+  }
+}

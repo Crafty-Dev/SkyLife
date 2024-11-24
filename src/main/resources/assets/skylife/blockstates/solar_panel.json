@@ -1,0 +1,40 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/solar_panel_active"
+      },
+      "when": {
+        "active": true,
+        "upgraded": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/solar_panel_inactive"
+      },
+      "when": {
+        "active": false,
+        "upgraded": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/solar_panel_upgraded_inactive"
+      },
+      "when": {
+        "active": false,
+        "upgraded": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/solar_panel_upgraded_active"
+      },
+      "when": {
+        "active": true,
+        "upgraded": true
+      }
+    }
+  ]
+}

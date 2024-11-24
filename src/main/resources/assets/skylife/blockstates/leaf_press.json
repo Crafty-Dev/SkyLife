@@ -1,0 +1,97 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_base"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_0"
+      },
+      "when": {
+        "progress": "0"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_1"
+      },
+      "when": {
+        "progress": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_2"
+      },
+      "when": {
+        "progress": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_3"
+      },
+      "when": {
+        "progress": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_4"
+      },
+      "when": {
+        "progress": "4"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_5"
+      },
+      "when": {
+        "progress": "5"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_6"
+      },
+      "when": {
+        "progress": "6"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_fluid_1"
+      },
+      "when": {
+        "fluid_level": "1"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_fluid_2"
+      },
+      "when": {
+        "fluid_level": "2"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_fluid_3"
+      },
+      "when": {
+        "fluid_level": "3"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/leaf_press_fluid_4"
+      },
+      "when": {
+        "fluid_level": "4"
+      }
+    }
+  ]
+}

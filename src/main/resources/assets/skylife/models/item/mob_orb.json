@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "skylife:item/mob_orb"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "skylife:active": 0
+      },
+      "model": "skylife:item/mob_orb_inactive"
+    },
+    {
+      "predicate": {
+        "skylife:active": 1
+      },
+      "model": "skylife:item/mob_orb_active"
+    }
+  ]
+}

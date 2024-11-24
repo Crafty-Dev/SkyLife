@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "skylife:wood_briquette"
+    }
+  },
+  "result": {
+    "id": "skylife:wood_briquettes",
+    "count": 1
+  }
+}

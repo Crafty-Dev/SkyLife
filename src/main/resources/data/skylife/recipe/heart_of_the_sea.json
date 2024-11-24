@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "FSG",
+    "S#S",
+    "HSI"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:glow_ink_sac"
+    },
+    "S": {
+      "item": "minecraft:ink_sac"
+    },
+    "F": {
+      "item": "minecraft:cod"
+    },
+    "G": {
+      "item": "minecraft:salmon"
+    },
+    "H": {
+      "item": "minecraft:tropical_fish"
+    },
+    "I": {
+      "item": "minecraft:pufferfish"
+    }
+  },
+  "result": {
+    "id": "minecraft:heart_of_the_sea",
+    "count": 1
+  }
+}

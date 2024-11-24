@@ -1,0 +1,63 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/briquette_generator"
+      },
+      "when": {
+        "facing": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/briquette_generator",
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/briquette_generator",
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/briquette_generator",
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/briquette_generator_wood"
+      },
+      "when": {
+        "briquette": "wood"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/briquette_generator_coal"
+      },
+      "when": {
+        "briquette": "coal"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/briquette_generator_fire"
+      },
+      "when": {
+        "working": true
+      }
+    }
+  ]
+}

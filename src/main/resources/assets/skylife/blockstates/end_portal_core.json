@@ -1,0 +1,130 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_active"
+      },
+      "when": {
+        "active": true,
+        "charge": 12
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_12"
+      },
+      "when": {
+        "active": false,
+        "charge": 12
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_11"
+      },
+      "when": {
+        "active": false,
+        "charge": 11
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_10"
+      },
+      "when": {
+        "active": false,
+        "charge": 10
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_9"
+      },
+      "when": {
+        "active": false,
+        "charge": 9
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_8"
+      },
+      "when": {
+        "active": false,
+        "charge": 8
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_7"
+      },
+      "when": {
+        "active": false,
+        "charge": 7
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_6"
+      },
+      "when": {
+        "active": false,
+        "charge": 6
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_5"
+      },
+      "when": {
+        "active": false,
+        "charge": 5
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_4"
+      },
+      "when": {
+        "active": false,
+        "charge": 4
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_3"
+      },
+      "when": {
+        "active": false,
+        "charge": 3
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_2"
+      },
+      "when": {
+        "active": false,
+        "charge": 2
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core_1"
+      },
+      "when": {
+        "active": false,
+        "charge": 1
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/end_portal_core"
+      },
+      "when": {
+        "active": false,
+        "charge": 0
+      }
+    }
+  ]
+}

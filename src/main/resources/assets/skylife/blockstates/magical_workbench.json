@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "activity_state=0,facing=north": {
+      "model": "skylife:block/magical_workbench_0"
+    },
+    "activity_state=0,facing=east": {
+      "model": "skylife:block/magical_workbench_0",
+      "y": 90
+    },
+    "activity_state=0,facing=south": {
+      "model": "skylife:block/magical_workbench_0",
+      "y": 180
+    },
+    "activity_state=0,facing=west": {
+      "model": "skylife:block/magical_workbench_0",
+      "y": 270
+    },
+    "activity_state=1,facing=north": {
+      "model": "skylife:block/magical_workbench_1"
+    },
+    "activity_state=1,facing=east": {
+      "model": "skylife:block/magical_workbench_1",
+      "y": 90
+    },
+    "activity_state=1,facing=south": {
+      "model": "skylife:block/magical_workbench_1",
+      "y": 180
+    },
+    "activity_state=1,facing=west": {
+      "model": "skylife:block/magical_workbench_1",
+      "y": 270
+    },
+    "activity_state=2,facing=north": {
+      "model": "skylife:block/magical_workbench_2"
+    },
+    "activity_state=2,facing=east": {
+      "model": "skylife:block/magical_workbench_2",
+      "y": 90
+    },
+    "activity_state=2,facing=south": {
+      "model": "skylife:block/magical_workbench_2",
+      "y": 180
+    },
+    "activity_state=2,facing=west": {
+      "model": "skylife:block/magical_workbench_2",
+      "y": 270
+    }
+  }
+}

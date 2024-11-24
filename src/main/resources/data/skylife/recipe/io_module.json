@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "skylife:input_module"
+    },
+    {
+      "item": "skylife:output_module"
+    }
+  ],
+  "result": {
+    "id": "skylife:io_module"
+  }
+}

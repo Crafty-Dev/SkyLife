@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": {
+    "item": "skylife:emerald_dust"
+  },
+  "result": {
+    "id": "minecraft:emerald"
+  }
+}

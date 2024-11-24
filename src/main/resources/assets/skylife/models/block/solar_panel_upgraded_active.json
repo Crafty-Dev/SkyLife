@@ -1,0 +1,6 @@
+{
+	"parent": "skylife:block/solar_panel_active",
+	"textures": {
+		"3": "skylife:block/solar_panel_upgraded"
+	}
+}

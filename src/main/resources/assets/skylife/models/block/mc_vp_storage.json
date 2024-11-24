@@ -1,0 +1,6 @@
+{
+	"parent": "skylife:block/energy_storage",
+	"textures": {
+		"storageIO": "skylife:block/energy_storage_io_medium"
+	}
+}

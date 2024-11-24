@@ -1,0 +1,18 @@
+{
+  "values": [
+    "skylife:coal_enriched_wheat",
+    "skylife:copper_enriched_wheat",
+    "skylife:iron_enriched_wheat",
+    "skylife:gold_enriched_wheat",
+    "skylife:lapis_enriched_wheat",
+    "skylife:redstone_enriched_wheat",
+    "skylife:diamond_enriched_wheat",
+    "skylife:emerald_enriched_wheat",
+    "skylife:quartz_enriched_wheat",
+    "skylife:netherite_enriched_wheat",
+    "skylife:netherrack_enriched_wheat",
+    "skylife:cobblestone_enriched_wheat",
+    "skylife:glowstone_enriched_wheat",
+    "skylife:dirt_enriched_wheat"
+  ]
+}

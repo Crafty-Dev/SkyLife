@@ -1,0 +1,33 @@
+{
+  "parent": "minecraft:skylife/root",
+  "criteria": {
+    "got_leafpress": {
+      "conditions": {
+        "items": [
+          {
+            "items": "skylife:leaf_press"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.skylife.leaf_press.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "skylife:leaf_press"
+    },
+    "title": {
+      "translate": "advancements.skylife.leaf_press.title"
+    }
+  },
+  "requirements": [
+    [
+      "got_leafpress"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

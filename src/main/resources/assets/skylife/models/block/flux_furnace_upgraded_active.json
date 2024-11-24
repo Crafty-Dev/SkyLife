@@ -1,0 +1,7 @@
+{
+  "parent": "skylife:block/flux_furnace_active",
+  "textures": {
+    "3": "skylife:block/flux_furnace_front_upgraded",
+    "4": "skylife:block/flux_furnace_top_upgraded"
+  }
+}

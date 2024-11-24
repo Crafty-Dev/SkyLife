@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "skylife:redstone_ore_dust"
+    }
+  },
+  "result": {
+    "id": "minecraft:redstone",
+    "count": 1
+  }
+}

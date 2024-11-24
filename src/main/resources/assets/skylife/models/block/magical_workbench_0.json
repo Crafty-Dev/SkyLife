@@ -1,0 +1,10 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "skylife:block/magical_workbench_top",
+    "side": "skylife:block/magical_workbench_side",
+    "front": "skylife:block/magical_workbench_front_0",
+    "back": "skylife:block/magical_workbench_back",
+    "particle": "#side"
+  }
+}

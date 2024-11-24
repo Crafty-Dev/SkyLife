@@ -1,0 +1,241 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_core"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_core_charged"
+      },
+      "when": {
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_connector"
+      },
+      "when": {
+        "north": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_connector",
+        "x": 270
+      },
+      "when": {
+        "up": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_connector",
+        "y": 90
+      },
+      "when": {
+        "east": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_connector_charged"
+      },
+      "when": {
+        "north": "transfer",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_connector_charged",
+        "x": 270
+      },
+      "when": {
+        "up": "transfer",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_connector_charged",
+        "y": 90
+      },
+      "when": {
+        "east": "transfer",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_socket",
+        "y": 180
+      },
+      "when": {
+        "south": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_socket",
+        "x": 90
+      },
+      "when": {
+        "down": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_socket",
+        "y": 270
+      },
+      "when": {
+        "west": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_socket_charged",
+        "y": 180
+      },
+      "when": {
+        "south": "transfer",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_socket_charged",
+        "x": 90
+      },
+      "when": {
+        "down": "transfer",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_socket_charged",
+        "y": 270
+      },
+      "when": {
+        "west": "transfer",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_block"
+      },
+      "when": {
+        "north": "connected"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_block",
+        "y": 90
+      },
+      "when": {
+        "east": "connected"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_block",
+        "y": 180
+      },
+      "when": {
+        "south": "connected"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_block",
+        "y": 270
+      },
+      "when": {
+        "west": "connected"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_block",
+        "x": 270
+      },
+      "when": {
+        "up": "connected"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/improved_energy_cable_connected_block",
+        "x": 90
+      },
+      "when": {
+        "down": "connected"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_block_charged"
+      },
+      "when": {
+        "north": "connected",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_block_charged",
+        "y": 90
+      },
+      "when": {
+        "east": "connected",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_block_charged",
+        "y": 180
+      },
+      "when": {
+        "south": "connected",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_block_charged",
+        "y": 270
+      },
+      "when": {
+        "west": "connected",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_block_charged",
+        "x": 270
+      },
+      "when": {
+        "up": "connected",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/energy_cable_connected_block_charged",
+        "x": 90
+      },
+      "when": {
+        "down": "connected",
+        "energy": true
+      }
+    }
+  ]
+}

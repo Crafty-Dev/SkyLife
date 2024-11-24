@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#X#",
+        "S S",
+        "#P#"
+    ],
+    "key": {
+        "#": {
+            "tag": "minecraft:logs"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        },
+        "X": {
+            "tag": "minecraft:wooden_slabs"
+        },
+        "P": {
+            "tag": "minecraft:planks"
+        }
+    },
+    "result": {
+        "id": "skylife:leaf_press",
+        "count": 1
+    }
+}

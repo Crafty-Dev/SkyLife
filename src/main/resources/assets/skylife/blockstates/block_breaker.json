@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "skylife:block/block_breaker",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "skylife:block/block_breaker",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "skylife:block/block_breaker"
+    },
+    "facing=south": {
+      "model": "skylife:block/block_breaker",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "skylife:block/block_breaker",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "skylife:block/block_breaker",
+      "y": 270
+    }
+  }
+}
