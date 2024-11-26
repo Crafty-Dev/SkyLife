@@ -11,8 +11,11 @@ import de.crafty.skylife.registry.*;
 import de.crafty.skylife.network.SkyLifeNetworkManager;
 import de.crafty.skylife.network.SkyLifeNetworkServer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
+import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,8 +42,10 @@ public class SkyLife implements ModInitializer {
         DataComponentTypeRegistry.perform();
         FluidRegistry.perform();
         InventoryRegistry.perform();
-        SkyLifeCriteriaTriggers.perform();
+        StructureRegistry.perform();
+        StructureRegistry.Pieces.perform();
 
+        SkyLifeCriteriaTriggers.perform();
         ItemGroupRegistry.registerModItems();
 
         //TODO Fix crash with addBucketToGroup called twice

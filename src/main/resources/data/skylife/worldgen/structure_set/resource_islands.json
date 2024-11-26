@@ -1,0 +1,38 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 42060187,
+    "separation": 4,
+    "spacing": 8
+  },
+  "structures": [
+    {
+      "structure": "skylife:oak_island",
+      "weight": 1
+    },
+    {
+      "structure": "skylife:birch_island",
+      "weight": 1
+    },
+    {
+      "structure": "skylife:spruce_island",
+      "weight": 1
+    },
+    {
+      "structure": "skylife:dark_oak_island",
+      "weight": 1
+    },
+    {
+      "structure": "skylife:jungle_island",
+      "weight": 1
+    },
+    {
+      "structure": "skylife:acacia_island",
+      "weight": 1
+    },
+    {
+      "structure": "skylife:mangrove_island",
+      "weight": 1
+    }
+  ]
+}

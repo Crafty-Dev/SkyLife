@@ -55,6 +55,7 @@ public class SkyLifeBlockLootProvider extends BlockLootSubProvider {
         this.dropSelf(BlockRegistry.HC_VP_STORAGE);
         this.dropSelf(BlockRegistry.BASIC_ENERGY_CABLE);
         this.dropSelf(BlockRegistry.IMPROVED_ENERGY_CABLE);
+        this.dropSelf(BlockRegistry.ADVANCED_ENERGY_CABLE);
 
         this.dropOther(BlockRegistry.MELTING_COBBLESTONE, Blocks.COBBLESTONE);
         this.dropOther(BlockRegistry.MELTING_STONE, Blocks.STONE);

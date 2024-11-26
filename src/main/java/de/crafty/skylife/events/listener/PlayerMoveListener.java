@@ -28,6 +28,8 @@ public class PlayerMoveListener implements EventListener<PlayerMoveEvent.Callbac
         if(!(hitResult instanceof BlockHitResult blockHitResult))
             return;
 
+
+
         BlockPos p = blockHitResult.getBlockPos();
         if(callback.player().connection == null || !(callback.player().level().getBlockEntity(p) instanceof AbstractEnergyConsumer consumer))
             return;

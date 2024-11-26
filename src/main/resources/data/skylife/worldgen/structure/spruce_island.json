@@ -1,0 +1,7 @@
+{
+  "type": "skylife:resource_island",
+  "resource_type": "spruce",
+  "biomes": "#skylife:has_spruce_island_spawn",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

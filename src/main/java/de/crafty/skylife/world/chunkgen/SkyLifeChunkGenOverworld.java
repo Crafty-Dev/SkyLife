@@ -47,4 +47,5 @@ public class SkyLifeChunkGenOverworld extends AbstractSkyLifeChunkGenerator {
     public @NotNull CompletableFuture<ChunkAccess> fillFromNoise(Blender blender, RandomState noiseConfig, StructureManager structureAccessor, ChunkAccess chunk) {
         return CompletableFuture.completedFuture(chunk);
     }
+
 }

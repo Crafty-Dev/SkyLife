@@ -15,6 +15,7 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -49,7 +50,7 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
 
         this.indexedFeaturesListGetter = Suppliers.memoize(
                 () -> FeatureSorter.buildFeaturesPerStep(
-                        List.copyOf(biomeSource.possibleBiomes()), biomeEntry -> AbstractSkyLifeChunkGenerator.filterFeatures(generationSettingsGetter.apply(biomeEntry).features()), true
+                        List.copyOf(biomeSource.possibleBiomes()), biomeEntry -> this.filterFeatures(generationSettingsGetter.apply(biomeEntry).features()), true
                 )
         );
     }
@@ -62,7 +63,7 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
         return feature.value().feature().is(TagRegistry.SKYBLOCK_FEATURES);
     }
 
-    public static List<HolderSet<PlacedFeature>> filterFeatures(List<HolderSet<PlacedFeature>> featureList){
+    public List<HolderSet<PlacedFeature>> filterFeatures(List<HolderSet<PlacedFeature>> featureList){
         List<HolderSet<PlacedFeature>> skyblockAvailableFeatures = new ArrayList<>();
 
         featureList.forEach(registryEntries -> {
@@ -132,7 +133,7 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
                         IntSet intSet = new IntArraySet();
 
                         for (Holder<Biome> registryEntry : set) {
-                            List<HolderSet<PlacedFeature>> list3 = AbstractSkyLifeChunkGenerator.filterFeatures(this.generationSettingsGetter.apply(registryEntry).features());
+                            List<HolderSet<PlacedFeature>> list3 = this.filterFeatures(this.generationSettingsGetter.apply(registryEntry).features());
                             if (k < list3.size()) {
                                 HolderSet<PlacedFeature> registryEntryList = list3.get(k);
                                 FeatureSorter.StepFeatureData indexedFeatures = list.get(k);
@@ -171,4 +172,6 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
             }
         }
     }
+
+
 }

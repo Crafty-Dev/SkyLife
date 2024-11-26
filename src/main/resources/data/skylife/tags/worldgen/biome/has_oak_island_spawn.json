@@ -1,0 +1,20 @@
+{
+  "values": [
+    "minecraft:ocean",
+    "minecraft:deep_ocean",
+
+    "minecraft:meadow",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_gravelly_hills",
+    "minecraft:windswept_forest",
+
+    "minecraft:forest",
+    "minecraft:flower_forest",
+
+    "minecraft:river",
+    "minecraft:stony_shore",
+
+    "minecraft:plains",
+    "minecraft:sunflower_plains"
+  ]
+}
