@@ -11,6 +11,7 @@
   "item.skylife.acacia_leaf": "Acacia Leaf",
   "item.skylife.jungle_leaf": "Jungle Leaf",
   "item.skylife.mangrove_leaf": "Mangrove Leaf",
+  "item.skylife.cherry_leaf": "Cherry Leaf",
 
   "item.skylife.wooden_bucket": "Wooden Bucket",
   "item.skylife.wooden_water_bucket": "Wooden Water Bucket",
@@ -118,6 +119,9 @@
   "block.skylife.advanced_energy_cable": "Advanced VoidPower Cable",
   "block.skylife.molten_obsidian": "Molten Obsidian",
   "block.skylife.oil": "Oil",
+  "block.skylife.oily_stone": "Oily Stone",
+
+  "block.skylife.basic_fluid_storage": "Small Fluid Storage",
 
   "entity.skylife.coal_sheep": "Coal Sheep",
   "entity.skylife.iron_sheep": "Iron Sheep",
@@ -135,7 +139,7 @@
   "entity.skylife.quartz_sheep": "Quartz Sheep",
 
 
-  "gui.jei.category.lava_conversion": "Lava Conversion",
+  "gui.jei.category.fluid_conversion": "Fluid Conversion",
   "gui.jei.category.block_transformation": "Block Transformation",
   "gui.jei.category.cobblestone_melting": "Block Melting",
   "gui.jei.category.hammering": "Hammering",

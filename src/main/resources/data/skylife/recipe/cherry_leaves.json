@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "S#S",
+        "#S#"
+    ],
+    "key": {
+        "#": {
+            "item": "skylife:cherry_leaf"
+        },
+        "S": {
+            "item": "minecraft:stick"
+        }
+    },
+    "result": {
+        "id": "minecraft:cherry_leaves",
+        "count": 1
+    }
+}

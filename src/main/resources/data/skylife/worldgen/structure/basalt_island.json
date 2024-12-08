@@ -1,0 +1,7 @@
+{
+  "type": "skylife:resource_island",
+  "resource_type": "basalt",
+  "biomes": "#skylife:has_basalt_island_spawn",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

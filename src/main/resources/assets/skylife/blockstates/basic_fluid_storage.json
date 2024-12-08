@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "skylife:block/basic_fluid_storage"
+    }
+  }
+}

@@ -57,6 +57,8 @@ public class LeafDropLogic {
         if (state.is(Blocks.MANGROVE_LEAVES))
             dropStack = new ItemStack(ItemRegistry.MANGROVE_LEAF, amount);
 
+        if(state.is(Blocks.CHERRY_LEAVES))
+            dropStack = new ItemStack(ItemRegistry.CHERRY_LEAF, amount);
 
         if (!dropStack.isEmpty() && dropStack.getCount() > 0)
             Block.popResource(level, pos, dropStack);

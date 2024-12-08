@@ -24,17 +24,9 @@ public class PlayerMoveListener implements EventListener<PlayerMoveEvent.Callbac
         if(callback.player() == null)
             return;
 
-        HitResult hitResult = Minecraft.getInstance().hitResult;
-        if(!(hitResult instanceof BlockHitResult blockHitResult))
-            return;
 
 
-
-        BlockPos p = blockHitResult.getBlockPos();
-        if(callback.player().connection == null || !(callback.player().level().getBlockEntity(p) instanceof AbstractEnergyConsumer consumer))
-            return;
-
-        callback.player().displayClientMessage(Component.literal("Buffer: " + consumer.getStoredEnergy()), true);
+        //callback.player().displayClientMessage(Component.literal("Buffer: " + consumer.getStoredEnergy()), true);
         //callback.player().displayClientMessage(Component.literal("Buffer: " + (cable.isBufferUnlocked() ? "Unlocked" : "Locked") + " [" + cable.getStoredEnergy() + "/" + cable.getCapacity() + "] " + "(last Update: " + cable.getLastTick() + ")"), true);
 
         SaplingGrowthLogic.onSaplingGrowthByMoving(callback.player(), callback.level(), prevPos.x(), prevPos.y(), prevPos.z(), pos.x(), pos.y(), pos.z());

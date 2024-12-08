@@ -5,7 +5,9 @@ import de.crafty.skylife.block.MeltingBlock;
 import de.crafty.skylife.block.machines.integrated.ImprovedEnergyCableBlock;
 import de.crafty.skylife.blockentities.*;
 
+import de.crafty.skylife.blockentities.fluid.BasicFluidStorageBlockEntity;
 import de.crafty.skylife.blockentities.machines.integrated.*;
+import net.fabricmc.api.ModInitializer;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -36,6 +38,9 @@ public class BlockEntityRegistry {
     public static final BlockEntityType<ImprovedEnergyCableBlockEntity> IMPROVED_ENERGY_CABLE = BlockEntityType.Builder.of(ImprovedEnergyCableBlockEntity::new, BlockRegistry.IMPROVED_ENERGY_CABLE).build();
     public static final BlockEntityType<AdvancedEnergyCableBlockEntity> ADVANCED_ENERGY_CABLE = BlockEntityType.Builder.of(AdvancedEnergyCableBlockEntity::new, BlockRegistry.ADVANCED_ENERGY_CABLE).build();
 
+    //Fluid
+    public static final BlockEntityType<BasicFluidStorageBlockEntity> BASIC_FLUID_STORAGE = BlockEntityType.Builder.of(BasicFluidStorageBlockEntity::new, BlockRegistry.BASIC_FLUID_STORAGE).build();
+
     public static void perform(){
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "leaf_press"), LEAF_PRESS);
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "grave_stone"), GRAVE_STONE);
@@ -54,6 +59,8 @@ public class BlockEntityRegistry {
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "basic_energy_cable"), BASIC_ENERGY_CABLE);
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "improved_energy_cable"), IMPROVED_ENERGY_CABLE);
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "advanced_energy_cable"), ADVANCED_ENERGY_CABLE);
+
+        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "basic_fluid_storage"), BASIC_FLUID_STORAGE);
 
 
     }

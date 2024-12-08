@@ -134,6 +134,11 @@ public class FluxFurnaceBlock extends AbstractUpgradableMachine<FluxFurnaceBlock
 
     @Override
     protected void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+        if (blockState2.is(this)) {
+            super.onRemove(blockState, level, blockPos, blockState2, bl);
+            return;
+        }
+
         Containers.dropContentsOnDestroy(blockState, blockState2, level, blockPos);
 
         Item currentUpgrade = this.getCurrentUpgrade(blockState);

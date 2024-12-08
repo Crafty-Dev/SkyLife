@@ -1,0 +1,7 @@
+{
+  "type": "skylife:resource_island",
+  "resource_type": "desert",
+  "biomes": "#skylife:has_desert_island_spawn",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

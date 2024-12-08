@@ -12,11 +12,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.Nullable;
 
 public class DragonInfusedBedrockBlock extends Block {
 
@@ -42,9 +44,4 @@ public class DragonInfusedBedrockBlock extends Block {
         return ItemInteractionResult.SUCCESS;
     }
 
-
-    @Override
-    protected void neighborChanged(BlockState state, Level world, BlockPos pos, Block sourceBlock, BlockPos sourcePos, boolean notify) {
-        super.neighborChanged(state, world, pos, sourceBlock, sourcePos, notify);
-    }
 }

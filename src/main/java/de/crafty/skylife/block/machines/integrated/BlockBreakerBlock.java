@@ -21,12 +21,13 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.*;
 
 public class BlockBreakerBlock extends BaseEnergyBlock {
 
@@ -82,9 +83,11 @@ public class BlockBreakerBlock extends BaseEnergyBlock {
         return this.defaultBlockState().setValue(FACING, (blockPlaceContext.getPlayer().isCrouching() || blockPlaceContext.getPlayer().isShiftKeyDown()) ? blockPlaceContext.getNearestLookingDirection() : blockPlaceContext.getNearestLookingDirection().getOpposite());
     }
 
+
     @Override
     protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player
             player, BlockHitResult blockHitResult) {
+
         InteractionResult result = super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);
         if (level.isClientSide())
             return InteractionResult.SUCCESS;

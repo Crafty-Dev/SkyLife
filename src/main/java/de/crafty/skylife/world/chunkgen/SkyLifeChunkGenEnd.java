@@ -9,6 +9,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.BiomeSource;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -52,5 +53,11 @@ public class SkyLifeChunkGenEnd extends AbstractSkyLifeChunkGenerator {
             return super.fillFromNoise(blender, noiseConfig, structureAccessor, chunk);
 
         return CompletableFuture.completedFuture(chunk);
+    }
+
+
+    @Override
+    public void applyBiomeDecoration(WorldGenLevel world, ChunkAccess chunk, StructureManager structureAccessor) {
+        super.applyBiomeDecoration(world, chunk, structureAccessor);
     }
 }

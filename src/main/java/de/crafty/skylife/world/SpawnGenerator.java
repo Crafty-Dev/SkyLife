@@ -33,7 +33,6 @@ public class SpawnGenerator {
     );
 
     public static void start(ServerLevel world, ServerLevelData worldProperties) {
-        System.out.println("Moin");
 
         if (!(world.getChunkSource().getGenerator() instanceof SkyLifeChunkGenOverworld))
             return;

@@ -134,8 +134,10 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
             for (int z = 0; z <= this.template().getSize().getZ(); z++) {
                 for (int y = 0; y <= this.template().getSize().getY(); y++) {
                     BlockState state = this.getBlock(worldGenLevel, x, y, z, boundingBox);
-                    if (state.is(Blocks.BEDROCK))
-                        this.placeBlock(worldGenLevel, this.resourceType.fillerBlockProvider().randomBlock(randomSource), x, y, z, boundingBox);
+
+                    BlockState replace = this.resourceType.fillerBlockProvider().randomBlock(randomSource);
+                    if (state.is(Blocks.BEDROCK) && replace != null)
+                        this.placeBlock(worldGenLevel, replace, x, y, z, boundingBox);
 
                 }
             }
@@ -175,8 +177,10 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
             BlockState belowBelowBlock = this.getBlock(worldGenLevel, topPos.getX(), topPos.getY() - 2, topPos.getZ(), boundingBox);
             BlockState belowBelowBelowBlock = this.getBlock(worldGenLevel, topPos.getX(), topPos.getY() - 3, topPos.getZ(), boundingBox);
 
-            if (!belowBlock.is(Blocks.AIR))
-                this.placeBlock(worldGenLevel,this.resourceType.topBlockProvider().randomBlock(randomSource), topPos.getX(), topPos.getY(), topPos.getZ(), boundingBox);
+            BlockState randomTopBlock = this.resourceType.topBlockProvider().randomBlock(randomSource);
+
+            if (!belowBlock.is(Blocks.AIR) && randomTopBlock != null)
+                this.placeBlock(worldGenLevel, randomTopBlock, topPos.getX(), topPos.getY(), topPos.getZ(), boundingBox);
 
             BlockState depthBlock = this.resourceType.depthBlock;
             if(depthBlock == null)
@@ -189,6 +193,27 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
                     this.placeBlock(worldGenLevel, depthBlock, topPos.getX(), topPos.getY() - 2, topPos.getZ(), boundingBox);
             }
 
+        });
+
+
+        List<BlockPos> bottomBlocks = new ArrayList<>();
+
+        for (int x = 0; x <= this.template().getSize().getX(); x++) {
+            for (int z = 0; z <= this.template().getSize().getZ(); z++) {
+                for (int y = 0; y < this.template().getSize().getY(); y++) {
+                    BlockPos pos = new BlockPos(x, y, z);
+                    if (allBlocks.contains(pos)) {
+                        bottomBlocks.add(new BlockPos(x, y, z));
+                        break;
+                    }
+                }
+            }
+        }
+
+        bottomBlocks.forEach(bottomPos -> {
+            BlockState randomBottomBlock = this.resourceType.bottomBlockProvider().randomBlock(randomSource);
+            if(randomBottomBlock != null)
+                this.placeBlock(worldGenLevel, randomBottomBlock, bottomPos.getX(), bottomPos.getY(), bottomPos.getZ(), boundingBox);
         });
 
     }

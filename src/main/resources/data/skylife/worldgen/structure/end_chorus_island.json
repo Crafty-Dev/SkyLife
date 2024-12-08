@@ -1,0 +1,7 @@
+{
+  "type": "skylife:resource_island",
+  "resource_type": "end_chorus",
+  "biomes": "#skylife:has_end_chorus_island_spawn",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

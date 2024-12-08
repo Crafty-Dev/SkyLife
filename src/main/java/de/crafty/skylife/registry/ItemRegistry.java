@@ -30,6 +30,7 @@ public class ItemRegistry {
     public static final Item JUNGLE_LEAF = register("jungle_leaf", new Item(new Item.Properties().food(Foods.DRIED_KELP)));
     public static final Item ACACIA_LEAF = register("acacia_leaf", new Item(new Item.Properties().food(Foods.DRIED_KELP)));
     public static final Item MANGROVE_LEAF = register("mangrove_leaf", new Item(new Item.Properties().food(Foods.DRIED_KELP)));
+    public static final Item CHERRY_LEAF = register("cherry_leaf", new Item(new Item.Properties().food(Foods.DRIED_KELP)));
 
     public static final Item WOODEN_BUCKET = register("wooden_bucket", new BucketItem(Fluids.EMPTY, new Item.Properties().stacksTo(16)));
     public static final Item WOODEN_WATER_BUCKET = register("wooden_water_bucket", new BucketItem(Fluids.WATER, new Item.Properties().stacksTo(1).craftRemainder(WOODEN_BUCKET)));

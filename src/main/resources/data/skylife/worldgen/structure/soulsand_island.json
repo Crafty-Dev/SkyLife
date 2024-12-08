@@ -1,0 +1,7 @@
+{
+  "type": "skylife:resource_island",
+  "resource_type": "soulsand",
+  "biomes": "#skylife:has_soulsand_island_spawn",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

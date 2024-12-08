@@ -3,12 +3,17 @@ package de.crafty.skylife.block.machines;
 import de.crafty.lifecompat.energy.block.BaseEnergyCable;
 import de.crafty.lifecompat.util.EnergyUnitConverter;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Equipable;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -56,6 +61,35 @@ public abstract class SkyLifeEnergyCable extends BaseEnergyCable implements Equi
     }
 
 
+    @Override
+    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
+
+        if(this.hasClickedShape(blockHitResult, SHAPE_NORTH))
+            System.out.println("North clicked");
+        if(this.hasClickedShape(blockHitResult, SHAPE_EAST))
+            System.out.println("East clicked");
+        if(this.hasClickedShape(blockHitResult, SHAPE_SOUTH))
+            System.out.println("South clicked");
+        if(this.hasClickedShape(blockHitResult, SHAPE_WEST))
+            System.out.println("West clicked");
+        if(this.hasClickedShape(blockHitResult, SHAPE_UP))
+            System.out.println("Up clicked");
+        if(this.hasClickedShape(blockHitResult, SHAPE_DOWN))
+            System.out.println("Down clicked");
+
+        return InteractionResult.PASS;
+    }
+
+
+    private boolean hasClickedShape(BlockHitResult blockHitResult, VoxelShape shape) {
+        BlockPos clicked = blockHitResult.getBlockPos();
+        Vec3 clickedLoc = blockHitResult.getLocation().subtract(clicked.getX(), clicked.getY(), clicked.getZ());
+
+
+        return clickedLoc.x() >= shape.min(Direction.Axis.X) && clickedLoc.x() <= shape.max(Direction.Axis.X)
+                        && clickedLoc.y() >= shape.min(Direction.Axis.Y) && clickedLoc.y() <= shape.max(Direction.Axis.Y)
+                && clickedLoc.z() >= shape.min(Direction.Axis.Z) && clickedLoc.z() <= shape.max(Direction.Axis.Z);
+    }
 
     public enum Tier {
         BASIC(EnergyUnitConverter.kiloVP(4), 40),
@@ -64,7 +98,7 @@ public abstract class SkyLifeEnergyCable extends BaseEnergyCable implements Equi
 
         final int capacity, maxIO;
 
-        Tier(int capacity, int maxIO){
+        Tier(int capacity, int maxIO) {
             this.capacity = capacity;
             this.maxIO = maxIO;
         }

@@ -1,0 +1,7 @@
+{
+  "type": "skylife:resource_island",
+  "resource_type": "lush_cave",
+  "biomes": "#skylife:has_lush_cave_island_spawn",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

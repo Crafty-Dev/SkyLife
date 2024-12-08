@@ -7,6 +7,7 @@ import de.crafty.skylife.block.fluid.LiquidObsidianBlock;
 import de.crafty.skylife.block.fluid.LiquidOilBlock;
 import de.crafty.skylife.block.fluid.MoltenObsidianCauldron;
 import de.crafty.skylife.block.fluid.OilCauldron;
+import de.crafty.skylife.block.fluid.container.BasicFluidStorageBlock;
 import de.crafty.skylife.block.machines.integrated.*;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -66,6 +67,8 @@ public class BlockRegistry {
     public static final Block IMPROVED_ENERGY_CABLE = registerDefault("improved_energy_cable", new ImprovedEnergyCableBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(0.75F).noOcclusion()), new Item.Properties().rarity(Rarity.COMMON));
     public static final Block ADVANCED_ENERGY_CABLE = registerDefault("advanced_energy_cable", new AdvancedEnergyCableBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GRAY).strength(1.0F).noOcclusion()), new Item.Properties().rarity(Rarity.RARE));
 
+    public static final Block OILY_STONE = registerDefault("oily_stone", new Block(BlockBehaviour.Properties.ofFullCopy(Blocks.COAL_ORE)));
+
     //Liquids
     public static final Block MOLTEN_OBSIDIAN = registerBlock("molten_obsidian", new LiquidObsidianBlock(FluidRegistry.MOLTEN_OBSIDIAN, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).replaceable().noCollission().strength(1000.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY)));
     public static final Block MOLTEN_OBSIDIAN_CAULDRON = registerBlock("molten_obsidian_cauldron", new MoltenObsidianCauldron(BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
@@ -73,6 +76,8 @@ public class BlockRegistry {
     public static final Block OIL = registerBlock("oil", new LiquidOilBlock(FluidRegistry.OIL, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).replaceable().noCollission().strength(1.0F).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY)));
     public static final Block OIL_CAULDRON = registerBlock("oil_cauldron", new OilCauldron(BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)));
 
+    //Fluid Blocks
+    public static final Block BASIC_FLUID_STORAGE = registerDefault("basic_fluid_storage", new BasicFluidStorageBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion()));
 
     private static <T extends Block> T registerDefault(String id, T block, Item.Properties itemProperties){
         registerBlock(id, block);

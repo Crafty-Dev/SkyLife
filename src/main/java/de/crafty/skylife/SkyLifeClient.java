@@ -1,6 +1,7 @@
 package de.crafty.skylife;
 
 import de.crafty.skylife.blockentities.renderer.*;
+import de.crafty.skylife.blockentities.renderer.fluid.FluidStorageRenderer;
 import de.crafty.skylife.blockentities.renderer.machines.BlockBreakerRenderer;
 import de.crafty.skylife.blockentities.renderer.machines.BriquetteGeneratorRenderer;
 import de.crafty.skylife.blockentities.renderer.machines.EnergyStorageRenderer;
@@ -64,6 +65,8 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.HC_VP_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BASIC_ENERGY_CABLE, RenderType.cutout());
 
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BASIC_FLUID_STORAGE, RenderType.cutout());
+
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.MOLTEN_OBSIDIAN, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.MOLTEN_OBSIDIAN_FLOWING, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.OIL, RenderType.translucent());
@@ -100,6 +103,9 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockEntityRenderers.register(BlockEntityRegistry.BRIQUETTE_GENERATOR, BriquetteGeneratorRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.SOLAR_PANEL, SolarPanelRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.BLOCK_BREAKER, BlockBreakerRenderer::new);
+
+        BlockEntityRenderers.register(BlockEntityRegistry.BASIC_FLUID_STORAGE, FluidStorageRenderer::new);
+
 
     }
 

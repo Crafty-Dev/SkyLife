@@ -10,6 +10,7 @@ import de.crafty.skylife.events.listener.*;
 import de.crafty.skylife.registry.*;
 import de.crafty.skylife.network.SkyLifeNetworkManager;
 import de.crafty.skylife.network.SkyLifeNetworkServer;
+import de.crafty.skylife.structure.resource_island.ResourceIslandStructure;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -44,6 +45,10 @@ public class SkyLife implements ModInitializer {
         InventoryRegistry.perform();
         StructureRegistry.perform();
         StructureRegistry.Pieces.perform();
+
+        for (ResourceIslandStructure.ResourceType type : ResourceIslandStructure.ResourceType.values()) {
+            LOGGER.info("Known Resource Island Type: {}", type.name().toLowerCase());
+        }
 
         SkyLifeCriteriaTriggers.perform();
         ItemGroupRegistry.registerModItems();
