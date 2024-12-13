@@ -1,11 +1,9 @@
 package de.crafty.skylife;
 
 import de.crafty.skylife.blockentities.renderer.*;
+import de.crafty.skylife.blockentities.renderer.fluid.FluidPipeRenderer;
 import de.crafty.skylife.blockentities.renderer.fluid.FluidStorageRenderer;
-import de.crafty.skylife.blockentities.renderer.machines.BlockBreakerRenderer;
-import de.crafty.skylife.blockentities.renderer.machines.BriquetteGeneratorRenderer;
-import de.crafty.skylife.blockentities.renderer.machines.EnergyStorageRenderer;
-import de.crafty.skylife.blockentities.renderer.machines.SolarPanelRenderer;
+import de.crafty.skylife.blockentities.renderer.machines.*;
 import de.crafty.skylife.client.model.entity.ResourceSheepEntityFurModel;
 import de.crafty.skylife.client.model.entity.ResourceSheepEntityModel;
 import de.crafty.skylife.client.renderer.entity.ResourceSheepRenderer;
@@ -60,12 +58,18 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BRIQUETTE_GENERATOR, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.SOLAR_PANEL, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.FLUX_FURNACE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BLOCK_MELTER, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.FLUID_PUMP, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.LC_VP_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.MC_VP_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.HC_VP_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BASIC_ENERGY_CABLE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.IMPROVED_ENERGY_CABLE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.ADVANCED_ENERGY_CABLE, RenderType.cutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BASIC_FLUID_STORAGE, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BASIC_FLUID_PIPE, RenderType.cutout());
+
 
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.MOLTEN_OBSIDIAN, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.MOLTEN_OBSIDIAN_FLOWING, RenderType.translucent());
@@ -79,6 +83,11 @@ public class SkyLifeClient implements ClientModInitializer {
         //BlockEntities
         EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.ENERGY_STORAGE_CORE, EnergyStorageRenderer::createCoreLayer);
         EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.BLOCK_BREAKER_CHAIN, BlockBreakerRenderer::createChainLayer);
+
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.FLUID_PIPE_DOWN_ARROW, FluidPipeRenderer::createDownArrowLayer);
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.FLUID_PIPE_UP_ARROW, FluidPipeRenderer::createUpArrowLayer);
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.FLUID_PIPE_INOUT, FluidPipeRenderer::createIOLayer);
+
 
         this.registerBlockEntityRenderers();
         this.registerEntityRenderers();
@@ -103,8 +112,11 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockEntityRenderers.register(BlockEntityRegistry.BRIQUETTE_GENERATOR, BriquetteGeneratorRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.SOLAR_PANEL, SolarPanelRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.BLOCK_BREAKER, BlockBreakerRenderer::new);
+        BlockEntityRenderers.register(BlockEntityRegistry.BLOCK_MELTER, BlockMelterRenderer::new);
+        BlockEntityRenderers.register(BlockEntityRegistry.FLUID_PUMP, FluidPumpRenderer::new);
 
         BlockEntityRenderers.register(BlockEntityRegistry.BASIC_FLUID_STORAGE, FluidStorageRenderer::new);
+        BlockEntityRenderers.register(BlockEntityRegistry.BASIC_FLUID_PIPE, FluidPipeRenderer::new);
 
 
     }

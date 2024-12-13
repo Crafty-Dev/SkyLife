@@ -1,0 +1,20 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pump"
+      },
+      "when": {
+        "energy": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pump_charged"
+      },
+      "when": {
+        "energy": true
+      }
+    }
+  ]
+}

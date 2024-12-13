@@ -29,7 +29,6 @@ public class FluxFurnaceMenu extends AbstractEnergyContainerMenu {
     public FluxFurnaceMenu(int containerId, Inventory inventory, Container container, ContainerData dataAccess, ContainerLevelAccess containerLevelAccess) {
         super(InventoryRegistry.FLUX_FURNACE, containerId);
 
-        //System.out.println((inventory.player.level().isClientSide() ? "Client: " : "Server: " + menuPos));
         this.container = container;
         this.dataAccess = dataAccess;
         this.levelAccess = containerLevelAccess;

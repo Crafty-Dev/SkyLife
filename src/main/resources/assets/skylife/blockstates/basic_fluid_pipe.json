@@ -1,0 +1,115 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_core"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_connector"
+      },
+      "when": {
+        "north": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_connector",
+        "x": 270
+      },
+      "when": {
+        "up": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_connector",
+        "y": 90
+      },
+      "when": {
+        "east": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_connector",
+        "y": 180
+      },
+      "when": {
+        "south": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_connector",
+        "x": 90
+      },
+      "when": {
+        "down": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_connector",
+        "y": 270
+      },
+      "when": {
+        "west": "transfer"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_device_connector"
+      },
+      "when": {
+        "north": "attached"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_device_connector",
+        "y": 90
+      },
+      "when": {
+        "east": "attached"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_device_connector",
+        "y": 180
+      },
+      "when": {
+        "south": "attached"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_device_connector",
+        "y": 270
+      },
+      "when": {
+        "west": "attached"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_device_connector",
+        "x": 270
+      },
+      "when": {
+        "up": "attached"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pipe_device_connector",
+        "x": 90
+      },
+      "when": {
+        "down": "attached"
+      }
+    }
+  ]
+}

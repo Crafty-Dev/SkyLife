@@ -61,26 +61,6 @@ public abstract class SkyLifeEnergyCable extends BaseEnergyCable implements Equi
     }
 
 
-    @Override
-    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
-
-        if(this.hasClickedShape(blockHitResult, SHAPE_NORTH))
-            System.out.println("North clicked");
-        if(this.hasClickedShape(blockHitResult, SHAPE_EAST))
-            System.out.println("East clicked");
-        if(this.hasClickedShape(blockHitResult, SHAPE_SOUTH))
-            System.out.println("South clicked");
-        if(this.hasClickedShape(blockHitResult, SHAPE_WEST))
-            System.out.println("West clicked");
-        if(this.hasClickedShape(blockHitResult, SHAPE_UP))
-            System.out.println("Up clicked");
-        if(this.hasClickedShape(blockHitResult, SHAPE_DOWN))
-            System.out.println("Down clicked");
-
-        return InteractionResult.PASS;
-    }
-
-
     private boolean hasClickedShape(BlockHitResult blockHitResult, VoxelShape shape) {
         BlockPos clicked = blockHitResult.getBlockPos();
         Vec3 clickedLoc = blockHitResult.getLocation().subtract(clicked.getX(), clicked.getY(), clicked.getZ());

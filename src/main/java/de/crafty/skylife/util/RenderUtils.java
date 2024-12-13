@@ -10,6 +10,9 @@ import net.minecraft.core.Vec3i;
 public class RenderUtils {
 
 
+    /*
+    * Thanks to enderio for having solved this in their code :D
+    * */
     public static void renderTexturedPlane(PoseStack.Pose pose, VertexConsumer consumer, TextureAtlasSprite texture, Direction facing, float x, float y, float z, float width, float height, float u, float v, float texWidth, float texHeight, int color, int light) {
 
         float u0 = u * texture.contents().width() / 16.0F;

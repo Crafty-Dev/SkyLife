@@ -30,7 +30,12 @@ public record SkyLifeClientEventPayload(BlockPos pos, ClientEventType eventType)
 
         //Block Breaker
         BB_BLOCK_HIT,
-        BB_ITEM_BREAK;
+        BB_ITEM_BREAK,
+
+        //Block Melter
+        BM_EXSTINGUISH,
+        BM_MELTING_FINISHED,
+        BM_PLACE_ITEM;
 
         public static final StreamCodec<ByteBuf, ClientEventType> STREAM_CODEC = SkyLifeByteBufCodecs.createSimpleEnum(ClientEventType.class);
     }

@@ -69,6 +69,18 @@ public class SkyLifeNetworkClient {
                 break;
             case BB_ITEM_BREAK:
                 level.playLocalSound(pos, SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F, true);
+                break;
+
+            case BM_EXSTINGUISH:
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.25F, 2.6F, true);
+                break;
+
+            case BM_MELTING_FINISHED:
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BUCKET_FILL_LAVA, SoundSource.BLOCKS, 1.0F, 1.0F, true);
+                break;
+            case BM_PLACE_ITEM:
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 0.5F, true);
+
             default:
         }
     }

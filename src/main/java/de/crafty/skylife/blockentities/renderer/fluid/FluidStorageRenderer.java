@@ -1,16 +1,13 @@
 package de.crafty.skylife.blockentities.renderer.fluid;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import de.crafty.lifecompat.fluid.blockentity.AbstractFluidContainerBlockEntity;
 import de.crafty.skylife.util.RenderUtils;
-import net.fabricmc.fabric.api.client.render.fluid.v1.FluidRenderHandler;
-import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.rendering.fluid.FluidRenderHandlerRegistryImpl;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
@@ -19,12 +16,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.Fluids;
 
 import java.awt.*;
 
+@Environment(EnvType.CLIENT)
 public class FluidStorageRenderer<T extends AbstractFluidContainerBlockEntity> implements BlockEntityRenderer<T> {
 
 
@@ -59,15 +55,15 @@ public class FluidStorageRenderer<T extends AbstractFluidContainerBlockEntity> i
                     vertexConsumer,
                     spriteStill,
                     Direction.UP,
-                    px(2.0F),
-                    px(1.001F) + px(14.0F) * fillStatus,
-                    px(2.0F),
-                    px(12.0F),
-                    px(12.0F),
-                    0.0F,
-                    0.0F,
-                    1.0F,
-                    1.0F,
+                    px(2.01F),
+                    px(1.01F) + px(14.0F - 0.02F) * fillStatus,
+                    px(2.01F),
+                    px(12.0F - 0.02F),
+                    px(12.0F - 0.02F),
+                    px(1.0F + 0.01F),
+                    px(1.0F + 0.01F),
+                    px(12.0F - 0.02F),
+                    px(12.0F - 0.02F),
                     color,
                     light);
 
@@ -79,32 +75,33 @@ public class FluidStorageRenderer<T extends AbstractFluidContainerBlockEntity> i
                 vertexConsumer,
                 spriteStill,
                 Direction.NORTH,
-                px(2.0F + 0.001F),
-                px(1.001F),
-                px(2.0F + 0.001F),
-                px(12.0F - 0.001F),
-                px(14.0F - 0.001F) * fillStatus,
-                0.0F,
-                0.0F,
-                1.0F,
-                fillStatus,
+                px(2.0F + 0.01F),
+                px(1.0F + 0.01F),
+                px(2.0F + 0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
+                px(1.0F + 0.01F),
+                px(0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
                 color,
                 light);
+
 
         RenderUtils.renderTexturedPlane(
                 poseStack.last(),
                 vertexConsumer,
                 spriteStill,
                 Direction.EAST,
-                px(14.0F - 0.001F),
-                px(1.001F),
-                px(2.0F + 0.001F),
-                px(12.0F - 0.001F),
-                px(14.0F - 0.001F) * fillStatus,
-                0.0F,
-                0.0F,
-                1.0F,
-                fillStatus,
+                px(14.0F - 0.01F),
+                px(1.01F),
+                px(2.0F + 0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
+                px(1.0F + 0.01F),
+                px(0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
                 color,
                 light);
 
@@ -113,15 +110,15 @@ public class FluidStorageRenderer<T extends AbstractFluidContainerBlockEntity> i
                 vertexConsumer,
                 spriteStill,
                 Direction.SOUTH,
-                px(2.0F + 0.001F),
-                px(1.001F),
-                px(14.0F - 0.001F),
-                px(12.0F - 0.001F),
-                px(14.0F - 0.001F) * fillStatus,
-                0.0F,
-                0.0F,
-                1.0F,
-                fillStatus,
+                px(2.0F + 0.01F),
+                px(1.01F),
+                px(14.0F - 0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
+                px(1.0F + 0.01F),
+                px(0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
                 color,
                 light);
 
@@ -130,15 +127,15 @@ public class FluidStorageRenderer<T extends AbstractFluidContainerBlockEntity> i
                 vertexConsumer,
                 spriteStill,
                 Direction.WEST,
-                px(2.0F + 0.001F),
-                px(1.001F),
-                px(2.0F + 0.001F),
-                px(12.0F - 0.001F),
-                px(14.0F - 0.001F) * fillStatus,
-                0.0F,
-                0.0F,
-                1.0F,
-                fillStatus,
+                px(2.0F + 0.01F),
+                px(1.01F),
+                px(2.0F + 0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
+                px(1.0F + 0.01F),
+                px(0.01F),
+                px(12.0F - 0.02F),
+                px((14.0F - 0.02F) * fillStatus),
                 color,
                 light);
 

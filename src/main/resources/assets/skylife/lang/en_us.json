@@ -110,6 +110,8 @@
   "block.skylife.solar_panel": "Solar Panel",
   "block.skylife.block_breaker": "Block Breaker",
   "block.skylife.flux_furnace": "Flux Furnace",
+  "block.skylife.block_melter": "Block Melter",
+  "block.skylife.fluid_pump": "Fluid Pump",
   "block.skylife.lc_vp_storage": "Low Capacity VoidPower Storage",
   "block.skylife.mc_vp_storage": "Medium Capacity VoidPower Storage",
   "block.skylife.hc_vp_storage": "High Capacity VoidPower Storage",
@@ -121,7 +123,8 @@
   "block.skylife.oil": "Oil",
   "block.skylife.oily_stone": "Oily Stone",
 
-  "block.skylife.basic_fluid_storage": "Small Fluid Storage",
+  "block.skylife.basic_fluid_storage": "Small Fluid Tank",
+  "block.skylife.basic_fluid_pipe": "Basic Fluid Pipe",
 
   "entity.skylife.coal_sheep": "Coal Sheep",
   "entity.skylife.iron_sheep": "Iron Sheep",

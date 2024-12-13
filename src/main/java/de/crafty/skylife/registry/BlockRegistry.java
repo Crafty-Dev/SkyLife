@@ -8,6 +8,7 @@ import de.crafty.skylife.block.fluid.LiquidOilBlock;
 import de.crafty.skylife.block.fluid.MoltenObsidianCauldron;
 import de.crafty.skylife.block.fluid.OilCauldron;
 import de.crafty.skylife.block.fluid.container.BasicFluidStorageBlock;
+import de.crafty.skylife.block.fluid.pipe.BasicFluidPipeBlock;
 import de.crafty.skylife.block.machines.integrated.*;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -58,7 +59,9 @@ public class BlockRegistry {
     public static final BaseEnergyBlock BRIQUETTE_GENERATOR = registerDefault("briquette_generator", new BriquetteGeneratorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion().lightLevel(state -> state.getValue(BriquetteGeneratorBlock.WORKING) ? 13 : 0)));
     public static final BaseEnergyBlock SOLAR_PANEL = registerDefault("solar_panel", new SolarPanelBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(2.5F, 3.0F).requiresCorrectToolForDrops().noOcclusion()));
     public static final BaseEnergyBlock BLOCK_BREAKER = registerDefault("block_breaker", new BlockBreakerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion()));
+    public static final BaseEnergyBlock FLUID_PUMP = registerDefault("fluid_pump", new FluidPumpBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion()));
     public static final BaseEnergyBlock FLUX_FURNACE = registerDefault("flux_furnace", new FluxFurnaceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).requiresCorrectToolForDrops().strength(3.5F).lightLevel(value -> value.getValue(FluxFurnaceBlock.ACTIVE) ? 13 : 0)));
+    public static final BaseEnergyBlock BLOCK_MELTER = registerDefault("block_melter", new BlockMelterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion().lightLevel(state -> state.getValue(BlockMelterBlock.ENERGY) ? 10 : 0)));
     public static final BaseEnergyBlock LC_VP_STORAGE = registerDefault("lc_vp_storage", new LowCapacityVPStorageBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion()));
     public static final BaseEnergyBlock MC_VP_STORAGE = registerDefault("mc_vp_storage", new MediumCapacityVPStorageBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion()));
     public static final BaseEnergyBlock HC_VP_STORAGE = registerDefault("hc_vp_storage", new HighCapacityVPStorageBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion()));
@@ -78,6 +81,8 @@ public class BlockRegistry {
 
     //Fluid Blocks
     public static final Block BASIC_FLUID_STORAGE = registerDefault("basic_fluid_storage", new BasicFluidStorageBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion()));
+    public static final Block BASIC_FLUID_PIPE = registerDefault("basic_fluid_pipe", new BasicFluidPipeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(0.5F).noOcclusion()));
+
 
     private static <T extends Block> T registerDefault(String id, T block, Item.Properties itemProperties){
         registerBlock(id, block);

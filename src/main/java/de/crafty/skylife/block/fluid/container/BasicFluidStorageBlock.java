@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import de.crafty.lifecompat.api.fluid.logistic.container.IFluidContainer;
 import de.crafty.lifecompat.fluid.block.BaseFluidContainerBlock;
 import de.crafty.skylife.blockentities.fluid.BasicFluidStorageBlockEntity;
+import de.crafty.skylife.registry.FluidRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -68,7 +69,7 @@ public class BasicFluidStorageBlock extends BaseFluidContainerBlock {
 
     @Override
     public Optional<SoundEvent> getBucketEmptySound(Fluid fluid, Level level, BlockPos blockPos, BlockState blockState) {
-        return fluid == Fluids.LAVA ? Optional.of(SoundEvents.BUCKET_EMPTY_LAVA) : Optional.of(SoundEvents.BUCKET_EMPTY);
+        return fluid == Fluids.LAVA || fluid == FluidRegistry.MOLTEN_OBSIDIAN ? Optional.of(SoundEvents.BUCKET_EMPTY_LAVA) : Optional.of(SoundEvents.BUCKET_EMPTY);
     }
 
     @Override
