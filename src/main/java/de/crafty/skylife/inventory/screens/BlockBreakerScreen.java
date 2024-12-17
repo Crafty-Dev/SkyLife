@@ -2,8 +2,6 @@ package de.crafty.skylife.inventory.screens;
 
 import de.crafty.lifecompat.energy.screen.AbstractEnergyContainerScreen;
 import de.crafty.skylife.SkyLife;
-import de.crafty.skylife.blockentities.machines.integrated.BlockBreakerBlockEntity;
-import de.crafty.skylife.blockentities.machines.integrated.FluxFurnaceBlockEntity;
 import de.crafty.skylife.inventory.BlockBreakerMenu;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

@@ -144,7 +144,6 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
         this.level.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(), GameEvent.Context.of(this.getBlockState()));
         this.setChanged();
         this.getLevel().sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), Block.UPDATE_ALL);
-
         this.updateRecipe();
     }
 
@@ -165,6 +164,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
         this.meltingStack = ItemStack.parseOptional(provider, tag.getCompound("meltingStack"));
 
+        System.out.println("Loaded");
         this.meltingProgress = tag.getInt("meltingProgress");
         this.totalMeltingTime = tag.getInt("totalMeltingTime");
     }
@@ -239,7 +239,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
     @Override
     public boolean canPlaceItem(int i, ItemStack itemStack) {
-        return this.meltingStack.isEmpty();
+        return this.meltingStack.isEmpty() && this.getVolume() < this.getFluidCapacity();
     }
 
     @Override

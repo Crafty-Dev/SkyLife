@@ -10,6 +10,8 @@ import de.crafty.skylife.SkyLife;
 import de.crafty.skylife.block.machines.integrated.BlockBreakerBlock;
 import de.crafty.skylife.blockentities.machines.integrated.BlockBreakerBlockEntity;
 import de.crafty.skylife.registry.EntityRegistry;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -25,6 +27,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
+@Environment(EnvType.CLIENT)
 public class BlockBreakerRenderer extends SimpleEnergyBlockRenderer<BlockBreakerBlockEntity> {
 
     //Static implementation for performance efficiency

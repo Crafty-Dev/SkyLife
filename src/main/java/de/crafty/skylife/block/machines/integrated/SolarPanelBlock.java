@@ -8,6 +8,9 @@ import de.crafty.skylife.blockentities.machines.integrated.SolarPanelBlockEntity
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -22,6 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -132,5 +136,17 @@ public class SolarPanelBlock extends AbstractUpgradableMachine<SolarPanelBlockEn
             Block.popResource(level, blockPos, new ItemStack(currentUpgrade));
 
         super.onRemove(blockState, level, blockPos, blockState2, bl);
+    }
+
+    @Override
+    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        ItemInteractionResult result = super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+
+        if (result == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION && itemStack.is(ItemRegistry.MACHINE_KEY))
+            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+
+        return result;
+
     }
 }

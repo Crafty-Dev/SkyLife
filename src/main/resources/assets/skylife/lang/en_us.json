@@ -92,6 +92,8 @@
   "item.skylife.output_module": "Output Module",
   "item.skylife.io_module": "I/O Module",
   "item.skylife.upgrade_module": "Upgrade Module",
+  "item.skylife.plastic": "Plastic",
+  "item.skylife.machine_key": "Machine-Key",
 
   "block.skylife.leaf_press": "Leaf Press",
   "block.skylife.dried_leaves": "Dried Leaves",
@@ -112,6 +114,7 @@
   "block.skylife.flux_furnace": "Flux Furnace",
   "block.skylife.block_melter": "Block Melter",
   "block.skylife.fluid_pump": "Fluid Pump",
+  "block.skylife.solid_fluid_merger": "Solid-Liquid Merger",
   "block.skylife.lc_vp_storage": "Low Capacity VoidPower Storage",
   "block.skylife.mc_vp_storage": "Medium Capacity VoidPower Storage",
   "block.skylife.hc_vp_storage": "High Capacity VoidPower Storage",
@@ -181,5 +184,6 @@
   "advancements.hammering.diamond.description": "Craft a Diamond Hammer",
   "container.skylife.block_breaker": "Block Breaker",
   "container.skylife.flux_furnace": "Flux Furnace",
-  "skylife.machine.upgrade": "Upgrade"
+  "skylife.machine.upgrade": "Upgrade",
+  "container.skylife.solid_fluid_merger": "Solid-Liquid Merger"
 }

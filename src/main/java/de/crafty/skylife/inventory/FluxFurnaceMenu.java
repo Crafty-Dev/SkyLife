@@ -22,6 +22,7 @@ public class FluxFurnaceMenu extends AbstractEnergyContainerMenu {
     private final Container container;
     private final ContainerData dataAccess;
     private final ContainerLevelAccess levelAccess;
+
     public FluxFurnaceMenu(int containerId, Inventory inventory) {
         this(containerId, inventory, new SimpleContainer(2), new SimpleContainerData(5), ContainerLevelAccess.NULL);
     }

@@ -4,14 +4,18 @@ import de.crafty.lifecompat.api.energy.IEnergyHolder;
 import de.crafty.lifecompat.energy.block.BaseEnergyBlock;
 import de.crafty.lifecompat.util.EnergyUnitConverter;
 import de.crafty.skylife.blockentities.machines.SkyLifeEnergyStorageBlockEntity;
+import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -85,6 +89,11 @@ public abstract class SkyLifeEnergyStorageBlock extends BaseEnergyBlock {
             level.addParticle(ParticleTypes.ELECTRIC_SPARK, x - 0.15D + 0.3D * randomSource.nextFloat(), y, z - 0.15D + 0.3D * randomSource.nextFloat(), 0.0D, 0.0D, 0.0D);
         }
 
+    }
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        return itemStack.is(ItemRegistry.MACHINE_KEY) && this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     public enum Tier {

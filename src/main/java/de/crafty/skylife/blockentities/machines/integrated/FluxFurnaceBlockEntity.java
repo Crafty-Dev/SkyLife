@@ -50,7 +50,7 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
         public int get(int dataSlot) {
             return switch (dataSlot) {
                 case 0 -> FluxFurnaceBlockEntity.this.getStoredEnergy();
-                case 1 -> FluxFurnaceBlockEntity.this.getCapacity();
+                case 1 -> FluxFurnaceBlockEntity.this.getEnergyCapacity();
                 case 2 -> FluxFurnaceBlockEntity.this.smeltingProgress;
                 case 3 -> FluxFurnaceBlockEntity.this.smeltingTotalTime;
                 case 4 -> FluxFurnaceBlockEntity.this.performanceMode ? 1 : 0;
@@ -62,7 +62,7 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
         public void set(int dataSlot, int value) {
             switch (dataSlot) {
                 case 0 -> FluxFurnaceBlockEntity.this.setStoredEnergy(value);
-                case 1 -> FluxFurnaceBlockEntity.this.setCapacity(value);
+                case 1 -> FluxFurnaceBlockEntity.this.setEnergyCapacity(value);
                 case 2 -> FluxFurnaceBlockEntity.this.smeltingProgress = value;
                 case 3 -> FluxFurnaceBlockEntity.this.smeltingTotalTime = value;
                 case 4 -> FluxFurnaceBlockEntity.this.performanceMode = value > 0;

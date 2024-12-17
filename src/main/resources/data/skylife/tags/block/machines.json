@@ -1,0 +1,17 @@
+{
+  "values": [
+    "skylife:briquette_generator",
+    "skylife:solar_panel",
+    "skylife:block_breaker",
+    "skylife:fluid_pump",
+    "skylife:solid_fluid_merger",
+    "skylife:flux_furnace",
+    "skylife:block_melter",
+    "skylife:lc_vp_storage",
+    "skylife:mc_vp_storage",
+    "skylife:hc_vp_storage",
+    "skylife:basic_energy_cable",
+    "skylife:improved_energy_cable",
+    "skylife:advanced_energy_cable"
+  ]
+}

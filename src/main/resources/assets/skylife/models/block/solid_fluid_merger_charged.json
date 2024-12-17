@@ -1,0 +1,6 @@
+{
+	"parent": "skylife:block/solid_fluid_merger",
+	"textures": {
+		"energy": "skylife:block/voidflux"
+	}
+}

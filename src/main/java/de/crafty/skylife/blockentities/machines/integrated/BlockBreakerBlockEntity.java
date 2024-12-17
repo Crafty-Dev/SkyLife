@@ -60,7 +60,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
         public int get(int dataSlot) {
             return switch (dataSlot){
                 case 0 -> BlockBreakerBlockEntity.this.getStoredEnergy();
-                case 1 -> BlockBreakerBlockEntity.this.getCapacity();
+                case 1 -> BlockBreakerBlockEntity.this.getEnergyCapacity();
                 default -> 0;
             };
         }
@@ -69,7 +69,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
         public void set(int dataSlot, int amount) {
             switch (dataSlot){
                 case 0 -> BlockBreakerBlockEntity.this.setStoredEnergy(amount);
-                case 1 -> BlockBreakerBlockEntity.this.setCapacity(amount);
+                case 1 -> BlockBreakerBlockEntity.this.setEnergyCapacity(amount);
             }
         }
 

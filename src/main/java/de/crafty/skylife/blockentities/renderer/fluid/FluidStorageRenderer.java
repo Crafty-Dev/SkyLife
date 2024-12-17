@@ -44,7 +44,7 @@ public class FluidStorageRenderer<T extends AbstractFluidContainerBlockEntity> i
 
         int color = fluidContainer.getFluid() == Fluids.WATER ? new Color(BiomeColors.getAverageWaterColor(fluidContainer.getLevel(), fluidContainer.getBlockPos())).getRGB() : -1;
 
-        float fillStatus = (float) fluidContainer.getVolume() / (float) fluidContainer.getCapacity();
+        float fillStatus = (float) fluidContainer.getVolume() / (float) fluidContainer.getFluidCapacity();
 
         poseStack.pushPose();
 

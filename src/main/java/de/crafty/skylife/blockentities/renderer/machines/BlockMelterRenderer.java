@@ -63,7 +63,7 @@ public class BlockMelterRenderer extends SimpleEnergyBlockRenderer<BlockMelterBl
         TextureAtlasSprite spriteStill = FluidRenderHandlerRegistryImpl.INSTANCE.get(blockEntity.getFluid()).getFluidSprites(blockEntity.getLevel(), null, blockEntity.getFluid().defaultFluidState())[0];
         int color = blockEntity.getFluid() == Fluids.WATER ? new Color(BiomeColors.getAverageWaterColor(blockEntity.getLevel(), blockEntity.getBlockPos())).getRGB() : -1;
 
-        float fillStatus = (float) blockEntity.getVolume() / (float) blockEntity.getCapacity();
+        float fillStatus = (float) blockEntity.getVolume() / (float) blockEntity.getFluidCapacity();
 
         //Top
         if (fillStatus < 1.0F)

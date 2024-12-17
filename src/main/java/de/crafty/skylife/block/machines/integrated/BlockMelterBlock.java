@@ -6,6 +6,7 @@ import de.crafty.lifecompat.util.EnergyUnitConverter;
 import de.crafty.skylife.blockentities.machines.integrated.BlockMelterBlockEntity;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.FluidRegistry;
+import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -88,8 +89,8 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
     @Override
     protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
 
-        if(level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity melter && !melter.getMeltingStack().isEmpty() && blockHitResult.getDirection() != Direction.DOWN) {
-            if(!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty())
+        if (level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity melter && !melter.getMeltingStack().isEmpty() && blockHitResult.getDirection() != Direction.DOWN) {
+            if (!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty())
                 return InteractionResult.sidedSuccess(level.isClientSide());
 
             ItemStack stack = melter.getMeltingStack().copy();
@@ -104,18 +105,21 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
 
     @Override
     protected ItemInteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        if(stack.isEmpty())
+        if (stack.isEmpty())
             return super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
         ItemInteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        if(result != ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION)
+        if (result != ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION)
             return result;
 
-        if(level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity melter) {
+        if (stack.is(ItemRegistry.MACHINE_KEY) && this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()))
+            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+
+        if (level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity melter) {
 
             //TODO add sounds
-            if(stack.getCount() == 1 && !melter.getMeltingStack().isEmpty()){
+            if (stack.getCount() == 1 && !melter.getMeltingStack().isEmpty()) {
                 ItemStack prevStack = melter.getMeltingStack().copy();
                 ItemStack copied = stack.copy();
 
@@ -125,7 +129,7 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
                 return ItemInteractionResult.sidedSuccess(level.isClientSide());
             }
 
-            if(melter.getMeltingStack().isEmpty()){
+            if (melter.getMeltingStack().isEmpty()) {
                 ItemStack copied = stack.copy();
                 copied.setCount(1);
 
@@ -161,4 +165,12 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
     }
 
 
+    @Override
+    protected void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+
+        if (!blockState.is(blockState2.getBlock()) && level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity be && !be.getMeltingStack().isEmpty())
+            Block.popResource(level, blockPos, be.getMeltingStack().copy());
+
+        super.onRemove(blockState, level, blockPos, blockState2, bl);
+    }
 }

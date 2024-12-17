@@ -6,11 +6,13 @@ import de.crafty.lifecompat.util.EnergyUnitConverter;
 import de.crafty.lifecompat.util.LifeCompatMenuHelper;
 import de.crafty.skylife.blockentities.machines.integrated.BlockBreakerBlockEntity;
 import de.crafty.skylife.registry.BlockEntityRegistry;
+import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -85,8 +87,7 @@ public class BlockBreakerBlock extends BaseEnergyBlock {
 
 
     @Override
-    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player
-            player, BlockHitResult blockHitResult) {
+    protected InteractionResult useWithoutItem(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult) {
 
         InteractionResult result = super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);
         if (level.isClientSide())
@@ -111,4 +112,9 @@ public class BlockBreakerBlock extends BaseEnergyBlock {
         super.onRemove(blockState, level, blockPos, blockState2, bl);
     }
 
+
+    @Override
+    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        return itemStack.is(ItemRegistry.MACHINE_KEY) && this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    }
 }

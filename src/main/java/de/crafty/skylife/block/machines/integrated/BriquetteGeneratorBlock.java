@@ -189,7 +189,6 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
 
     @Override
     protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-
         if (!(level.getBlockEntity(blockPos) instanceof BriquetteGeneratorBlockEntity blockEntity))
             return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
@@ -218,6 +217,9 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
             itemStack.consume(1, player);
             return ItemInteractionResult.sidedSuccess(level.isClientSide());
         }
+
+        if(itemStack.is(ItemRegistry.MACHINE_KEY))
+            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }

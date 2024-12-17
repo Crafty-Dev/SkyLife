@@ -9,6 +9,7 @@ import de.crafty.skylife.client.model.entity.ResourceSheepEntityModel;
 import de.crafty.skylife.client.renderer.entity.ResourceSheepRenderer;
 import de.crafty.skylife.inventory.screens.BlockBreakerScreen;
 import de.crafty.skylife.inventory.screens.FluxFurnaceScreen;
+import de.crafty.skylife.inventory.screens.SolidFluidMergerScreen;
 import de.crafty.skylife.registry.*;
 import de.crafty.skylife.item.MobOrbItem;
 import de.crafty.skylife.network.SkyLifeNetworkClient;
@@ -60,6 +61,8 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.FLUX_FURNACE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BLOCK_MELTER, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.FLUID_PUMP, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.SOLID_FLUID_MERGER, RenderType.cutout());
+
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.LC_VP_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.MC_VP_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.HC_VP_STORAGE, RenderType.cutout());
@@ -96,6 +99,7 @@ public class SkyLifeClient implements ClientModInitializer {
 
         MenuScreens.register(InventoryRegistry.BLOCK_BREAKER, BlockBreakerScreen::new);
         MenuScreens.register(InventoryRegistry.FLUX_FURNACE, FluxFurnaceScreen::new);
+        MenuScreens.register(InventoryRegistry.SOLID_FLUID_MERGER, SolidFluidMergerScreen::new);
 
     }
 
@@ -112,8 +116,10 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockEntityRenderers.register(BlockEntityRegistry.BRIQUETTE_GENERATOR, BriquetteGeneratorRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.SOLAR_PANEL, SolarPanelRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.BLOCK_BREAKER, BlockBreakerRenderer::new);
+        BlockEntityRenderers.register(BlockEntityRegistry.FLUX_FURNACE, FluxFurnaceRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.BLOCK_MELTER, BlockMelterRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.FLUID_PUMP, FluidPumpRenderer::new);
+        BlockEntityRenderers.register(BlockEntityRegistry.SOLID_FLUID_MERGER, SolidFluidMergerRenderer::new);
 
         BlockEntityRenderers.register(BlockEntityRegistry.BASIC_FLUID_STORAGE, FluidStorageRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.BASIC_FLUID_PIPE, FluidPipeRenderer::new);

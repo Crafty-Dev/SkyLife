@@ -1,0 +1,20 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/solid_fluid_merger"
+      },
+      "when": {
+        "energy": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/solid_fluid_merger_charged"
+      },
+      "when": {
+        "energy": true
+      }
+    }
+  ]
+}

@@ -30,7 +30,7 @@ public class FluidPumpRenderer extends SimpleEnergyBlockRenderer<FluidPumpBlockE
         TextureAtlasSprite spriteStill = FluidRenderHandlerRegistryImpl.INSTANCE.get(fluidPump.getFluid()).getFluidSprites(fluidPump.getLevel(), null, fluidPump.getFluid().defaultFluidState())[0];
         int color = fluidPump.getFluid() == Fluids.WATER ? new Color(BiomeColors.getAverageWaterColor(fluidPump.getLevel(), fluidPump.getBlockPos())).getRGB() : -1;
 
-        float fillStatus = (float) fluidPump.getVolume() / (float) fluidPump.getCapacity();
+        float fillStatus = (float) fluidPump.getVolume() / (float) fluidPump.getFluidCapacity();
 
         if (fillStatus < 1.0F)
             RenderUtils.renderTexturedPlane(

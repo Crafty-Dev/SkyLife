@@ -119,6 +119,9 @@ public class ItemRegistry {
     public static final Item OUTPUT_MODULE = register("output_module", new Item(new Item.Properties()));
     public static final Item IO_MODULE = register("io_module", new Item(new Item.Properties()));
 
+    public static final Item PLASTIC = register("plastic", new Item(new Item.Properties()));
+    public static final Item MACHINE_KEY = register("machine_key", new Item(new Item.Properties()));
+
     //Update
     public static final Item STURDY_IRON = register("sturdy_iron", new Item(new Item.Properties()));
     public static final Item STURDY_DIAMOND = register("sturdy_diamond", new Item(new Item.Properties()));
