@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.BoneMealItem;
@@ -69,6 +71,10 @@ public class SkyLifeNetworkClient {
                 break;
             case BB_ITEM_BREAK:
                 level.playLocalSound(pos, SoundEvents.ITEM_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F, true);
+                break;
+
+            case BB_HAMMER_BLOCK:
+                level.playLocalSound(pos, level.getBlockState(pos).getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.5F, true);
                 break;
 
             case BM_EXSTINGUISH:

@@ -117,12 +117,12 @@ public class SolidFluidMergerBlockEntity extends AbstractFluidEnergyConsumerBloc
 
     @Override
     public int getMaxInput(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 60;
+        return 320;
     }
 
     @Override
     public int getConsumptionPerTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 40;
+        return 240;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.*;
 import de.crafty.lifecompat.energy.screen.AbstractEnergyContainerScreen;
 import de.crafty.skylife.SkyLife;
 import de.crafty.skylife.inventory.SolidFluidMergerMenu;
+import de.crafty.skylife.util.RenderUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.rendering.fluid.FluidRenderHandlerRegistryImpl;
@@ -72,6 +73,7 @@ public class SolidFluidMergerScreen extends AbstractEnergyContainerScreen<SolidF
         if (fluid == Fluids.EMPTY)
             return;
 
+        //TODO add water color
         float fluidStatus = (float) this.getMenu().getFluidVolume() / (float) this.getMenu().getFluidCapacity();
         TextureAtlasSprite spriteStill = FluidRenderHandlerRegistryImpl.INSTANCE.get(fluid).getFluidSprites(null, null, fluid.defaultFluidState())[0];
 
@@ -89,8 +91,8 @@ public class SolidFluidMergerScreen extends AbstractEnergyContainerScreen<SolidF
 
             int yPos = y + 18 + (60 - allowedSize + ((i - 1) * 12));
 
-            this.renderSprite(guiGraphics, spriteStill, x + 8, yPos, 12, ySize, 0, 0, 16, ySize * (16.0F / 12.0F));
-            this.renderSprite(guiGraphics, spriteStill, x + 156, yPos, 12, ySize, 0, 0, 16, ySize * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, spriteStill, x + 8, yPos, 12, ySize, 0, 0, 16, ySize * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, spriteStill, x + 156, yPos, 12, ySize, 0, 0, 16, ySize * (16.0F / 12.0F));
 
         }
 
@@ -127,8 +129,8 @@ public class SolidFluidMergerScreen extends AbstractEnergyContainerScreen<SolidF
             if (width == 0)
                 break;
 
-            this.renderSprite(guiGraphics, sprite, x + 20 + (i * 12), y + 74, width, 4, 0, 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
-            this.renderSprite(guiGraphics, sprite, x + 114 + 42 - (i * 12) - width, y + 74, width, 4, 16 - width * (16.0F / 12.0F), 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, sprite, x + 20 + (i * 12), y + 74, width, 4, 0, 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, sprite, x + 114 + 42 - (i * 12) - width, y + 74, width, 4, 16 - width * (16.0F / 12.0F), 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
         }
 
         if(progressedTime < partOneTime)
@@ -142,8 +144,8 @@ public class SolidFluidMergerScreen extends AbstractEnergyContainerScreen<SolidF
             if(height == 0)
                 break;
 
-            this.renderSprite(guiGraphics, sprite, x + 58, y + 23 + 51 - (i * 12) - height, 4, height, 0, 16 - height * (16.0F / 12.0F), 4 * (16.0F / 12.0F), height * (16.0F / 12.0F));
-            this.renderSprite(guiGraphics, sprite, x + 114, y + 23 + 51 - (i * 12) - height, 4, height, 0, 16 - height * (16.0F / 12.0F), 4 * (16.0F / 12.0F), height * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, sprite, x + 58, y + 23 + 51 - (i * 12) - height, 4, height, 0, 16 - height * (16.0F / 12.0F), 4 * (16.0F / 12.0F), height * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, sprite, x + 114, y + 23 + 51 - (i * 12) - height, 4, height, 0, 16 - height * (16.0F / 12.0F), 4 * (16.0F / 12.0F), height * (16.0F / 12.0F));
 
         }
 
@@ -158,36 +160,12 @@ public class SolidFluidMergerScreen extends AbstractEnergyContainerScreen<SolidF
             if(width == 0)
                 break;
 
-            this.renderSprite(guiGraphics, sprite, x + 62 + (i * 12), y + 23, width, 4, 0, 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
-            this.renderSprite(guiGraphics, sprite, x + 97 + 17 - (i * 12) - width, y + 23, width, 4, 16 - width * (16.0F / 12.0F), 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, sprite, x + 62 + (i * 12), y + 23, width, 4, 0, 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
+            RenderUtils.renderGuiSprite(guiGraphics, sprite, x + 97 + 17 - (i * 12) - width, y + 23, width, 4, 16 - width * (16.0F / 12.0F), 0, width * (16.0F / 12.0F), 4 * (16.0F / 12.0F));
 
         }
 
     }
 
-    private void renderSprite(GuiGraphics guiGraphics, TextureAtlasSprite sprite, int x, int y, int width, int height, float u0, float v0, float uWidth, float vWidth) {
 
-        float spriteWidthFloat = (sprite.getU1() - sprite.getU0());
-        float spriteHeightFloat = (sprite.getV1() - sprite.getV0());
-
-        u0 = u0 / sprite.contents().width() * spriteWidthFloat;
-        v0 = v0 / sprite.contents().height() * spriteHeightFloat;
-
-        uWidth = uWidth / sprite.contents().width() * spriteWidthFloat;
-        vWidth = vWidth / sprite.contents().height() * spriteHeightFloat;
-
-        guiGraphics.pose().pushPose();
-        Matrix4f matrix4f = guiGraphics.pose().last().pose();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderTexture(0, sprite.atlasLocation());
-
-        BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        bufferBuilder.addVertex(matrix4f, x, y, 0).setUv(sprite.getU0() + u0, sprite.getV0() + v0);
-        bufferBuilder.addVertex(matrix4f, x, y + height, 0).setUv(sprite.getU0() + u0, sprite.getV0() + v0 + vWidth);
-        bufferBuilder.addVertex(matrix4f, x + width, y + height, 0).setUv(sprite.getU0() + u0 + uWidth, sprite.getV0() + v0 + vWidth);
-        bufferBuilder.addVertex(matrix4f, x + width, y, 0).setUv(sprite.getU0() + u0 + uWidth, sprite.getV0() + v0);
-
-        BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
-        guiGraphics.pose().popPose();
-    }
 }

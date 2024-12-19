@@ -31,6 +31,7 @@ public record SkyLifeClientEventPayload(BlockPos pos, ClientEventType eventType)
         //Block Breaker
         BB_BLOCK_HIT,
         BB_ITEM_BREAK,
+        BB_HAMMER_BLOCK,
 
         //Block Melter
         BM_EXSTINGUISH,

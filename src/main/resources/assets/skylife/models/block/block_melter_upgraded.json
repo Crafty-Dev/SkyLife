@@ -1,0 +1,6 @@
+{
+  "parent": "skylife:block/block_melter",
+  "textures": {
+    "machine_texture": "skylife:block/machine_top_upgraded"
+  }
+}

@@ -1,0 +1,7 @@
+{
+	"parent": "skylife:block/fluid_pump",
+	"textures": {
+		"energy": "skylife:block/voidflux",
+		"machine_texture": "skylife:block/machine_top_upgraded"
+	}
+}

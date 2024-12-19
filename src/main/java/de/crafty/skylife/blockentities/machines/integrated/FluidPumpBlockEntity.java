@@ -25,13 +25,17 @@ import java.util.List;
 
 public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity {
 
+    private static final int BASE_TOTAL_SUCKING_TIME = 20 * 10;
+
     private int suckingProgress, totalSuckingTime;
+    private boolean upgraded;
 
     public FluidPumpBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityRegistry.FLUID_PUMP, blockPos, blockState, BlockRegistry.FLUID_PUMP.getCapacity(), FluidUnitConverter.buckets(6.0F));
 
         //10 seconds
-        this.totalSuckingTime = 20 * 10;
+        this.totalSuckingTime = BASE_TOTAL_SUCKING_TIME;
+        this.upgraded = false;
     }
 
     @Override
@@ -46,12 +50,12 @@ public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity
 
     @Override
     public int getMaxInput(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 120;
+        return 240;
     }
 
     @Override
     public int getConsumptionPerTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 80;
+        return this.isUpgraded() ? 120 : 60;
     }
 
     @Override
@@ -64,6 +68,18 @@ public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity
         return false;
     }
 
+    public boolean isUpgraded() {
+        return this.upgraded;
+    }
+
+    public void setUpgraded(boolean upgraded) {
+        this.upgraded = upgraded;
+        if(this.upgraded)
+            this.setTotalSuckingTime(Math.round(BASE_TOTAL_SUCKING_TIME / 2.0F));
+        else
+            this.setTotalSuckingTime(BASE_TOTAL_SUCKING_TIME);
+        this.setChanged();
+    }
 
     public int getSuckingProgress() {
         return this.suckingProgress;
@@ -138,6 +154,7 @@ public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity
 
         tag.putInt("suckingProgress", this.suckingProgress);
         tag.putInt("totalSuckingTime", this.totalSuckingTime);
+        tag.putBoolean("upgraded", this.upgraded);
     }
 
     @Override
@@ -146,5 +163,6 @@ public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity
 
         this.suckingProgress = tag.getInt("suckingProgress");
         this.totalSuckingTime = tag.getInt("totalSuckingTime");
+        this.upgraded = tag.getBoolean("upgraded");
     }
 }

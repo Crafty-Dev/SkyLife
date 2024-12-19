@@ -92,7 +92,7 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
 
     @Override
     public int getMaxInput(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 120;
+        return 240;
     }
 
     @Override

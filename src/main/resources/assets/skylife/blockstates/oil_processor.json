@@ -1,0 +1,82 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor"
+      },
+      "when": {
+        "facing": "north",
+        "energy": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "energy": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "energy": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "energy": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor_active"
+      },
+      "when": {
+        "facing": "north",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor_active",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor_active",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "energy": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/oil_processor_active",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "energy": true
+      }
+    }
+  ]
+}

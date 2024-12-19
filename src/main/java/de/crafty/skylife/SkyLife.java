@@ -72,6 +72,7 @@ public class SkyLife implements ModInitializer {
         SkyLifeConfigs.BLOCK_MELTING.load();
         SkyLifeConfigs.LEAF_DROP.load();
         SkyLifeConfigs.FLUID_CONVERSION.load();
+        SkyLifeConfigs.OIL_PROCESSING.load();
 
         SkyLifeNetworkManager.registerPackets();
         SkyLifeNetworkServer.registerServerReceivers();

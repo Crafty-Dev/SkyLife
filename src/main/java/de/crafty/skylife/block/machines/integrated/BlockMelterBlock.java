@@ -3,6 +3,7 @@ package de.crafty.skylife.block.machines.integrated;
 import com.mojang.serialization.MapCodec;
 import de.crafty.lifecompat.fluid.block.BaseFluidEnergyBlock;
 import de.crafty.lifecompat.util.EnergyUnitConverter;
+import de.crafty.skylife.block.machines.AbstractUpgradableFluidMachine;
 import de.crafty.skylife.blockentities.machines.integrated.BlockMelterBlockEntity;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.FluidRegistry;
@@ -13,6 +14,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -24,6 +26,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -36,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class BlockMelterBlock extends BaseFluidEnergyBlock {
+public class BlockMelterBlock extends AbstractUpgradableFluidMachine<BlockMelterBlockEntity> {
 
     public static final MapCodec<BlockMelterBlock> CODEC = simpleCodec(BlockMelterBlock::new);
 
@@ -45,6 +48,7 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
     private static final VoxelShape HEAT_BARS = Block.box(4.5D, 14.0D, 4.5D, 11.5D, 15.0D, 11.5D);
 
     public static final BooleanProperty ENERGY = BooleanProperty.create("energy");
+    public static final BooleanProperty UPGRADED = BooleanProperty.create("upgraded");
 
     public BlockMelterBlock(Properties properties) {
         super(properties, Type.CONSUMER, EnergyUnitConverter.kiloVP(10.0F));
@@ -52,6 +56,7 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(IO_BOTTOM, IOMode.INPUT)
                 .setValue(ENERGY, false)
+                .setValue(UPGRADED, false)
         );
     }
 
@@ -62,7 +67,7 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(IO_BOTTOM, ENERGY);
+        builder.add(IO_BOTTOM, ENERGY, UPGRADED);
     }
 
     @Override
@@ -145,6 +150,11 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
     }
 
     @Override
+    protected Property<? extends Comparable<?>> getUpgradeProperty() {
+        return UPGRADED;
+    }
+
+    @Override
     public List<Direction> getFluidCompatableSides() {
         return List.of(Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST);
     }
@@ -161,7 +171,7 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
 
     @Override
     public Optional<SoundEvent> getBucketEmptySound(Fluid fluid, Level level, BlockPos blockPos, BlockState blockState) {
-        return fluid == Fluids.LAVA || fluid == FluidRegistry.MOLTEN_OBSIDIAN ? Optional.of(SoundEvents.BUCKET_EMPTY_LAVA) : Optional.of(SoundEvents.BUCKET_EMPTY);
+        return fluid == Fluids.LAVA || fluid == FluidRegistry.MOLTEN_OBSIDIAN || fluid == FluidRegistry.OIL ? Optional.of(SoundEvents.BUCKET_EMPTY_LAVA) : Optional.of(SoundEvents.BUCKET_EMPTY);
     }
 
 
@@ -172,5 +182,27 @@ public class BlockMelterBlock extends BaseFluidEnergyBlock {
             Block.popResource(level, blockPos, be.getMeltingStack().copy());
 
         super.onRemove(blockState, level, blockPos, blockState2, bl);
+    }
+
+    @Override
+    public List<Item> validUpgradeItems() {
+        return List.of(ItemRegistry.UPGRADE_MODULE);
+    }
+
+    @Override
+    public void onUpgrade(Level level, BlockState machine, BlockPos blockPos, ItemStack upgradeStack, BlockMelterBlockEntity blockEntity) {
+        blockEntity.setUpgraded(true);
+        level.setBlock(blockPos, machine.setValue(UPGRADED, true), Block.UPDATE_ALL);
+        //TODO Add sound to block and when upgrade applied
+    }
+
+    @Override
+    public @Nullable Item getCurrentUpgrade(BlockState machine) {
+        return machine.getValue(UPGRADED) ? ItemRegistry.UPGRADE_MODULE : null;
+    }
+
+    @Override
+    public Class<BlockMelterBlockEntity> getMachineBE() {
+        return BlockMelterBlockEntity.class;
     }
 }

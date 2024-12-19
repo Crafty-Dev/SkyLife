@@ -1,0 +1,6 @@
+{
+	"parent": "skylife:block/oil_processor",
+	"textures": {
+		"energy": "skylife:block/voidflux"
+	}
+}

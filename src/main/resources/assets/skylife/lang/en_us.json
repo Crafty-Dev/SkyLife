@@ -92,6 +92,7 @@
   "item.skylife.output_module": "Output Module",
   "item.skylife.io_module": "I/O Module",
   "item.skylife.upgrade_module": "Upgrade Module",
+  "item.skylife.upgrade_module_template": "Upgrade Module (Template)",
   "item.skylife.plastic": "Plastic",
   "item.skylife.machine_key": "Machine-Key",
 
@@ -114,6 +115,7 @@
   "block.skylife.flux_furnace": "Flux Furnace",
   "block.skylife.block_melter": "Block Melter",
   "block.skylife.fluid_pump": "Fluid Pump",
+  "block.skylife.oil_processor": "Oil Processor",
   "block.skylife.solid_fluid_merger": "Solid-Liquid Merger",
   "block.skylife.lc_vp_storage": "Low Capacity VoidPower Storage",
   "block.skylife.mc_vp_storage": "Medium Capacity VoidPower Storage",
@@ -185,5 +187,7 @@
   "container.skylife.block_breaker": "Block Breaker",
   "container.skylife.flux_furnace": "Flux Furnace",
   "skylife.machine.upgrade": "Upgrade",
-  "container.skylife.solid_fluid_merger": "Solid-Liquid Merger"
+  "container.skylife.solid_fluid_merger": "Solid-Liquid Merger",
+  "container.skylife.oil_processor": "Oil Processor",
+  "skylife.oil_processor.changedMode": "Mode Changed"
 }

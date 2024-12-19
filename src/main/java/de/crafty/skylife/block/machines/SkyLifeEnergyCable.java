@@ -72,9 +72,9 @@ public abstract class SkyLifeEnergyCable extends BaseEnergyCable implements Equi
     }
 
     public enum Tier {
-        BASIC(EnergyUnitConverter.kiloVP(4), 40),
-        IMPROVED(EnergyUnitConverter.kiloVP(16), 320),
-        ADVANCED(EnergyUnitConverter.kiloVP(64), 1280);
+        BASIC(EnergyUnitConverter.kiloVP(4), 80),
+        IMPROVED(EnergyUnitConverter.kiloVP(16), 640),
+        ADVANCED(EnergyUnitConverter.kiloVP(64), 2560);
 
         final int capacity, maxIO;
 

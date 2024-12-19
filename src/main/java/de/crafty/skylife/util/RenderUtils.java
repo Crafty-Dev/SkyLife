@@ -1,11 +1,14 @@
 package de.crafty.skylife.util;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import org.joml.Matrix4f;
 
 public class RenderUtils {
 
@@ -70,6 +73,33 @@ public class RenderUtils {
             consumer.addVertex(pose, x, y, z + width).setColor(color).setUv(texture.getU(u0), texture.getV(v1)).setOverlay(OverlayTexture.NO_OVERLAY).setLight(light).setNormal(xNormal, yNormal, zNormal);
         }
 
+    }
+
+
+    public static void renderGuiSprite(GuiGraphics guiGraphics, TextureAtlasSprite sprite, int x, int y, int width, int height, float u0, float v0, float uWidth, float vWidth) {
+
+        float spriteWidthFloat = (sprite.getU1() - sprite.getU0());
+        float spriteHeightFloat = (sprite.getV1() - sprite.getV0());
+
+        u0 = u0 / sprite.contents().width() * spriteWidthFloat;
+        v0 = v0 / sprite.contents().height() * spriteHeightFloat;
+
+        uWidth = uWidth / sprite.contents().width() * spriteWidthFloat;
+        vWidth = vWidth / sprite.contents().height() * spriteHeightFloat;
+
+        guiGraphics.pose().pushPose();
+        Matrix4f matrix4f = guiGraphics.pose().last().pose();
+        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShaderTexture(0, sprite.atlasLocation());
+
+        BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+        bufferBuilder.addVertex(matrix4f, x, y, 0).setUv(sprite.getU0() + u0, sprite.getV0() + v0);
+        bufferBuilder.addVertex(matrix4f, x, y + height, 0).setUv(sprite.getU0() + u0, sprite.getV0() + v0 + vWidth);
+        bufferBuilder.addVertex(matrix4f, x + width, y + height, 0).setUv(sprite.getU0() + u0 + uWidth, sprite.getV0() + v0 + vWidth);
+        bufferBuilder.addVertex(matrix4f, x + width, y, 0).setUv(sprite.getU0() + u0 + uWidth, sprite.getV0() + v0);
+
+        BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
+        guiGraphics.pose().popPose();
     }
 
 }

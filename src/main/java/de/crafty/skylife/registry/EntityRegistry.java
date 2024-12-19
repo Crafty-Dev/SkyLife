@@ -64,10 +64,14 @@ public class EntityRegistry {
         //BlockEntity
         public static final ModelLayerLocation ENERGY_STORAGE_CORE = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "energystorage"), "core");
         public static final ModelLayerLocation BLOCK_BREAKER_CHAIN = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "block_breaker"), "chain");
+        public static final ModelLayerLocation OIL_PROCESSOR_BURNING_INDICATOR = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "oil_processor"), "burning_indicator");
+        public static final ModelLayerLocation OIL_PROCESSOR_PROCESSING_INDICATOR = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "oil_processor"), "processing_indicator");
+
 
         public static final ModelLayerLocation FLUID_PIPE_DOWN_ARROW = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "fluid_pipe"), "down_arrow");
         public static final ModelLayerLocation FLUID_PIPE_UP_ARROW = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "fluid_pipe"), "up_arrow");
         public static final ModelLayerLocation FLUID_PIPE_INOUT = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "fluid_pipe"), "inout");
+
 
     }
 }

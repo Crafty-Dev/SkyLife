@@ -1,6 +1,6 @@
 {
 	"credit": "Made with Blockbench",
-	"parent": "minecraft:block/block",
+	"parent": "minecraft:block/cube",
 	"textures": {
 		"0": "skylife:block/basic_fluid_pipe",
 		"particle": "skylife:block/basic_fluid_pipe"
@@ -850,6 +850,26 @@
 	"display": {
 		"thirdperson_righthand": {
 			"scale": [1.1, 1.1, 1.1]
+		},
+		"thirdperson_lefthand": {
+			"scale": [1.1, 1.1, 1.1]
+		},
+		"firstperson_righthand": {
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"firstperson_lefthand": {
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"ground": {
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"gui": {
+			"rotation": [30, 45, 0],
+			"scale": [1.25, 1.25, 1.25]
+		},
+		"fixed": {
+			"translation": [0, 0, 1.25],
+			"scale": [1.25, 1.25, 1.25]
 		}
 	},
 	"groups": [

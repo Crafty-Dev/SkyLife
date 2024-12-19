@@ -44,11 +44,13 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
     private ItemStack meltingStack;
     private int meltingProgress, totalMeltingTime;
+    private boolean upgraded;
 
     public BlockMelterBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityRegistry.BLOCK_MELTER, blockPos, blockState, BlockRegistry.BLOCK_MELTER.getCapacity(), FluidUnitConverter.buckets(4.0F));
 
         this.meltingStack = ItemStack.EMPTY;
+        this.upgraded = false;
     }
 
 
@@ -74,12 +76,12 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
     @Override
     public int getMaxInput(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 80;
+        return 240;
     }
 
     @Override
     public int getConsumptionPerTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 40;
+        return this.isUpgraded() ? 160 : 100;
     }
 
 
@@ -96,6 +98,15 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
             SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.BM_MELTING_FINISHED, blockPos, level);
         }
 
+    }
+
+    public boolean isUpgraded() {
+        return this.upgraded;
+    }
+
+    public void setUpgraded(boolean upgraded) {
+        this.upgraded = upgraded;
+        this.setChanged();
     }
 
     public float getMeltingProgress() {
@@ -133,7 +144,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
                 highestEfficiency = heatSource.heatEfficiency();
         }
 
-        this.totalMeltingTime = (int) (MeltingBlockEntity.BASE_MELTING_TIME / highestEfficiency);
+        this.totalMeltingTime = (int) (MeltingBlockEntity.BASE_MELTING_TIME / highestEfficiency / (this.isUpgraded() ? 2.0F : 1.0F));
         this.meltingProgress = 0;
         this.setChanged();
     }
@@ -156,6 +167,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
         tag.putInt("meltingProgress", this.meltingProgress);
         tag.putInt("totalMeltingTime", this.totalMeltingTime);
+        tag.putBoolean("upgraded", this.upgraded);
     }
 
     @Override
@@ -167,6 +179,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
         System.out.println("Loaded");
         this.meltingProgress = tag.getInt("meltingProgress");
         this.totalMeltingTime = tag.getInt("totalMeltingTime");
+        this.upgraded = tag.getBoolean("upgraded");
     }
 
 

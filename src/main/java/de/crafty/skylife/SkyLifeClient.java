@@ -9,6 +9,7 @@ import de.crafty.skylife.client.model.entity.ResourceSheepEntityModel;
 import de.crafty.skylife.client.renderer.entity.ResourceSheepRenderer;
 import de.crafty.skylife.inventory.screens.BlockBreakerScreen;
 import de.crafty.skylife.inventory.screens.FluxFurnaceScreen;
+import de.crafty.skylife.inventory.screens.OilProcessorScreen;
 import de.crafty.skylife.inventory.screens.SolidFluidMergerScreen;
 import de.crafty.skylife.registry.*;
 import de.crafty.skylife.item.MobOrbItem;
@@ -62,6 +63,7 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BLOCK_MELTER, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.FLUID_PUMP, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.SOLID_FLUID_MERGER, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.OIL_PROCESSOR, RenderType.cutout());
 
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.LC_VP_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.MC_VP_STORAGE, RenderType.cutout());
@@ -86,6 +88,8 @@ public class SkyLifeClient implements ClientModInitializer {
         //BlockEntities
         EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.ENERGY_STORAGE_CORE, EnergyStorageRenderer::createCoreLayer);
         EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.BLOCK_BREAKER_CHAIN, BlockBreakerRenderer::createChainLayer);
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.OIL_PROCESSOR_BURNING_INDICATOR, OilProcessorRenderer::createBurningLayer);
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.OIL_PROCESSOR_PROCESSING_INDICATOR, OilProcessorRenderer::createProcessingLayer);
 
         EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.FLUID_PIPE_DOWN_ARROW, FluidPipeRenderer::createDownArrowLayer);
         EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.FLUID_PIPE_UP_ARROW, FluidPipeRenderer::createUpArrowLayer);
@@ -100,6 +104,7 @@ public class SkyLifeClient implements ClientModInitializer {
         MenuScreens.register(InventoryRegistry.BLOCK_BREAKER, BlockBreakerScreen::new);
         MenuScreens.register(InventoryRegistry.FLUX_FURNACE, FluxFurnaceScreen::new);
         MenuScreens.register(InventoryRegistry.SOLID_FLUID_MERGER, SolidFluidMergerScreen::new);
+        MenuScreens.register(InventoryRegistry.OIL_PROCESSOR, OilProcessorScreen::new);
 
     }
 
@@ -120,6 +125,7 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockEntityRenderers.register(BlockEntityRegistry.BLOCK_MELTER, BlockMelterRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.FLUID_PUMP, FluidPumpRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.SOLID_FLUID_MERGER, SolidFluidMergerRenderer::new);
+        BlockEntityRenderers.register(BlockEntityRegistry.OIL_PROCESSOR, OilProcessorRenderer::new);
 
         BlockEntityRenderers.register(BlockEntityRegistry.BASIC_FLUID_STORAGE, FluidStorageRenderer::new);
         BlockEntityRenderers.register(BlockEntityRegistry.BASIC_FLUID_PIPE, FluidPipeRenderer::new);

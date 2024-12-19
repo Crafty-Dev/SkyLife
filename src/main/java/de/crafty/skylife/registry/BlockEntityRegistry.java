@@ -34,6 +34,7 @@ public class BlockEntityRegistry {
     public static final BlockEntityType<BlockMelterBlockEntity> BLOCK_MELTER = BlockEntityType.Builder.of(BlockMelterBlockEntity::new, BlockRegistry.BLOCK_MELTER).build();
     public static final BlockEntityType<FluidPumpBlockEntity> FLUID_PUMP = BlockEntityType.Builder.of(FluidPumpBlockEntity::new, BlockRegistry.FLUID_PUMP).build();
     public static final BlockEntityType<SolidFluidMergerBlockEntity> SOLID_FLUID_MERGER = BlockEntityType.Builder.of(SolidFluidMergerBlockEntity::new, BlockRegistry.SOLID_FLUID_MERGER).build();
+    public static final BlockEntityType<OilProcessorBlockEntity> OIL_PROCESSOR = BlockEntityType.Builder.of(OilProcessorBlockEntity::new, BlockRegistry.OIL_PROCESSOR).build();
 
     public static final BlockEntityType<LowCapacityVPStorageBlockEntity> LC_VP_STORAGE = BlockEntityType.Builder.of(LowCapacityVPStorageBlockEntity::new, BlockRegistry.LC_VP_STORAGE).build();
     public static final BlockEntityType<MediumCapacityVPStorageBlockEntity> MC_VP_STORAGE = BlockEntityType.Builder.of(MediumCapacityVPStorageBlockEntity::new, BlockRegistry.MC_VP_STORAGE).build();
@@ -62,6 +63,7 @@ public class BlockEntityRegistry {
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "block_melter"), BLOCK_MELTER);
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "fluid_pump"), FLUID_PUMP);
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "solid_fluid_merger"), SOLID_FLUID_MERGER);
+        Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "oil_processor"), OIL_PROCESSOR);
 
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "lc_vp_storage"), LC_VP_STORAGE);
         Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "mc_vp_storage"), MC_VP_STORAGE);

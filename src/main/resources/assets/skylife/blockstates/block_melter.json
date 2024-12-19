@@ -5,7 +5,8 @@
         "model": "skylife:block/block_melter"
       },
       "when": {
-        "energy": false
+        "energy": false,
+        "upgraded": false
       }
     },
     {
@@ -13,8 +14,28 @@
         "model": "skylife:block/block_melter_charged"
       },
       "when": {
-        "energy": true
+        "energy": true,
+        "upgraded": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/block_melter_upgraded"
+      },
+      "when": {
+        "energy": false,
+        "upgraded": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/block_melter_charged_upgraded"
+      },
+      "when": {
+        "energy": true,
+        "upgraded": true
       }
     }
+
   ]
 }

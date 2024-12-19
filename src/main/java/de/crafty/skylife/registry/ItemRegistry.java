@@ -109,9 +109,10 @@ public class ItemRegistry {
     public static final Item WOOD_BRIQUETT = register("wood_briquette", new Item(new Item.Properties()));
     public static final Item COAL_BRIQUETT = register("coal_briquette", new Item(new Item.Properties()));
 
-    public static final BriquettItem WOOD_BRIQUETTES = register("wood_briquettes", new BriquettItem(BriquetteGeneratorBlock.BriquetteType.WOOD, TickTimeConverter.minutes(0.5F),  new Item.Properties().stacksTo(1)));
-    public static final BriquettItem COAL_BRIQUETTES = register("coal_briquettes", new BriquettItem(BriquetteGeneratorBlock.BriquetteType.COAL, TickTimeConverter.minutes(2.5F), new Item.Properties().stacksTo(1)));
+    public static final BriquettItem WOOD_BRIQUETTES = register("wood_briquettes", new BriquettItem(BriquetteGeneratorBlock.BriquetteType.WOOD, TickTimeConverter.minutes(1.5F),  new Item.Properties().stacksTo(1)));
+    public static final BriquettItem COAL_BRIQUETTES = register("coal_briquettes", new BriquettItem(BriquetteGeneratorBlock.BriquetteType.COAL, TickTimeConverter.minutes(5.0F), new Item.Properties().stacksTo(1)));
 
+    public static final Item UPGRADE_MODULE_TEMPLATE = register("upgrade_module_template", new Item(new Item.Properties()));
     public static final Item UPGRADE_MODULE = register("upgrade_module", new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
     public static final Item COPPER_COIL = register("copper_coil", new Item(new Item.Properties()));
     public static final Item ENHANCED_COPPER_COIL = register("enhanced_copper_coil", new Item(new Item.Properties()));
@@ -120,7 +121,7 @@ public class ItemRegistry {
     public static final Item IO_MODULE = register("io_module", new Item(new Item.Properties()));
 
     public static final Item PLASTIC = register("plastic", new Item(new Item.Properties()));
-    public static final Item MACHINE_KEY = register("machine_key", new Item(new Item.Properties()));
+    public static final Item MACHINE_KEY = register("machine_key", new MachineKeyItem(new Item.Properties()));
 
     //Update
     public static final Item STURDY_IRON = register("sturdy_iron", new Item(new Item.Properties()));

@@ -5,7 +5,8 @@
         "model": "skylife:block/fluid_pump"
       },
       "when": {
-        "energy": false
+        "energy": false,
+        "upgraded": false
       }
     },
     {
@@ -13,7 +14,26 @@
         "model": "skylife:block/fluid_pump_charged"
       },
       "when": {
-        "energy": true
+        "energy": true,
+        "upgraded": false
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pump_upgraded"
+      },
+      "when": {
+        "energy": false,
+        "upgraded": true
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/fluid_pump_charged_upgraded"
+      },
+      "when": {
+        "energy": true,
+        "upgraded": true
       }
     }
   ]

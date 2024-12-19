@@ -97,9 +97,9 @@ public abstract class SkyLifeEnergyStorageBlock extends BaseEnergyBlock {
     }
 
     public enum Tier {
-        LOW(EnergyUnitConverter.kiloVP(100), 40),
-        MEDIUM(EnergyUnitConverter.kiloVP(400), 320),
-        HIGH(EnergyUnitConverter.kiloVP(1600), 1280);
+        LOW(EnergyUnitConverter.kiloVP(100), 80),
+        MEDIUM(EnergyUnitConverter.kiloVP(400), 640),
+        HIGH(EnergyUnitConverter.kiloVP(1600), 2560);
 
         final int capacity, maxIO;
 

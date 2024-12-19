@@ -69,7 +69,7 @@ public class BasicFluidStorageBlock extends BaseFluidContainerBlock {
 
     @Override
     public Optional<SoundEvent> getBucketEmptySound(Fluid fluid, Level level, BlockPos blockPos, BlockState blockState) {
-        return fluid == Fluids.LAVA || fluid == FluidRegistry.MOLTEN_OBSIDIAN ? Optional.of(SoundEvents.BUCKET_EMPTY_LAVA) : Optional.of(SoundEvents.BUCKET_EMPTY);
+        return fluid == Fluids.LAVA || fluid == FluidRegistry.MOLTEN_OBSIDIAN || fluid == FluidRegistry.OIL ? Optional.of(SoundEvents.BUCKET_EMPTY_LAVA) : Optional.of(SoundEvents.BUCKET_EMPTY);
     }
 
     @Override

@@ -3,6 +3,8 @@ package de.crafty.skylife.blockentities.machines.integrated;
 import de.crafty.lifecompat.api.energy.consumer.AbstractEnergyConsumer;
 import de.crafty.skylife.block.machines.integrated.BlockBreakerBlock;
 import de.crafty.skylife.inventory.BlockBreakerMenu;
+import de.crafty.skylife.item.HammerItem;
+import de.crafty.skylife.logic.HammerLogic;
 import de.crafty.skylife.network.SkyLifeNetworkServer;
 import de.crafty.skylife.network.payload.SkyLifeClientEventPayload;
 import de.crafty.skylife.registry.BlockEntityRegistry;
@@ -58,7 +60,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
     private final ContainerData dataAccess = new ContainerData() {
         @Override
         public int get(int dataSlot) {
-            return switch (dataSlot){
+            return switch (dataSlot) {
                 case 0 -> BlockBreakerBlockEntity.this.getStoredEnergy();
                 case 1 -> BlockBreakerBlockEntity.this.getEnergyCapacity();
                 default -> 0;
@@ -67,7 +69,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
 
         @Override
         public void set(int dataSlot, int amount) {
-            switch (dataSlot){
+            switch (dataSlot) {
                 case 0 -> BlockBreakerBlockEntity.this.setStoredEnergy(amount);
                 case 1 -> BlockBreakerBlockEntity.this.setEnergyCapacity(amount);
             }
@@ -101,7 +103,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
 
     @Override
     public int getMaxInput(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return 50;
+        return 180;
     }
 
     //TODO Consumption display
@@ -133,7 +135,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
 
     public void setTargetBlock(BlockState targetState) {
         this.targetBlock = targetState.getBlock();
-        this.setDestroyProgress(-1);
+        this.setDestroyProgress(-1.0F);
         this.setChanged();
     }
 
@@ -198,6 +200,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
     public float getDestroyProgress(ServerLevel level, BlockPos blockPos) {
         ItemStack tool = this.getItem(0);
         BlockState state = level.getBlockState(blockPos);
+
         if (tool.isEmpty())
             return 0.0F;
 
@@ -205,7 +208,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
 
         if (f.get() > 1.0F) {
             EnchantmentHelper.forEachModifier(tool, EquipmentSlot.MAINHAND, (attributeHolder, attributeModifier) -> {
-                if(attributeHolder.is(Attributes.MINING_EFFICIENCY))
+                if (attributeHolder.is(Attributes.MINING_EFFICIENCY))
                     f.set((float) (f.get() + attributeModifier.amount()));
             });
         }
@@ -221,6 +224,9 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
     @Override
     protected void performAction(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
         BlockPos targetPos = this.getTargetPos();
+        if (serverLevel.getBlockState(targetPos).isAir())
+            return;
+
         BlockState targetState = this.getLevel().getBlockState(targetPos);
 
         float destroyProgress = this.getDestroyProgress((ServerLevel) level, targetPos);
@@ -242,22 +248,28 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
             level.levelEvent(2001, targetPos, Block.getId(targetState));
             this.setDestroyProgress(-1.0F);
 
-            if (toolStack.isCorrectToolForDrops(targetState) || !targetState.requiresCorrectToolForDrops()){
-                List<ItemStack> drops = Block.getDrops(targetState, serverLevel, targetPos, level.getBlockEntity(targetPos), null, toolStack);
+            if (toolStack.isCorrectToolForDrops(targetState) || !targetState.requiresCorrectToolForDrops()) {
+
+                if (toolStack.getItem() instanceof HammerItem) {
+                    SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.BB_HAMMER_BLOCK, targetPos, serverLevel);
+                    HammerLogic.handleEffects(serverLevel, null, targetPos, targetState);
+                }
+
+                List<ItemStack> drops = toolStack.getItem() instanceof HammerItem ? HammerLogic.getRandomDrop(targetBlock, serverLevel) : Block.getDrops(targetState, serverLevel, targetPos, level.getBlockEntity(targetPos), null, toolStack);
                 drops.forEach(stack -> {
 
-                    for(int i = 1; i < this.getContainerSize(); i++){
+                    for (int i = 1; i < this.getContainerSize(); i++) {
                         ItemStack slotItem = this.getItem(i);
 
-                        if(stack.isEmpty())
+                        if (stack.isEmpty())
                             break;
 
-                        if(slotItem.isEmpty()){
+                        if (slotItem.isEmpty()) {
                             this.setItem(i, stack);
                             break;
                         }
 
-                        if(slotItem.is(stack.getItem()) && slotItem.getCount() < this.getMaxStackSize(slotItem)){
+                        if (slotItem.is(stack.getItem()) && slotItem.getCount() < this.getMaxStackSize(slotItem)) {
                             int prevSlotCount = slotItem.getCount();
                             slotItem.setCount(Math.min(slotItem.getCount() + stack.getCount(), this.getMaxStackSize(slotItem)));
                             stack.setCount(stack.getCount() - (this.getMaxStackSize(slotItem) - prevSlotCount));
@@ -271,7 +283,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
                 if (targetState.getDestroySpeed(level, blockPos) != 0.0F && tool.damagePerBlock() > 0) {
                     toolStack.hurtAndBreak(tool.damagePerBlock(), (ServerLevel) level, null, item -> {
                     });
-                    if (toolStack.isEmpty()){
+                    if (toolStack.isEmpty()) {
                         this.setToolType(ToolType.NONE);
                         SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.BB_ITEM_BREAK, blockPos, serverLevel);
                     }
@@ -400,12 +412,12 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
 
     public enum ToolType {
         NONE(10),
-        WOOD(15),
-        STONE(20),
-        IRON(25),
-        GOLD(30),
-        DIAMOND(40),
-        NETHERITE(50);
+        WOOD(20),
+        STONE(30),
+        IRON(40),
+        GOLD(45),
+        DIAMOND(75),
+        NETHERITE(100);
 
         final int energyConsumption;
 

@@ -19,6 +19,8 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,8 +69,9 @@ public class HammerLogic {
         return TIER_ORDER.indexOf(item.getTier()) >= TIER_ORDER.indexOf(SkyLifeConfigs.HAMMER.getPrecisionDropTier());
     }
 
-    private static void handleEffects(ServerLevel serverWorld, ServerPlayer serverPlayer, BlockPos blockPos, BlockState state){
-        serverPlayer.playNotifySound(state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.5F);
+    public static void handleEffects(ServerLevel serverWorld, @Nullable ServerPlayer serverPlayer, BlockPos blockPos, BlockState state){
+        if(serverPlayer != null)
+            serverPlayer.playNotifySound(state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.5F);
 
         int xParticles = 3;
         int yParticles = 3;

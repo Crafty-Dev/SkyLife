@@ -99,7 +99,7 @@ public abstract class OilFluid extends FlowingFluid {
 
     @Override
     public Optional<SoundEvent> getPickupSound() {
-        return Optional.of(SoundEvents.BUCKET_FILL);
+        return Optional.of(SoundEvents.BUCKET_FILL_LAVA);
     }
 
     public static class Source extends OilFluid {

@@ -1,0 +1,8 @@
+{
+  "parent": "skylife:block/block_melter",
+  "textures": {
+    "energy": "skylife:block/voidflux",
+    "heat_bars": "skylife:block/block_melter_heat_bars_warm",
+    "machine_texture": "skylife:block/machine_top_upgraded"
+  }
+}

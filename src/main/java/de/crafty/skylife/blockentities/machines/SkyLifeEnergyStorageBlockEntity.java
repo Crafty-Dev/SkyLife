@@ -30,4 +30,8 @@ public abstract class SkyLifeEnergyStorageBlockEntity extends SimpleEnergyStorag
     public int getMaxOutput(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
         return this.tier.getMaxIO();
     }
+
+    @Override
+    protected void performAction(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
+    }
 }
