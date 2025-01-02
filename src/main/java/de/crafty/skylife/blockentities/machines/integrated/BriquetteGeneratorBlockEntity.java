@@ -70,14 +70,11 @@ public class BriquetteGeneratorBlockEntity extends AbstractEnergyProvider {
         tag.put("briquette", this.briquetteStack.saveOptional(provider));
         tag.putInt("currentTick", this.currentTick);
 
-        System.out.println("Saved: " + tag);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
-
-        System.out.println("Loading: " + tag);
 
         this.briquetteStack = ItemStack.parseOptional(provider, tag.getCompound("briquette"));
         this.currentTick = tag.getInt("currentTick");

@@ -100,6 +100,7 @@ public class LootGemConfig extends AbstractSkyLifeConfig {
     }
 
     private void decodeLoot() {
+        this.gems.clear();
 
         this.data().keySet().forEach(gemId -> {
             Item gem = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(gemId));

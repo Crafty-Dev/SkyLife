@@ -1,5 +1,6 @@
 package de.crafty.skylife.block.fluid;
 
+import de.crafty.skylife.entity.ResourceSheepEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -22,6 +23,9 @@ public class LiquidOilBlock extends LiquidBlock {
 
     @Override
     protected void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
+        if(entity instanceof ResourceSheepEntity sheep && sheep.getResourceType() == ResourceSheepEntity.Type.OIL)
+            return;
+
         entity.makeStuckInBlock(blockState, new Vec3(0.75F, 0.75F, 0.75F));
 
         if(entity instanceof LivingEntity livingEntity)

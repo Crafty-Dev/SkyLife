@@ -5,6 +5,7 @@ import de.crafty.lifecompat.util.FluidUnitConverter;
 import de.crafty.skylife.block.machines.integrated.BlockMelterBlock;
 import de.crafty.skylife.blockentities.MeltingBlockEntity;
 import de.crafty.skylife.config.BlockMeltingConfig;
+import de.crafty.skylife.config.ItemMeltingConfig;
 import de.crafty.skylife.config.SkyLifeConfigs;
 import de.crafty.skylife.network.SkyLifeNetworkServer;
 import de.crafty.skylife.network.payload.SkyLifeClientEventPayload;
@@ -23,7 +24,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -71,7 +74,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
     @Override
     public boolean isConsuming(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return this.canBeMolten(this.getMeltingBlock());
+        return this.canBeMolten(this.getMeltingBlock()) || this.canBeMolten(this.getMeltingStack().getItem());
     }
 
     @Override
@@ -87,13 +90,19 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
     @Override
     protected void performAction(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        if (this.getMeltingBlock() == Blocks.AIR)
+        if (this.getMeltingBlock() == Blocks.AIR && this.meltingStack == ItemStack.EMPTY)
             return;
 
         this.meltingProgress++;
 
         if (this.meltingProgress == this.totalMeltingTime) {
-            this.fillWithLiquid(serverLevel, blockPos, blockState, SkyLifeConfigs.BLOCK_MELTING.getMeltingResultForBlock(this.getMeltingBlock()), FluidUnitConverter.buckets(1.0F));
+            if(this.canBeMolten(this.getMeltingBlock()))
+                this.fillWithLiquid(serverLevel, blockPos, blockState, SkyLifeConfigs.BLOCK_MELTING.getMeltingResultForBlock(this.getMeltingBlock()), FluidUnitConverter.buckets(1.0F));
+            else if(this.canBeMolten(this.meltingStack.getItem())){
+                ItemMeltingConfig.MeltingResult result = SkyLifeConfigs.ITEM_MELTING.getMeltingResult(this.meltingStack.getItem());
+                this.fillWithLiquid(serverLevel, blockPos, blockState, result.fluid(), result.amount());
+            }
+
             this.setMeltingStack(ItemStack.EMPTY);
             SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.BM_MELTING_FINISHED, blockPos, level);
         }
@@ -125,27 +134,42 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
         return SkyLifeConfigs.BLOCK_MELTING.getMeltingResultForBlock(block) != Fluids.EMPTY;
     }
 
+    public boolean canBeMolten(Item item) {
+        if (item == Items.AIR)
+            return false;
+
+        return SkyLifeConfigs.ITEM_MELTING.getMeltingResults().containsKey(item);
+    }
+
     public Block getMeltingBlock() {
         return this.meltingStack.getItem() instanceof BlockItem blockItem ? blockItem.getBlock() : Blocks.AIR;
     }
 
     public void updateRecipe() {
 
-        if (SkyLifeConfigs.BLOCK_MELTING.getMeltingResultForBlock(this.getMeltingBlock()) == Fluids.EMPTY) {
+        if (this.canBeMolten(this.getMeltingBlock())) {
+            float highestEfficiency = 1.0F;
+            for (BlockMeltingConfig.HeatSource heatSource : SkyLifeConfigs.BLOCK_MELTING.getMeltables().get(this.getMeltingBlock()).heatSources()) {
+                if (heatSource.heatEfficiency() > highestEfficiency)
+                    highestEfficiency = heatSource.heatEfficiency();
+            }
+
+            this.totalMeltingTime = (int) (MeltingBlockEntity.BASE_MELTING_TIME / highestEfficiency / (this.isUpgraded() ? 2.0F : 1.0F));
             this.meltingProgress = 0;
-            this.totalMeltingTime = 0;
             this.setChanged();
             return;
         }
 
-        float highestEfficiency = 1.0F;
-        for (BlockMeltingConfig.HeatSource heatSource : SkyLifeConfigs.BLOCK_MELTING.getMeltables().get(this.getMeltingBlock()).heatSources()) {
-            if (heatSource.heatEfficiency() > highestEfficiency)
-                highestEfficiency = heatSource.heatEfficiency();
+        if (this.canBeMolten(this.meltingStack.getItem())) {
+            ItemMeltingConfig.MeltingResult result = SkyLifeConfigs.ITEM_MELTING.getMeltingResult(this.meltingStack.getItem());
+            this.totalMeltingTime = (int) (result.meltingTime() / (this.isUpgraded() ? 2.0F : 1.0F));
+            this.meltingProgress = 0;
+            this.setChanged();
+            return;
         }
 
-        this.totalMeltingTime = (int) (MeltingBlockEntity.BASE_MELTING_TIME / highestEfficiency / (this.isUpgraded() ? 2.0F : 1.0F));
         this.meltingProgress = 0;
+        this.totalMeltingTime = 0;
         this.setChanged();
     }
 
@@ -186,26 +210,33 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
         if (level.isClientSide())
             return;
 
+        if(!state.getValue(BlockMelterBlock.UPGRADED) && blockEntity.upgraded)
+            blockEntity.upgraded = false;
+
+        if(state.getValue(BlockMelterBlock.UPGRADED) && !blockEntity.upgraded)
+            blockEntity.upgraded = true;
+
+
         if (blockEntity.getStoredEnergy() < blockEntity.getConsumptionPerTick((ServerLevel) level, pos, state) && blockEntity.meltingProgress > 0) {
             blockEntity.meltingProgress--;
             level.sendBlockUpdated(pos, state, state, Block.UPDATE_ALL);
-            if(blockEntity.meltingProgress == 0)
+            if (blockEntity.meltingProgress == 0)
                 SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.BM_EXSTINGUISH, pos, level);
 
             blockEntity.setChanged();
         }
 
-        if (!blockEntity.meltingStack.isEmpty() && !blockEntity.canBeMolten(blockEntity.getMeltingBlock())) {
+        if (!blockEntity.meltingStack.isEmpty() && !(blockEntity.canBeMolten(blockEntity.getMeltingBlock()) || blockEntity.canBeMolten(blockEntity.getMeltingStack().getItem()))) {
             ItemStack prevStack = blockEntity.meltingStack.copy();
 
             blockEntity.setMeltingStack(ItemStack.EMPTY);
             Block.popResource(level, pos.above(), prevStack);
         }
 
-        if(state.getValue(BlockMelterBlock.ENERGY) && blockEntity.getStoredEnergy() < blockEntity.getConsumptionPerTick((ServerLevel) level, pos, state))
+        if (state.getValue(BlockMelterBlock.ENERGY) && blockEntity.getStoredEnergy() < blockEntity.getConsumptionPerTick((ServerLevel) level, pos, state))
             level.setBlock(pos, state.setValue(BlockMelterBlock.ENERGY, false), Block.UPDATE_CLIENTS);
 
-        if(!state.getValue(BlockMelterBlock.ENERGY) && blockEntity.getStoredEnergy() >= blockEntity.getConsumptionPerTick((ServerLevel) level, pos, state))
+        if (!state.getValue(BlockMelterBlock.ENERGY) && blockEntity.getStoredEnergy() >= blockEntity.getConsumptionPerTick((ServerLevel) level, pos, state))
             level.setBlock(pos, state.setValue(BlockMelterBlock.ENERGY, true), Block.UPDATE_CLIENTS);
 
         blockEntity.energyTick((ServerLevel) level, pos, state);
@@ -245,7 +276,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
     @Override
     public void setTheItem(ItemStack itemStack) {
         this.setMeltingStack(itemStack);
-        if(!this.level.isClientSide())
+        if (!this.level.isClientSide())
             SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.BM_PLACE_ITEM, this.getBlockPos(), this.level);
     }
 

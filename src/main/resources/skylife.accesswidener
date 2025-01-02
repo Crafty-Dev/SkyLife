@@ -29,3 +29,6 @@ accessible class net/minecraft/world/level/block/ComposterBlock$InputContainer
 
 #Block Entity
 accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier
+
+#Item Rendering
+accessible method net/minecraft/client/renderer/item/ItemStackRenderState firstLayer ()Lnet/minecraft/client/renderer/item/ItemStackRenderState$LayerRenderState;

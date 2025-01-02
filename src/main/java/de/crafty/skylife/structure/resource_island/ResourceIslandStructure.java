@@ -251,13 +251,16 @@ public class ResourceIslandStructure extends Structure {
 
         }
 
-        //TODO Spawn oil sheeps
-        if (this.resourceType != ResourceType.OIL || randomSource.nextFloat() >= 0.6F)
+        if (this.resourceType != ResourceType.OIL)
             return;
 
+        if (piece.hasCheckedSheep() || !piece.shouldSpawnSheeps())
+            return;
+
+        piece.setCheckedSheep(true);
         SpawnGroupData spawnGroupData = null;
 
-        int amount = 1 + randomSource.nextInt(3);
+        int amount = 1 + randomSource.nextInt(2);
         for (int i = 0; i < amount; i++) {
 
             BlockPos spawnPos = topBlocks.get(randomSource.nextInt(topBlocks.size())).above();
@@ -268,15 +271,13 @@ public class ResourceIslandStructure extends Structure {
             }
 
             Mob sheep = EntityRegistry.OIL_SHEEP.create(worldGenLevel.getLevel(), EntitySpawnReason.STRUCTURE);
-            if(sheep == null)
+            if (sheep == null)
                 return;
 
-            sheep.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), randomSource.nextFloat() * 360.0F, 0.0F);
-            if (sheep.checkSpawnObstruction(worldGenLevel)) {
-                spawnGroupData = sheep.finalizeSpawn(worldGenLevel, worldGenLevel.getCurrentDifficultyAt(sheep.blockPosition()), EntitySpawnReason.STRUCTURE, spawnGroupData);
-                worldGenLevel.addFreshEntityWithPassengers(sheep);
-                //success = true;
-            }
+            sheep.moveTo(spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D, randomSource.nextFloat() * 360.0F, 0.0F);
+            spawnGroupData = sheep.finalizeSpawn(worldGenLevel, worldGenLevel.getCurrentDifficultyAt(sheep.blockPosition()), EntitySpawnReason.STRUCTURE, spawnGroupData);
+            worldGenLevel.addFreshEntityWithPassengers(sheep);
+
         }
     }
 

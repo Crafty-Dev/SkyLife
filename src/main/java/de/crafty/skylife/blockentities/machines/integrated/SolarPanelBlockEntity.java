@@ -2,6 +2,7 @@ package de.crafty.skylife.blockentities.machines.integrated;
 
 import de.crafty.lifecompat.api.energy.provider.AbstractEnergyProvider;
 import de.crafty.lifecompat.energy.block.BaseEnergyBlock;
+import de.crafty.skylife.block.machines.integrated.BlockMelterBlock;
 import de.crafty.skylife.block.machines.integrated.BriquetteGeneratorBlock;
 import de.crafty.skylife.block.machines.integrated.SolarPanelBlock;
 import de.crafty.skylife.registry.BlockEntityRegistry;
@@ -73,6 +74,12 @@ public class SolarPanelBlockEntity extends AbstractEnergyProvider {
     public static void tick(Level level, BlockPos blockPos, BlockState blockState, SolarPanelBlockEntity blockEntity) {
         if (level.isClientSide())
             return;
+
+        if(!blockState.getValue(SolarPanelBlock.UPGRADED) && blockEntity.upgraded)
+            blockEntity.upgraded = false;
+
+        if(blockState.getValue(SolarPanelBlock.UPGRADED) && !blockEntity.upgraded)
+            blockEntity.upgraded = true;
 
         if (blockState.getValue(SolarPanelBlock.ACTIVE) && !blockEntity.isGenerating((ServerLevel) level, blockPos, blockState))
             level.setBlock(blockPos, blockState.setValue(SolarPanelBlock.ACTIVE, false), SolarPanelBlock.UPDATE_CLIENTS);

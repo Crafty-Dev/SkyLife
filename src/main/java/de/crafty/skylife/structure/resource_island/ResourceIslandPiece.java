@@ -2,6 +2,7 @@ package de.crafty.skylife.structure.resource_island;
 
 import de.crafty.skylife.SkyLifeClient;
 import de.crafty.skylife.SkyLifeServer;
+import de.crafty.skylife.registry.EntityRegistry;
 import de.crafty.skylife.registry.StructureRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,6 +13,10 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -43,6 +48,9 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
     private final ResourceIslandStructure.ResourceType resourceType;
     protected final List<BlockPos> originBlocks = new ArrayList<>();
 
+    private boolean checkedSheep = false;
+    private boolean spawnSheeps = false;
+
     public ResourceIslandPiece(ResourceIslandStructure.ResourceType resourceType, RandomSource randomSource, StructureTemplateManager structureTemplateManager, ResourceLocation resourceLocation, Rotation rotation, BlockPos blockPos) {
         super(StructureRegistry.Pieces.RESOURCE_ISLAND, 0, structureTemplateManager, resourceLocation, resourceLocation.toString(), new StructurePlaceSettings().setMirror(Mirror.NONE).setRotation(rotation).setRotationPivot(new BlockPos(0, 0, 0)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK), blockPos);
 
@@ -53,6 +61,8 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
         super(StructureRegistry.Pieces.RESOURCE_ISLAND, tag, templateManager, resourceLocation -> new StructurePlaceSettings().setMirror(Mirror.NONE).setRotation(Rotation.valueOf(tag.getString("Rot"))).setRotationPivot(new BlockPos(0, 0, 0)).addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK));
 
         this.resourceType = ResourceIslandStructure.ResourceType.valueOf(tag.getString("resource_type").toUpperCase());
+        this.checkedSheep = tag.getBoolean("checkedSheep");
+        this.spawnSheeps = tag.getBoolean("spawnSheeps");
     }
 
 
@@ -61,6 +71,9 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
         super.addAdditionalSaveData(structurePieceSerializationContext, compoundTag);
         compoundTag.putString("Rot", this.placeSettings.getRotation().name());
         compoundTag.putString("resource_type", resourceType.name().toLowerCase());
+
+        compoundTag.putBoolean("checkedSheep", this.checkedSheep);
+        compoundTag.putBoolean("spawnSheeps", this.spawnSheeps);
     }
 
     @Override
@@ -220,11 +233,32 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
                 this.placeBlock(worldGenLevel, randomBottomBlock, bottomPos.getX(), bottomPos.getY(), bottomPos.getZ(), boundingBox);
         });
 
+        if(this.checkedSheep)
+            return;
+
+        if (this.resourceType != ResourceIslandStructure.ResourceType.OIL || randomSource.nextFloat() >= 0.6F)
+            return;
+
+        this.spawnSheeps = true;
+
+    }
+
+    public void setCheckedSheep(boolean checkedSheep) {
+        this.checkedSheep = checkedSheep;
+    }
+
+    public boolean hasCheckedSheep() {
+        return this.checkedSheep;
+    }
+
+    public boolean shouldSpawnSheeps() {
+        return this.spawnSheeps;
     }
 
     @Override
     protected void handleDataMarker(String string, BlockPos blockPos, ServerLevelAccessor serverLevelAccessor, RandomSource randomSource, BoundingBox boundingBox) {
 
     }
+
 
 }

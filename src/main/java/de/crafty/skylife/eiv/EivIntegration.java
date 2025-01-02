@@ -14,6 +14,8 @@ import de.crafty.skylife.eiv.recipes.fluid_conversion.FluidConversionViewType;
 import de.crafty.skylife.eiv.recipes.hammering.HammeringServerRecipe;
 import de.crafty.skylife.eiv.recipes.hammering.HammeringViewRecipe;
 import de.crafty.skylife.eiv.recipes.hammering.HammeringViewType;
+import de.crafty.skylife.eiv.recipes.item_melting.ItemMeltingServerRecipe;
+import de.crafty.skylife.eiv.recipes.item_melting.ItemMeltingViewRecipe;
 import de.crafty.skylife.eiv.recipes.leafpress.LeafPressServerRecipe;
 import de.crafty.skylife.eiv.recipes.leafpress.LeafPressViewRecipe;
 import de.crafty.skylife.eiv.recipes.leafpress.LeafPressViewType;
@@ -102,6 +104,14 @@ public class EivIntegration implements IExtendedItemViewIntegration {
 
         ItemViewRecipes.INSTANCE.addModRecipeProvider(list -> {
 
+            SkyLifeConfigs.ITEM_MELTING.getMeltingResults().forEach((meltable, meltingResult) -> {
+                list.add(new ItemMeltingServerRecipe(meltable, meltingResult));
+            });
+
+        });
+
+        ItemViewRecipes.INSTANCE.addModRecipeProvider(list -> {
+
             list.add(new OilProcessingServerRecipe(
                     SkyLifeConfigs.OIL_PROCESSING.getNoPI_requiredLiquid(),
                     ItemStack.EMPTY,
@@ -175,6 +185,11 @@ public class EivIntegration implements IExtendedItemViewIntegration {
         ItemViewRecipes.INSTANCE.registerModRecipeWrapper(BlockMeltingServerRecipe.TYPE, iEivServerModRecipe -> {
             BlockMeltingServerRecipe recipe = (BlockMeltingServerRecipe) iEivServerModRecipe;
             return List.of(new BlockMeltingViewRecipe(recipe.getMeltable(), recipe.getLiquid(), recipe.getHeatSource()));
+        });
+
+        ItemViewRecipes.INSTANCE.registerModRecipeWrapper(ItemMeltingServerRecipe.TYPE, iEivServerModRecipe -> {
+            ItemMeltingServerRecipe recipe = (ItemMeltingServerRecipe) iEivServerModRecipe;
+            return List.of(new ItemMeltingViewRecipe(recipe.getMeltable(), recipe.getMeltingResult()));
         });
 
         ItemViewRecipes.INSTANCE.registerModRecipeWrapper(OilProcessingServerRecipe.TYPE, iEivServerModRecipe -> {

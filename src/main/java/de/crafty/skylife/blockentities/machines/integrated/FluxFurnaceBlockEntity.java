@@ -1,6 +1,7 @@
 package de.crafty.skylife.blockentities.machines.integrated;
 
 import de.crafty.lifecompat.api.energy.consumer.AbstractEnergyConsumer;
+import de.crafty.skylife.block.machines.integrated.FluidPumpBlock;
 import de.crafty.skylife.block.machines.integrated.FluxFurnaceBlock;
 import de.crafty.skylife.inventory.FluxFurnaceMenu;
 import de.crafty.skylife.registry.BlockEntityRegistry;
@@ -184,17 +185,23 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
     }
 
 
-    public static void tick(Level level, BlockPos blockPos, BlockState blockState, FluxFurnaceBlockEntity blockEntity) {
+    public static void tick(Level level, BlockPos blockPos, BlockState state, FluxFurnaceBlockEntity blockEntity) {
         if (level.isClientSide())
             return;
 
-        if (blockState.getValue(FluxFurnaceBlock.ACTIVE) && blockEntity.getStoredEnergy() < blockEntity.getConsumptionPerTick((ServerLevel) level, blockPos, blockState))
-            level.setBlock(blockPos, blockState.setValue(FluxFurnaceBlock.ACTIVE, false), Block.UPDATE_CLIENTS);
+        if(!state.getValue(FluxFurnaceBlock.UPGRADED) && blockEntity.performanceMode)
+            blockEntity.performanceMode = false;
 
-        if (!blockState.getValue(FluxFurnaceBlock.ACTIVE) && blockEntity.getStoredEnergy() >= blockEntity.getConsumptionPerTick((ServerLevel) level, blockPos, blockState))
-            level.setBlock(blockPos, blockState.setValue(FluxFurnaceBlock.ACTIVE, true), Block.UPDATE_CLIENTS);
+        if(state.getValue(FluxFurnaceBlock.UPGRADED) && !blockEntity.performanceMode)
+            blockEntity.performanceMode = true;
 
-        blockEntity.energyTick((ServerLevel) level, blockPos, blockState);
+        if (state.getValue(FluxFurnaceBlock.ACTIVE) && blockEntity.getStoredEnergy() < blockEntity.getConsumptionPerTick((ServerLevel) level, blockPos, state))
+            level.setBlock(blockPos, state.setValue(FluxFurnaceBlock.ACTIVE, false), Block.UPDATE_CLIENTS);
+
+        if (!state.getValue(FluxFurnaceBlock.ACTIVE) && blockEntity.getStoredEnergy() >= blockEntity.getConsumptionPerTick((ServerLevel) level, blockPos, state))
+            level.setBlock(blockPos, state.setValue(FluxFurnaceBlock.ACTIVE, true), Block.UPDATE_CLIENTS);
+
+        blockEntity.energyTick((ServerLevel) level, blockPos, state);
     }
 
 

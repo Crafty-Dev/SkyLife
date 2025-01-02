@@ -68,7 +68,6 @@ public class LootGemServerRecipe implements IEivServerModRecipe {
 
     @Override
     public void loadFromTag(CompoundTag compoundTag) {
-        System.out.println("Received: " + compoundTag);
 
         this.gem = EivTagUtil.itemFromString(compoundTag.getString("gem"));
 

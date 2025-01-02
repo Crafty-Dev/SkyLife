@@ -120,6 +120,20 @@ public class FluidPumpBlock extends AbstractUpgradableFluidMachine<FluidPumpBloc
     }
 
     @Override
+    protected void onRemove(BlockState blockState, Level level, BlockPos blockPos, BlockState blockState2, boolean bl) {
+        if (blockState2.is(this)) {
+            super.onRemove(blockState, level, blockPos, blockState2, bl);
+            return;
+        }
+
+        Item currentUpgrade = this.getCurrentUpgrade(blockState);
+        if (currentUpgrade != null)
+            Block.popResource(level, blockPos, new ItemStack(currentUpgrade));
+
+        super.onRemove(blockState, level, blockPos, blockState2, bl);
+    }
+
+    @Override
     protected Property<? extends Comparable<?>> getUpgradeProperty() {
         return UPGRADED;
     }

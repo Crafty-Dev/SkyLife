@@ -40,8 +40,6 @@ public abstract class AbstractUpgradableFluidMachine<S extends BlockEntity> exte
 
         Class<S> beClass = this.getMachineBE();
         if (this.canApplyUpgrade(level, blockState, blockPos, itemStack) && beClass.isInstance(level.getBlockEntity(blockPos))) {
-            if (level.isClientSide())
-                return InteractionResult.CONSUME;
 
             this.onUpgrade(level, blockState, blockPos, itemStack, beClass.cast(level.getBlockEntity(blockPos)));
             itemStack.shrink(1);
@@ -53,22 +51,6 @@ public abstract class AbstractUpgradableFluidMachine<S extends BlockEntity> exte
 
     protected abstract Property<? extends Comparable<?>> getUpgradeProperty();
 
-
-    @Override
-    protected @NotNull List<ItemStack> getDrops(BlockState blockState, LootParams.Builder builder) {
-        List<ItemStack> drops = super.getDrops(blockState, builder);
-
-
-        for (ItemStack drop : drops) {
-            if (drop.is(this.asItem()))
-                drop.update(DataComponents.BLOCK_STATE, BlockItemStateProperties.EMPTY, blockItemStateProperties -> {
-
-                    blockItemStateProperties = blockItemStateProperties.with(this.getUpgradeProperty(), blockState);
-                    return blockItemStateProperties;
-                });
-        }
-        return drops;
-    }
 
 
     @Override

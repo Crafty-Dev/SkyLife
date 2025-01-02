@@ -183,6 +183,15 @@ public class BlockMelterBlock extends AbstractUpgradableFluidMachine<BlockMelter
         if (!blockState.is(blockState2.getBlock()) && level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity be && !be.getMeltingStack().isEmpty())
             Block.popResource(level, blockPos, be.getMeltingStack().copy());
 
+        if (blockState2.is(this)) {
+            super.onRemove(blockState, level, blockPos, blockState2, bl);
+            return;
+        }
+
+        Item currentUpgrade = this.getCurrentUpgrade(blockState);
+        if (currentUpgrade != null)
+            Block.popResource(level, blockPos, new ItemStack(currentUpgrade));
+
         super.onRemove(blockState, level, blockPos, blockState2, bl);
     }
 

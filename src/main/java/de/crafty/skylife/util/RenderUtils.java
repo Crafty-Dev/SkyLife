@@ -2,6 +2,7 @@ package de.crafty.skylife.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.GameRenderer;
@@ -18,6 +19,8 @@ public class RenderUtils {
     * Thanks to enderio for having solved this in their code :D
     * */
     public static void renderTexturedPlane(PoseStack.Pose pose, VertexConsumer consumer, TextureAtlasSprite texture, Direction facing, float x, float y, float z, float width, float height, float u, float v, float texWidth, float texHeight, int color, int light) {
+
+        texture = Minecraft.getInstance().getTextureAtlas(texture.atlasLocation()).apply(texture.contents().name());
 
         float u0 = u * texture.contents().width() / 16.0F;
         float v0 = v * texture.contents().height() / 16.0F;

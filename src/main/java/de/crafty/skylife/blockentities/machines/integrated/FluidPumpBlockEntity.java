@@ -3,6 +3,7 @@ package de.crafty.skylife.blockentities.machines.integrated;
 import de.crafty.lifecompat.energy.block.BaseEnergyBlock;
 import de.crafty.lifecompat.fluid.blockentity.AbstractFluidEnergyConsumerBlockEntity;
 import de.crafty.lifecompat.util.FluidUnitConverter;
+import de.crafty.skylife.block.machines.integrated.BlockMelterBlock;
 import de.crafty.skylife.block.machines.integrated.FluidPumpBlock;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.BlockRegistry;
@@ -130,6 +131,12 @@ public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity
     public static void tick(Level level, BlockPos pos, BlockState state, FluidPumpBlockEntity blockEntity) {
         if (level.isClientSide())
             return;
+
+        if(!state.getValue(FluidPumpBlock.UPGRADED) && blockEntity.upgraded)
+            blockEntity.upgraded = false;
+
+        if(state.getValue(FluidPumpBlock.UPGRADED) && !blockEntity.upgraded)
+            blockEntity.upgraded = true;
 
         if (!level.getFluidState(pos.below()).isSource() && blockEntity.suckingProgress > 0) {
             blockEntity.suckingProgress = 0;

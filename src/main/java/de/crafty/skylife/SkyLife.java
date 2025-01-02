@@ -95,6 +95,7 @@ public class SkyLife implements ModInitializer {
         SkyLifeConfigs.BLOCK_TRANSFORMATION.load();
         SkyLifeConfigs.SAPLING_GROWTH_CONFIG.load();
         SkyLifeConfigs.BLOCK_MELTING.load();
+        SkyLifeConfigs.ITEM_MELTING.load();
         SkyLifeConfigs.LEAF_DROP.load();
         SkyLifeConfigs.FLUID_CONVERSION.load();
         SkyLifeConfigs.OIL_PROCESSING.load();
