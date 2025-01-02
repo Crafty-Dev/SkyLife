@@ -1,16 +1,10 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "item": "minecraft:netherite_ingot"
-  },
-  "base": {
-    "item": "skylife:diamond_hammer"
-  },
+  "addition": "minecraft:netherite_ingot",
+  "base": "skylife:diamond_hammer",
   "result": {
     "count": 1,
     "id": "skylife:netherite_hammer"
   },
-  "template": {
-    "item": "minecraft:netherite_upgrade_smithing_template"
-  }
+  "template": "minecraft:netherite_upgrade_smithing_template"
 }

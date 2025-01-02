@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "GGG",
+        "QGQ",
+        "DQD"
+    ],
+    "key": {
+        "G": "#c:glass_blocks",
+        "Q": "minecraft:quartz_block",
+        "D": "minecraft:deepslate_tiles"
+    },
+    "result": {
+        "id": "skylife:internal_machine_tank",
+        "count": 1
+    }
+}

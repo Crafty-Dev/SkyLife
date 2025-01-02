@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import de.crafty.skylife.registry.EntityRegistry;
 import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 public class SkyLifeEntityLootProvider extends EntityLootSubProvider {
 
@@ -63,37 +65,50 @@ public class SkyLifeEntityLootProvider extends EntityLootSubProvider {
         this.add(EntityRegistry.NETHERRACK_SHEEP, this.createResourceSheepTable(Items.NETHERRACK));
         this.add(EntityRegistry.COBBLESTONE_SHEEP, this.createResourceSheepTable(Items.COBBLESTONE));
         this.add(EntityRegistry.DIRT_SHEEP, this.createResourceSheepTable(Items.DIRT));
+        this.add(EntityRegistry.OIL_SHEEP, this.createResourceSheepTable(ItemRegistry.HARDENED_OIL_FRAGMENT));
 
     }
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
         this.generate();
-
         Set<ResourceKey<LootTable>> set = new HashSet<>();
-        EntityRegistry.getLivingEntityTypes().forEach((resourceLocation, entityType) -> {
-            if (!entityType.isEnabled(this.allowed))
-                return;
+        EntityRegistry.getLivingEntityTypes()
+                .forEach(
+                        (resourceLocation, entityType) -> {
+                            if (entityType.isEnabled(this.allowed)) {
+                                Optional<ResourceKey<LootTable>> optional = entityType.getDefaultLootTable();
+                                if (optional.isPresent()) {
+                                    Map<ResourceKey<LootTable>, LootTable.Builder> map = (Map<ResourceKey<LootTable>, LootTable.Builder>)this.map.remove(entityType);
+                                    if (entityType.isEnabled(this.required) && (map == null || !map.containsKey(optional.get()))) {
+                                        throw new IllegalStateException(String.format(Locale.ROOT, "Missing loottable '%s' for '%s'", optional.get(), resourceLocation));
+                                    }
 
-            Map<ResourceKey<LootTable>, LootTable.Builder> map = this.map.remove(entityType);
-            ResourceKey<LootTable> resourceKey = entityType.getDefaultLootTable();
-            if (resourceKey != BuiltInLootTables.EMPTY && entityType.isEnabled(this.required) && (map == null || !map.containsKey(resourceKey))) {
-                throw new IllegalStateException(String.format(Locale.ROOT, "Missing loottable '%s' for '%s'", resourceKey, resourceLocation));
-            }
-
-            if (map == null)
-                return;
-
-            map.forEach((resourceKeyx, builder) -> {
-                if (!set.add(resourceKeyx)) {
-                    throw new IllegalStateException(String.format(Locale.ROOT, "Duplicate loottable '%s' for '%s'", resourceKeyx, resourceLocation));
-                } else {
-                    biConsumer.accept(resourceKeyx, builder);
-                }
-            });
-
-        });
-
+                                    if (map != null) {
+                                        map.forEach((resourceKey, builder) -> {
+                                            if (!set.add(resourceKey)) {
+                                                throw new IllegalStateException(String.format(Locale.ROOT, "Duplicate loottable '%s' for '%s'", resourceKey, resourceLocation));
+                                            } else {
+                                                biConsumer.accept(resourceKey, builder);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    Map<ResourceKey<LootTable>, LootTable.Builder> mapx = this.map.remove(entityType);
+                                    if (mapx != null) {
+                                        throw new IllegalStateException(
+                                                String.format(
+                                                        Locale.ROOT,
+                                                        "Weird loottables '%s' for '%s', not a LivingEntity so should not have loot",
+                                                        mapx.keySet().stream().map(resourceKey -> resourceKey.location().toString()).collect(Collectors.joining(",")),
+                                                        resourceLocation
+                                                )
+                                        );
+                                    }
+                                }
+                            }
+                        }
+                );
         if (!this.map.isEmpty()) {
             throw new IllegalStateException("Created loot tables for entities not supported by datapack: " + this.map.keySet());
         }

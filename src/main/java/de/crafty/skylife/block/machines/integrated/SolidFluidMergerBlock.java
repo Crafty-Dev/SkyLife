@@ -16,7 +16,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -138,11 +138,11 @@ public class SolidFluidMergerBlock extends BaseFluidEnergyBlock {
 
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        ItemInteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        InteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        if(result == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION && stack.is(ItemRegistry.MACHINE_KEY))
-            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if(!result.consumesAction() && stack.is(ItemRegistry.MACHINE_KEY))
+            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? InteractionResult.SUCCESS : InteractionResult.TRY_WITH_EMPTY_HAND;
 
 
         return result;

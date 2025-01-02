@@ -1,5 +1,7 @@
 package de.crafty.skylife.structure.resource_island;
 
+import de.crafty.skylife.SkyLifeClient;
+import de.crafty.skylife.SkyLifeServer;
 import de.crafty.skylife.registry.StructureRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -68,6 +70,7 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
         int templateWidth = this.template().getSize().getX();
         int templateDepth = this.template().getSize().getZ();
 
+
         //Pre-process emerald blocks
         for (int x = 0; x <= this.template().getSize().getX(); x++) {
             for (int z = 0; z <= this.template().getSize().getZ(); z++) {
@@ -129,6 +132,7 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
             }
         }
 
+
         //Process bedrock
         for (int x = 0; x <= this.template().getSize().getX(); x++) {
             for (int z = 0; z <= this.template().getSize().getZ(); z++) {
@@ -145,11 +149,11 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
 
 
         List<BlockPos> allBlocks = new ArrayList<>();
-        for(int x = 0; x <= this.template().getSize().getX(); x++) {
-            for(int z = 0; z < this.template().getSize().getZ(); z++) {
-                for(int y = 0; y <= this.template().getSize().getY(); y++) {
+        for (int x = 0; x <= this.template().getSize().getX(); x++) {
+            for (int z = 0; z < this.template().getSize().getZ(); z++) {
+                for (int y = 0; y <= this.template().getSize().getY(); y++) {
                     BlockPos pos = new BlockPos(x, y, z);
-                    if(!this.getBlock(worldGenLevel, x, y, z, boundingBox).isAir())
+                    if (!this.getBlock(worldGenLevel, x, y, z, boundingBox).isAir())
                         allBlocks.add(pos);
                 }
             }
@@ -183,7 +187,7 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
                 this.placeBlock(worldGenLevel, randomTopBlock, topPos.getX(), topPos.getY(), topPos.getZ(), boundingBox);
 
             BlockState depthBlock = this.resourceType.depthBlock;
-            if(depthBlock == null)
+            if (depthBlock == null)
                 return;
 
             if (topPos.getY() >= 1 && !belowBlock.is(Blocks.AIR) && !belowBelowBlock.is(Blocks.AIR) && randomSource.nextFloat() < 0.75F) {
@@ -212,7 +216,7 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
 
         bottomBlocks.forEach(bottomPos -> {
             BlockState randomBottomBlock = this.resourceType.bottomBlockProvider().randomBlock(randomSource);
-            if(randomBottomBlock != null)
+            if (randomBottomBlock != null)
                 this.placeBlock(worldGenLevel, randomBottomBlock, bottomPos.getX(), bottomPos.getY(), bottomPos.getZ(), boundingBox);
         });
 
@@ -222,4 +226,5 @@ public class ResourceIslandPiece extends TemplateStructurePiece {
     protected void handleDataMarker(String string, BlockPos blockPos, ServerLevelAccessor serverLevelAccessor, RandomSource randomSource, BoundingBox boundingBox) {
 
     }
+
 }

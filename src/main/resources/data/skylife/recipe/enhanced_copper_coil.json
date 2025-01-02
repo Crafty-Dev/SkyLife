@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "minecraft:diamond"
-    },
-    "S": {
-      "item": "skylife:copper_coil"
-    }
+    "#": "minecraft:diamond",
+    "S": "skylife:copper_coil"
   },
   "result": {
     "id": "skylife:enhanced_copper_coil",

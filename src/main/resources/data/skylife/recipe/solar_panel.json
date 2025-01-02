@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "PPP",
+        "DOD",
+        "DDD"
+    ],
+    "key": {
+        "P": "skylife:photo_absorber",
+        "D": "minecraft:deepslate_tiles",
+        "O": "skylife:output_module"
+    },
+    "result": {
+        "id": "skylife:solar_panel",
+        "count": 1
+    }
+}

@@ -49,34 +49,33 @@ public abstract class SkyLifeFluidPipe extends BaseFluidPipeBlock {
 
         if(blockState.getValue(NORTH) == ConnectionState.ATTACHED && this.hasClickedShape(blockHitResult, NORTH_DEVICE) && level.getBlockEntity(blockPos) instanceof AbstractFluidPipeBlockEntity pipe){
             pipe.loopThroughTransferMode(Direction.NORTH);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         if(blockState.getValue(EAST) == ConnectionState.ATTACHED && this.hasClickedShape(blockHitResult, EAST_DEVICE) && level.getBlockEntity(blockPos) instanceof AbstractFluidPipeBlockEntity pipe){
             pipe.loopThroughTransferMode(Direction.EAST);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
 
         if(blockState.getValue(SOUTH) == ConnectionState.ATTACHED && this.hasClickedShape(blockHitResult, SOUTH_DEVICE) && level.getBlockEntity(blockPos) instanceof AbstractFluidPipeBlockEntity pipe){
             pipe.loopThroughTransferMode(Direction.SOUTH);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         if(blockState.getValue(WEST) == ConnectionState.ATTACHED && this.hasClickedShape(blockHitResult, WEST_DEVICE) && level.getBlockEntity(blockPos) instanceof AbstractFluidPipeBlockEntity pipe){
             pipe.loopThroughTransferMode(Direction.WEST);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         if(blockState.getValue(UP) == ConnectionState.ATTACHED && this.hasClickedShape(blockHitResult, UP_DEVICE) && level.getBlockEntity(blockPos) instanceof AbstractFluidPipeBlockEntity pipe){
             pipe.loopThroughTransferMode(Direction.UP);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         if(blockState.getValue(DOWN) == ConnectionState.ATTACHED && this.hasClickedShape(blockHitResult, DOWN_DEVICE) && level.getBlockEntity(blockPos) instanceof AbstractFluidPipeBlockEntity pipe){
             pipe.loopThroughTransferMode(Direction.DOWN);
-            System.out.println(pipe.getTransferMode(Direction.DOWN));
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         return InteractionResult.PASS;

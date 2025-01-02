@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:deepslate"
-    },
-    "S": {
-      "item": "minecraft:obsidian"
-    }
+    "#": "minecraft:deepslate",
+    "S": "minecraft:obsidian"
   },
   "result": {
     "id": "minecraft:reinforced_deepslate",

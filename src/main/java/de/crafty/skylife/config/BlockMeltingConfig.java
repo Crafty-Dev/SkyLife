@@ -78,7 +78,7 @@ public class BlockMeltingConfig extends AbstractSkyLifeConfig {
         this.decodeMeltingRecipes();
     }
 
-    //Representable for JEI or other Recipe Show mods
+    //Representable for JEI or other Recipe View mods
     public record HeatSource(Block heatBlock, List<BlockMeltingCondition> conditions, float heatEfficiency, ItemStack representable) {
 
         private HeatSource(Block heatBlock, List<BlockMeltingCondition> conditions, float heatEfficiency) {
@@ -124,13 +124,13 @@ public class BlockMeltingConfig extends AbstractSkyLifeConfig {
     private void decodeMeltingRecipes() {
         LinkedHashMap<Block, MeltingRecipe> meltables = new LinkedHashMap<>();
         this.data().keySet().forEach(id -> {
-            Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(id));
+            Block block = BuiltInRegistries.BLOCK.getValue(ResourceLocation.tryParse(id));
 
             JsonArray heatSourcesEncoded = this.data().getAsJsonObject(id).getAsJsonArray("validHeatSources");
             List<HeatSource> heatSources = new LinkedList<>();
             heatSourcesEncoded.forEach(e -> {
                 JsonObject config = e.getAsJsonObject();
-                Block heatBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(config.get("heatBlock").getAsString()));
+                Block heatBlock = BuiltInRegistries.BLOCK.getValue(ResourceLocation.tryParse(config.get("heatBlock").getAsString()));
 
                 //Condition Decoding
                 JsonArray conditionConfigs = config.getAsJsonArray("conditions");
@@ -146,7 +146,7 @@ public class BlockMeltingConfig extends AbstractSkyLifeConfig {
                 ItemStack representable = ItemStack.CODEC.decode(JsonOps.INSTANCE, config.getAsJsonObject("representable")).getOrThrow().getFirst();
                 heatSources.add(new HeatSource(heatBlock, conditions, heatEfficiency, representable));
             });
-            Fluid meltingResult = BuiltInRegistries.FLUID.get(ResourceLocation.tryParse(this.data().getAsJsonObject(id).get("meltingResult").getAsString()));
+            Fluid meltingResult = BuiltInRegistries.FLUID.getValue(ResourceLocation.tryParse(this.data().getAsJsonObject(id).get("meltingResult").getAsString()));
             meltables.put(block, new MeltingRecipe(heatSources, meltingResult));
         });
         this.meltables = meltables;
@@ -186,7 +186,7 @@ public class BlockMeltingConfig extends AbstractSkyLifeConfig {
     }
 
 
-    enum ConditionType {
+    public enum ConditionType {
         STATE(StateCondition.class);
 
         final Class<? extends BlockMeltingCondition> clazz;
@@ -199,24 +199,24 @@ public class BlockMeltingConfig extends AbstractSkyLifeConfig {
         }
     }
 
-    static abstract class BlockMeltingCondition {
+    public static abstract class BlockMeltingCondition {
 
         protected final ConditionType type;
         BlockMeltingCondition(ConditionType conditionType) {
             this.type = conditionType;
         }
 
-        JsonObject encode(){
+        public JsonObject encode(){
             JsonObject encoded = new JsonObject();
             encoded.addProperty("conditionType", this.type.name());
             return encoded;
         }
 
-        abstract void decode(JsonObject encoded);
+        public abstract void decode(JsonObject encoded);
 
         abstract boolean check(Level world, BlockPos pos, BlockState state);
 
-        private static BlockMeltingCondition decodeCondition(JsonObject encoded){
+        public static BlockMeltingCondition decodeCondition(JsonObject encoded){
             ConditionType conditionType = ConditionType.valueOf(encoded.get("conditionType").getAsString());
             BlockMeltingCondition condition = ClassUtils.createInstance(conditionType.classOf());
             if(condition == null){
@@ -252,14 +252,14 @@ public class BlockMeltingConfig extends AbstractSkyLifeConfig {
         }
 
         @Override
-        JsonObject encode() {
+        public JsonObject encode() {
             JsonObject encoded = super.encode();
             encoded.addProperty(this.property, this.value);
             return encoded;
         }
 
         @Override
-        void decode(JsonObject encoded) {
+        public void decode(JsonObject encoded) {
             encoded.keySet().forEach(property -> {
                 this.property = property;
                 this.value = encoded.get(property).getAsString();

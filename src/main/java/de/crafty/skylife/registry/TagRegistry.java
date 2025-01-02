@@ -20,6 +20,14 @@ public class TagRegistry {
     public static final TagKey<Item> NETHER_WHEAT = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "nether_wheat"));
     public static final TagKey<Item> BRIQUETTES = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "briquettes"));
 
+    public static final TagKey<Item> WOODEN_TOOLS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "wooden_tools"));
+    public static final TagKey<Item> STONE_TOOLS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "stone_tools"));
+    public static final TagKey<Item> IRON_TOOLS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "iron_tools"));
+    public static final TagKey<Item> GOLD_TOOLS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "golden_tools"));
+    public static final TagKey<Item> DIAMOND_TOOLS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "diamond_tools"));
+    public static final TagKey<Item> NETHERITE_TOOLS = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "netherite_tools"));
+
+
     public static final TagKey<ConfiguredFeature<?, ?>> SKYBLOCK_FEATURES = TagKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "skyblock_features"));
     public static final TagKey<StructureSet> SKYBLOCK_STRUCTURES = TagKey.create(Registries.STRUCTURE_SET, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "skyblock_structure_sets"));
 

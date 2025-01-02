@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "minecraft:blaze_powder"
-    },
-    "S": {
-      "item": "minecraft:wheat_seeds"
-    }
+    "#": "minecraft:blaze_powder",
+    "S": "minecraft:wheat_seeds"
   },
   "result": {
     "id": "skylife:blaze_enriched_seeds",

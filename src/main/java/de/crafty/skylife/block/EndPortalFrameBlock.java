@@ -22,8 +22,8 @@ public class EndPortalFrameBlock extends Block {
     protected static final VoxelShape FULL_SHAPE = Shapes.or(SHAPE_NORMAL, SHAPE_FILLED);
 
 
-    public EndPortalFrameBlock() {
-        super(Properties.of().strength(20.0F, 1200.0F).requiresCorrectToolForDrops());
+    public EndPortalFrameBlock(Properties properties) {
+        super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(FILLED, false).setValue(TRANSFORMING, false));
     }
 

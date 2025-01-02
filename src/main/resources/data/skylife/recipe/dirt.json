@@ -6,12 +6,8 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "skylife:wood_dust"
-    },
-    "S": {
-      "item": "skylife:dried_leaves"
-    }
+    "#": "skylife:wood_dust",
+    "S": "skylife:dried_leaves"
   },
   "result": {
     "id": "minecraft:dirt",

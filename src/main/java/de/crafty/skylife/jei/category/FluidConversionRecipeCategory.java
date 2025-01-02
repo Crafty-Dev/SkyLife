@@ -3,6 +3,7 @@ package de.crafty.skylife.jei.category;
 import de.crafty.skylife.SkyLife;
 import de.crafty.skylife.jei.SkyLifeRecipeTypes;
 import de.crafty.skylife.jei.recipes.fluid_conversion.IJeiFluidConversionRecipe;
+import de.crafty.skylife.registry.BlockRegistry;
 import de.crafty.skylife.util.SkyLifeConstants;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;

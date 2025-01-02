@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "PQA",
+        "DID",
+        "DHD"
+    ],
+    "key": {
+        "P": "minecraft:diamond_pickaxe",
+        "A": "minecraft:diamond_axe",
+        "Q": "minecraft:quartz",
+        "D": "minecraft:deepslate_tiles",
+        "H": "skylife:diamond_hammer",
+        "I": "skylife:input_module"
+    },
+    "result": {
+        "id": "skylife:block_breaker",
+        "count": 1
+    }
+}

@@ -37,8 +37,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -73,7 +73,7 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
     private static final VoxelShape SHAPE_WEST = Shapes.join(Shapes.block(), AIR_WEST, BooleanOp.ONLY_FIRST);
 
     public static final BooleanProperty WORKING = BooleanProperty.create("working");
-    public static final DirectionProperty FACING = BaseEnergyBlock.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BaseEnergyBlock.HORIZONTAL_FACING;
     public static final EnumProperty<BriquetteType> BRIQUETTE_TYPE = EnumProperty.create("briquette", BriquetteType.class);
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 
@@ -152,7 +152,7 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
     }
 
     @Override
-    protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, BlockPos blockPos2, boolean bl) {
+    protected void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block, @Nullable Orientation orientation, boolean bl) {
         if (level.isClientSide())
             return;
 
@@ -165,8 +165,9 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
         if (!level.hasNeighborSignal(blockPos) && powered)
             level.setBlock(blockPos, blockState.setValue(POWERED, false), 2);
 
-        super.neighborChanged(blockState, level, blockPos, block, blockPos2, bl);
+        super.neighborChanged(blockState, level, blockPos, block, orientation, bl);
     }
+
 
     @Override
     protected boolean hasAnalogOutputSignal(BlockState blockState) {
@@ -188,40 +189,43 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected @NotNull InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (!(level.getBlockEntity(blockPos) instanceof BriquetteGeneratorBlockEntity blockEntity))
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
 
-        if(!this.canInteractWithContent(blockState, blockPos, blockHitResult))
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+
+        if(!this.canInteractWithContent(blockState, blockPos, blockHitResult)){
+            if(itemStack.is(ItemRegistry.MACHINE_KEY))
+                return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? InteractionResult.SUCCESS : InteractionResult.TRY_WITH_EMPTY_HAND;
+
+            return InteractionResult.TRY_WITH_EMPTY_HAND;
+        }
+
 
         if (itemStack.is(TagRegistry.BRIQUETTES) && blockState.getValue(BRIQUETTE_TYPE) == BriquetteType.EMPTY) {
             level.setBlock(blockPos, blockState.setValue(BRIQUETTE_TYPE, ((BriquettItem) itemStack.getItem()).getType()), 3);
             itemStack.consume(1, player);
             blockEntity.setBriquett(itemStack);
             SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.BG_BRIQUETTE_CHANGE, blockPos, level);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         if (itemStack.is(Items.FLINT_AND_STEEL)) {
             if (!this.enflame(level, blockPos, blockState))
-                return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
 
             itemStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(interactionHand));
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
         if (itemStack.is(Items.FIRE_CHARGE)) {
             if (!this.enflame(level, blockPos, blockState))
-                return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
 
             itemStack.consume(1, player);
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
-        if(itemStack.is(ItemRegistry.MACHINE_KEY))
-            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
@@ -236,7 +240,7 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
             blockEntity.setBriquett(ItemStack.EMPTY);
             level.playLocalSound(blockPos.getX(), blockPos.getY(), blockPos.getZ(), SoundEvents.ROOTED_DIRT_BREAK, SoundSource.BLOCKS, 1.0F, 1.0F, true);
 
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         if(!this.canInteractWithContent(blockState, blockPos, blockHitResult))
@@ -356,7 +360,6 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
 
         @Override
         public boolean canPlaceItemThroughFace(int i, ItemStack itemStack, @Nullable Direction direction) {
-            System.out.println(itemStack.is(TagRegistry.BRIQUETTES));
             return !this.changed && direction != Direction.DOWN && this.state.getValue(BRIQUETTE_TYPE) == BriquetteType.EMPTY && itemStack.is(TagRegistry.BRIQUETTES);
         }
 
@@ -421,9 +424,6 @@ public class BriquetteGeneratorBlock extends BaseEnergyBlock implements WorldlyC
         @Override
         public void setChanged() {
             if (!(this.level.getBlockEntity(this.pos) instanceof BriquetteGeneratorBlockEntity blockEntity))
-                return;
-
-            if (this.changed)
                 return;
 
             BlockState blockState = this.state.setValue(BRIQUETTE_TYPE, BriquetteType.EMPTY);

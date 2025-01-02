@@ -2,9 +2,7 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.7,
-  "ingredient": {
-    "item": "skylife:gold_dust"
-  },
+  "ingredient": "skylife:gold_dust",
   "result": {
     "id": "minecraft:gold_ingot"
   }

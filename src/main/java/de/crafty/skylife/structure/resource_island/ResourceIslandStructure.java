@@ -5,20 +5,29 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.crafty.skylife.SkyLife;
 import de.crafty.skylife.registry.BlockRegistry;
+import de.crafty.skylife.registry.EntityRegistry;
 import de.crafty.skylife.registry.StructureRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.WeightedRandomList;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.EndGatewayConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureType;
@@ -96,12 +105,12 @@ public class ResourceIslandStructure extends Structure {
 
 
     public static final RandomBlockProvider END = randomSource -> {
-      if(randomSource.nextInt(64) == 0)
-          return BlockRegistry.END_NETHERITE_ORE.defaultBlockState();
-      if(randomSource.nextInt(32) == 0)
-          return BlockRegistry.END_DIAMOND_ORE.defaultBlockState();
+        if (randomSource.nextInt(64) == 0)
+            return BlockRegistry.END_NETHERITE_ORE.defaultBlockState();
+        if (randomSource.nextInt(32) == 0)
+            return BlockRegistry.END_DIAMOND_ORE.defaultBlockState();
 
-      return Blocks.END_STONE.defaultBlockState();
+        return Blocks.END_STONE.defaultBlockState();
     };
 
     public static final MapCodec<ResourceIslandStructure> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
@@ -123,7 +132,7 @@ public class ResourceIslandStructure extends Structure {
     protected @NotNull Optional<GenerationStub> findGenerationPoint(GenerationContext generationContext) {
         RandomSource randomSource = generationContext.random();
         int genY = 48 + randomSource.nextInt(22);
-        int radius = 2 + randomSource.nextInt(4);
+
         Rotation rotation = Rotation.getRandom(randomSource);
         BlockPos genPos = new BlockPos(generationContext.chunkPos().getWorldPosition().getX(), genY, generationContext.chunkPos().getWorldPosition().getZ());
         return Optional.of(
@@ -146,7 +155,6 @@ public class ResourceIslandStructure extends Structure {
 
         ResourceIslandPiece piece = (ResourceIslandPiece) piecesContainer.pieces().getFirst();
 
-        //System.out.println(piecesContainer.pieces().size());
         List<BlockPos> topBlocks = new ArrayList<>();
         for (int x = boundingBox.minX(); x <= boundingBox.maxX(); x++) {
             for (int z = boundingBox.minZ(); z <= boundingBox.maxZ(); z++) {
@@ -175,6 +183,101 @@ public class ResourceIslandStructure extends Structure {
 
         this.resourceType.getDecorator().decorateSpecific(topBlocks, bottomBlocks, worldGenLevel, structureManager, chunkGenerator, randomSource, boundingBox, chunkPos, piece.template().getSize());
 
+        if (this.resourceType == ResourceType.END_CHORUS || this.resourceType == ResourceType.END_RUINES) {
+            if (randomSource.nextFloat() < 0.05F / 2.0F)
+                Feature.END_GATEWAY.place(EndGatewayConfiguration.delayedExitSearch(), worldGenLevel, worldGenLevel.getLevel().getChunkSource().getGenerator(), randomSource, new BlockPos(randomSource.nextBoolean() ? (boundingBox.minX() + 1) : (boundingBox.maxX() - 1), piece.getLocatorPosition().getY() + 15, randomSource.nextBoolean() ? (boundingBox.minZ() + 1) : (boundingBox.maxZ() - 1)));
+
+        }
+
+        if (topBlocks.isEmpty())
+            return;
+
+        MobSpawnSettings mobSpawnSettings = worldGenLevel.getBiome(piece.getLocatorPosition()).value().getMobSettings();
+        WeightedRandomList<MobSpawnSettings.SpawnerData> availableCreatures = mobSpawnSettings.getMobs(MobCategory.CREATURE);
+        if (availableCreatures.isEmpty())
+            return;
+
+        if (randomSource.nextFloat() < 0.75F) {
+            Optional<MobSpawnSettings.SpawnerData> optional = availableCreatures.getRandom(randomSource);
+            if (optional.isEmpty())
+                return;
+
+            MobSpawnSettings.SpawnerData spawnerData = optional.get();
+
+            SpawnGroupData spawnGroupData = null;
+
+            int min = 1;
+            int max = Mth.clamp(spawnerData.maxCount, min, 3);
+
+            int amount = min + randomSource.nextInt(1 + max - min);
+
+            for (int i = 0; i < amount; i++) {
+                boolean success = false;
+
+                for (int j = 0; !success && j < 4; j++) {
+
+                    BlockPos spawnPos = topBlocks.get(randomSource.nextInt(topBlocks.size())).above();
+                    if (!spawnerData.type.canSummon())
+                        break;
+
+                    int tries = 0;
+                    while (!SpawnPlacements.isSpawnPositionOk(spawnerData.type, worldGenLevel, spawnPos) && tries < 5) {
+                        spawnPos = topBlocks.get(randomSource.nextInt(topBlocks.size())).above();
+                        tries++;
+                    }
+
+                    if (!worldGenLevel.noCollision(spawnerData.type.getSpawnAABB(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ())) || !SpawnPlacements.checkSpawnRules(spawnerData.type, worldGenLevel, EntitySpawnReason.STRUCTURE, spawnPos, worldGenLevel.getRandom())) {
+                        continue;
+                    }
+
+
+                    Entity entity = spawnerData.type.create(worldGenLevel.getLevel(), EntitySpawnReason.STRUCTURE);
+
+                    if (entity == null)
+                        continue;
+
+                    entity.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), randomSource.nextFloat() * 360.0F, 0.0F);
+                    if (entity instanceof Mob mob) {
+                        if (mob.checkSpawnRules(worldGenLevel, EntitySpawnReason.STRUCTURE) && mob.checkSpawnObstruction(worldGenLevel)) {
+                            spawnGroupData = mob.finalizeSpawn(worldGenLevel, worldGenLevel.getCurrentDifficultyAt(mob.blockPosition()), EntitySpawnReason.STRUCTURE, spawnGroupData);
+                            worldGenLevel.addFreshEntityWithPassengers(mob);
+                            success = true;
+                        }
+                    }
+
+
+                }
+            }
+
+        }
+
+        //TODO Spawn oil sheeps
+        if (this.resourceType != ResourceType.OIL || randomSource.nextFloat() >= 0.6F)
+            return;
+
+        SpawnGroupData spawnGroupData = null;
+
+        int amount = 1 + randomSource.nextInt(3);
+        for (int i = 0; i < amount; i++) {
+
+            BlockPos spawnPos = topBlocks.get(randomSource.nextInt(topBlocks.size())).above();
+            int tries = 0;
+            while (!SpawnPlacements.isSpawnPositionOk(EntityRegistry.OIL_SHEEP, worldGenLevel, spawnPos) && tries < 5) {
+                spawnPos = topBlocks.get(randomSource.nextInt(topBlocks.size())).above();
+                tries++;
+            }
+
+            Mob sheep = EntityRegistry.OIL_SHEEP.create(worldGenLevel.getLevel(), EntitySpawnReason.STRUCTURE);
+            if(sheep == null)
+                return;
+
+            sheep.moveTo(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), randomSource.nextFloat() * 360.0F, 0.0F);
+            if (sheep.checkSpawnObstruction(worldGenLevel)) {
+                spawnGroupData = sheep.finalizeSpawn(worldGenLevel, worldGenLevel.getCurrentDifficultyAt(sheep.blockPosition()), EntitySpawnReason.STRUCTURE, spawnGroupData);
+                worldGenLevel.addFreshEntityWithPassengers(sheep);
+                //success = true;
+            }
+        }
     }
 
 

@@ -88,7 +88,7 @@ public class BlockBreakerRenderer extends SimpleEnergyBlockRenderer<BlockBreaker
         if(blockBreakerBlockEntity.getDestroyProgress() < 0.0F || blockBreakerBlockEntity.getTargetBlock() == Blocks.AIR)
             return;
 
-        Vec3i targetDirection = state.getValue(BlockBreakerBlock.FACING).getNormal();
+        Vec3i targetDirection = state.getValue(BlockBreakerBlock.FACING).getUnitVec3i();
 
         poseStack.pushPose();
         poseStack.translate(targetDirection.getX(), targetDirection.getY(), targetDirection.getZ());

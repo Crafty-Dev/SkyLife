@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:glowstone_dust"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:glowstone_dust",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:glowstone_enriched_wheat"

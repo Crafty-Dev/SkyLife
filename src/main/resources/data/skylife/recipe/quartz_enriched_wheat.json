@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:quartz"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:quartz",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:quartz_enriched_wheat"

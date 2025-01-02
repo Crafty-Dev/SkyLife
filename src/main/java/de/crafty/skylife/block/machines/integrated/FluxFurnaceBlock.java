@@ -7,6 +7,8 @@ import de.crafty.lifecompat.util.LifeCompatMenuHelper;
 import de.crafty.skylife.block.machines.AbstractUpgradableMachine;
 import de.crafty.skylife.block.machines.IUpgradableMachine;
 import de.crafty.skylife.blockentities.machines.integrated.FluxFurnaceBlockEntity;
+import de.crafty.skylife.network.SkyLifeNetworkServer;
+import de.crafty.skylife.network.payload.SkyLifeClientEventPayload;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
@@ -16,7 +18,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +32,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +44,7 @@ public class FluxFurnaceBlock extends AbstractUpgradableMachine<FluxFurnaceBlock
 
     public static final MapCodec<FluxFurnaceBlock> CODEC = simpleCodec(FluxFurnaceBlock::new);
 
-    public static final DirectionProperty FACING = BaseEnergyBlock.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BaseEnergyBlock.HORIZONTAL_FACING;
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
     public static final BooleanProperty UPGRADED = BooleanProperty.create("upgraded");
 
@@ -116,6 +118,8 @@ public class FluxFurnaceBlock extends AbstractUpgradableMachine<FluxFurnaceBlock
     public void onUpgrade(Level level, BlockState machine, BlockPos blockPos, ItemStack upgradeStack, FluxFurnaceBlockEntity blockEntity) {
         blockEntity.setPerformanceMode(true);
         level.setBlock(blockPos, machine.setValue(UPGRADED, true), Block.UPDATE_ALL);
+        if(level instanceof ServerLevel serverLevel)
+            SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.MACHINE_UPGRADED, blockPos, serverLevel);
     }
 
     @Override
@@ -151,11 +155,11 @@ public class FluxFurnaceBlock extends AbstractUpgradableMachine<FluxFurnaceBlock
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        ItemInteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        InteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        if(result == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION && stack.is(ItemRegistry.MACHINE_KEY))
-            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if(!result.consumesAction() && stack.is(ItemRegistry.MACHINE_KEY))
+            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? InteractionResult.SUCCESS : InteractionResult.TRY_WITH_EMPTY_HAND;
 
 
         return result;

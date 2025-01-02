@@ -11,6 +11,7 @@ import de.crafty.skylife.inventory.screens.BlockBreakerScreen;
 import de.crafty.skylife.inventory.screens.FluxFurnaceScreen;
 import de.crafty.skylife.inventory.screens.OilProcessorScreen;
 import de.crafty.skylife.inventory.screens.SolidFluidMergerScreen;
+import de.crafty.skylife.item.conditional.MobFilled;
 import de.crafty.skylife.registry.*;
 import de.crafty.skylife.item.MobOrbItem;
 import de.crafty.skylife.network.SkyLifeNetworkClient;
@@ -21,11 +22,14 @@ import net.fabricmc.fabric.api.client.render.fluid.v1.SimpleFluidRenderHandler;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.component.CustomData;
 
@@ -33,8 +37,6 @@ public class SkyLifeClient implements ClientModInitializer {
 
 
     private static SkyLifeClient instance;
-
-    private int currentIslandCount = 1;
 
     @Override
     public void onInitializeClient() {
@@ -50,9 +52,8 @@ public class SkyLifeClient implements ClientModInitializer {
                 ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "block/oil_flow")
         ));
 
-        ItemProperties.register(ItemRegistry.MOB_ORB, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "active"), (itemStack, clientLevel, livingEntity, i) -> {
-            return MobOrbItem.readEntityType(itemStack.getOrDefault(DataComponentTypeRegistry.SAVED_ENTITY, CustomData.EMPTY).copyTag()) == null ? 0.0F : 1.0F;
-        });
+        ConditionalItemModelProperties.ID_MAPPER.put(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "mob_filled"), MobFilled.MAP_CODEC);
+
 
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) -> tintIndex == 1 && world != null && pos != null ? BiomeColors.getAverageWaterColor(world, pos) : -1, BlockRegistry.LEAF_PRESS);
 
@@ -82,8 +83,12 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.OIL_FLOWING, RenderType.translucent());
 
         //Entities
-        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP, ResourceSheepEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP_FUR, ResourceSheepEntityFurModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP, ResourceSheepEntityModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP_FUR, ResourceSheepEntityFurModel::createFurLayer);
+
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP_BABY, ResourceSheepEntityModel::createBabyBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP_BABY_FUR, ResourceSheepEntityFurModel::createBabyFurLayer);
+
 
         //BlockEntities
         EntityModelLayerRegistry.registerModelLayer(EntityRegistry.ModelLayers.ENERGY_STORAGE_CORE, EnergyStorageRenderer::createCoreLayer);
@@ -150,6 +155,8 @@ public class SkyLifeClient implements ClientModInitializer {
         EntityRendererRegistry.register(EntityRegistry.COBBLESTONE_SHEEP, ResourceSheepRenderer::new);
         EntityRendererRegistry.register(EntityRegistry.DIRT_SHEEP, ResourceSheepRenderer::new);
 
+        EntityRendererRegistry.register(EntityRegistry.OIL_SHEEP, ResourceSheepRenderer::new);
+
     }
 
 
@@ -157,11 +164,7 @@ public class SkyLifeClient implements ClientModInitializer {
         return instance;
     }
 
-    public int getCurrentIslandCount() {
-        return this.currentIslandCount;
-    }
-
     public void setCurrentIslandCount(int currentIslandCount) {
-        this.currentIslandCount = currentIslandCount;
+        SkyLife.ISLAND_COUNT = currentIslandCount;
     }
 }

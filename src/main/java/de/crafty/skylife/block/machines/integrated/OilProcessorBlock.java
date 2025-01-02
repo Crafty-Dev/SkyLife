@@ -29,7 +29,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
@@ -52,7 +52,7 @@ public class OilProcessorBlock extends BaseFluidEnergyBlock {
     private static final VoxelShape SHAPE_SOUTH = OilProcessorBlock.makeShapeSouth();
     private static final VoxelShape SHAPE_WEST = OilProcessorBlock.makeShapeWest();
 
-    public static final DirectionProperty FACING = BaseEnergyBlock.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BaseEnergyBlock.HORIZONTAL_FACING;
     public static final BooleanProperty ENERGY = BooleanProperty.create("energy");
 
     public OilProcessorBlock(Properties properties) {
@@ -124,12 +124,12 @@ public class OilProcessorBlock extends BaseFluidEnergyBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        ItemInteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+    protected InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        InteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
 
-        if (result == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION && stack.is(ItemRegistry.MACHINE_KEY) && !(player.isCrouching() || player.isShiftKeyDown()))
-            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (!result.consumesAction() && stack.is(ItemRegistry.MACHINE_KEY) && !(player.isCrouching() || player.isShiftKeyDown()))
+            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? InteractionResult.SUCCESS : InteractionResult.TRY_WITH_EMPTY_HAND;
 
 
         return result;

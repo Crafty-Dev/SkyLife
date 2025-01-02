@@ -5,11 +5,15 @@ import de.crafty.lifecompat.energy.block.BaseEnergyBlock;
 import de.crafty.lifecompat.util.EnergyUnitConverter;
 import de.crafty.skylife.block.machines.AbstractUpgradableMachine;
 import de.crafty.skylife.blockentities.machines.integrated.SolarPanelBlockEntity;
+import de.crafty.skylife.network.SkyLifeNetworkServer;
+import de.crafty.skylife.network.payload.SkyLifeClientEventPayload;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -105,7 +109,8 @@ public class SolarPanelBlock extends AbstractUpgradableMachine<SolarPanelBlockEn
     public void onUpgrade(Level level, BlockState machine, BlockPos blockPos, ItemStack upgradeStack, SolarPanelBlockEntity blockEntity) {
         blockEntity.setUpgraded(true);
         level.setBlock(blockPos, machine.setValue(UPGRADED, true), Block.UPDATE_ALL);
-        //TODO Add sound to block and when upgrade applied
+        if (level instanceof ServerLevel serverLevel)
+            SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.MACHINE_UPGRADED, blockPos, serverLevel);
     }
 
     @Override
@@ -139,11 +144,11 @@ public class SolarPanelBlock extends AbstractUpgradableMachine<SolarPanelBlockEn
     }
 
     @Override
-    protected @NotNull ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        ItemInteractionResult result = super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+    protected @NotNull InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        InteractionResult result = super.useItemOn(itemStack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        if (result == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION && itemStack.is(ItemRegistry.MACHINE_KEY))
-            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if (!result.consumesAction() && itemStack.is(ItemRegistry.MACHINE_KEY))
+            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? InteractionResult.SUCCESS : InteractionResult.TRY_WITH_EMPTY_HAND;
 
 
         return result;

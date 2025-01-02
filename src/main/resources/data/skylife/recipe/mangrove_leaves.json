@@ -6,12 +6,8 @@
     "#S#"
   ],
   "key": {
-    "#": {
-      "item": "skylife:mangrove_leaf"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "#": "skylife:mangrove_leaf",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "minecraft:mangrove_leaves",

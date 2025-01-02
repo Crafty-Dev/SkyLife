@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "skylife:stone_piece"
-    }
+    "#": "skylife:stone_piece"
   },
   "result": {
     "id": "minecraft:cobblestone",

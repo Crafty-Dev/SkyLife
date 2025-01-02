@@ -18,6 +18,7 @@ import org.joml.Vector3f;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public class SpawnGenerator {
 
@@ -37,7 +38,7 @@ public class SpawnGenerator {
         if (!(world.getChunkSource().getGenerator() instanceof SkyLifeChunkGenOverworld))
             return;
 
-        SpawnGenerator.genIslands(world, world.getServer().isDedicatedServer() ? SkyLifeServer.getInstance().getIslandCountOnServers() : SkyLifeClient.getInstance().getCurrentIslandCount());
+        SpawnGenerator.genIslands(world, SkyLife.ISLAND_COUNT);
     }
 
 
@@ -58,7 +59,6 @@ public class SpawnGenerator {
             vec.mul((float) radius, (float) 0, (float) radius);
 
             spawns.add(SpawnGenerator.genIsland(world, (int) vec.x(), 63, (int) vec.z()));
-            SkyLife.LOGGER.info(spawns.toArray().toString());
         }
 
         SpawnGenerator.createSpawnLocations(world, spawns);
@@ -100,6 +100,6 @@ public class SpawnGenerator {
         vec.sub(playerVec);
         playerVec.normalize();
 
-        player.teleportTo(world, spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D, (float) (Math.atan2(vec.z(), vec.x()) * 180F / Math.PI) - 90.0F, 0.0F);
+        player.teleportTo(world, spawnPos.getX() + 0.5D, spawnPos.getY(), spawnPos.getZ() + 0.5D, Set.of(), (float) (Math.atan2(vec.z(), vec.x()) * 180F / Math.PI) - 90.0F, 0.0F, true);
     }
 }

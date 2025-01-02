@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "S S",
+        "#S#"
+    ],
+    "key": {
+        "#": "skylife:netherite_dust",
+        "S": "minecraft:redstone_block"
+    },
+    "result": {
+        "id": "skylife:upgrade_module_template",
+        "count": 1
+    }
+}

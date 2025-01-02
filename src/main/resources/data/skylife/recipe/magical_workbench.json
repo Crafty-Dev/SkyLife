@@ -6,15 +6,9 @@
     "#S#"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:crying_obsidian"
-    },
-    "S": {
-      "item": "minecraft:cobblestone"
-    },
-    "F": {
-      "item": "skylife:ender_core"
-    }
+    "#": "minecraft:crying_obsidian",
+    "S": "minecraft:cobblestone",
+    "F": "skylife:ender_core"
   },
   "result": {
     "id": "skylife:magical_workbench",

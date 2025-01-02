@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "skylife:gold_ore_dust"
-    }
+    "#": "skylife:gold_ore_dust"
   },
   "result": {
     "id": "skylife:gold_dust",

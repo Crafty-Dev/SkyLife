@@ -1,26 +1,31 @@
 package de.crafty.skylife.block;
 
+import de.crafty.lifecompat.api.fluid.IFluidProvider;
 import de.crafty.skylife.blockentities.LeafPressBlockEntity;
 import de.crafty.skylife.registry.BlockRegistry;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -29,8 +34,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
-public class LeafPressBlock extends Block implements EntityBlock {
+public class LeafPressBlock extends Block implements EntityBlock, BucketPickup, IFluidProvider {
 
     public static final List<Block> VALID_LEAVES = List.of(
             Blocks.OAK_LEAVES,
@@ -41,7 +47,8 @@ public class LeafPressBlock extends Block implements EntityBlock {
             Blocks.JUNGLE_LEAVES,
             Blocks.MANGROVE_LEAVES,
             Blocks.AZALEA_LEAVES,
-            Blocks.FLOWERING_AZALEA_LEAVES
+            Blocks.FLOWERING_AZALEA_LEAVES,
+            Blocks.CHERRY_LEAVES
     );
 
     public static final IntegerProperty PROGRESS = IntegerProperty.create("progress", 0, 6);
@@ -67,8 +74,8 @@ public class LeafPressBlock extends Block implements EntityBlock {
         }
     });
 
-    public LeafPressBlock() {
-        super(Properties.of().sound(SoundType.WOOD).isRedstoneConductor(Blocks::never).strength(2.0F));
+    public LeafPressBlock(Properties properties) {
+        super(properties);
         this.registerDefaultState(this.getStateDefinition().any().setValue(PROGRESS, 0));
     }
 
@@ -82,11 +89,6 @@ public class LeafPressBlock extends Block implements EntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(PROGRESS, FLUID_LEVEL);
-    }
-
-    @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        return super.useItemOn(stack, state, world, pos, player, hand, hit);
     }
 
     @Override
@@ -152,5 +154,23 @@ public class LeafPressBlock extends Block implements EntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new LeafPressBlockEntity(pos, state);
+    }
+
+    @Override
+    public ItemStack pickupBlock(@Nullable Player player, LevelAccessor levelAccessor, BlockPos pos, BlockState state) {
+        if (state.getValue(FLUID_LEVEL) == 4)
+            levelAccessor.setBlock(pos, state.setValue(FLUID_LEVEL, 0), 3);
+
+        return state.getValue(FLUID_LEVEL) == 4 ? new ItemStack(Items.WATER_BUCKET) : ItemStack.EMPTY;
+    }
+
+    @Override
+    public Optional<SoundEvent> getPickupSound() {
+        return Optional.of(SoundEvents.BUCKET_FILL);
+    }
+
+    @Override
+    public Fluid lifeCompat$provideFluid(LevelAccessor level, BlockPos blockPos, BlockState state) {
+        return state.getValue(FLUID_LEVEL) == 4 ? Fluids.WATER : Fluids.EMPTY;
     }
 }

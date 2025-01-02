@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:netherrack"
-    },
-    "S": {
-      "item": "skylife:quartz_dust"
-    }
+    "#": "minecraft:netherrack",
+    "S": "skylife:quartz_dust"
   },
   "result": {
     "id": "minecraft:nether_quartz_ore",

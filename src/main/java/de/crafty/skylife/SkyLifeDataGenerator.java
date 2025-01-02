@@ -11,9 +11,7 @@ public class SkyLifeDataGenerator implements DataGeneratorEntrypoint {
     public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        System.out.println(fabricDataGenerator.getModId());
-
-        pack.addProvider(SkyLifeAdvancementProvider::create);
+        //pack.addProvider(SkyLifeAdvancementProvider::create);
         pack.addProvider(SkyLifeLootTableProvider::create);
 
     }

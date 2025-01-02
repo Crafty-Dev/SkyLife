@@ -4,12 +4,7 @@ import de.crafty.lifecompat.energy.block.BaseEnergyCable;
 import de.crafty.lifecompat.util.EnergyUnitConverter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Equipable;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -17,9 +12,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import org.jetbrains.annotations.NotNull;
 
-public abstract class SkyLifeEnergyCable extends BaseEnergyCable implements Equipable {
+public abstract class SkyLifeEnergyCable extends BaseEnergyCable {
 
     public static final VoxelShape DEFAULT_SHAPE = Block.box(6.0D, 6.0D, 6.0D, 10.0D, 10.0D, 10.0D);
 
@@ -92,9 +86,4 @@ public abstract class SkyLifeEnergyCable extends BaseEnergyCable implements Equi
         }
     }
 
-
-    @Override
-    public @NotNull EquipmentSlot getEquipmentSlot() {
-        return EquipmentSlot.HEAD;
-    }
 }

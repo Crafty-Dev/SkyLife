@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DED",
+        "C#C",
+        "DFD"
+    ],
+    "key": {
+        "#": "skylife:input_module",
+        "C": "skylife:copper_coil",
+        "E": "skylife:enhanced_copper_coil",
+        "D": "minecraft:deepslate_tiles",
+        "F": "minecraft:furnace"
+    },
+    "result": {
+        "id": "skylife:flux_furnace",
+        "count": 1
+    }
+}

@@ -3,19 +3,21 @@
   "package": "de.crafty.skylife.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "core.dispenser.MixinShearsDispenseItemBehavior",
     "fluid.MixinFlowingFluid",
     "world.entity.animal.MixinAnimal",
+    "world.entity.animal.MixinLivingEntity",
     "world.entity.animal.MixinSheep",
     "world.gen.MixinWorldPresets",
     "world.level.block.LiquidBlockAccessor",
     "world.level.dimension.end.MixinEndDragonFight",
-    "world.level.levelgen.MixinPhantomSpawner"
+    "world.level.levelgen.MixinPhantomSpawner",
+    "world.level.levelgen.structure.MixinStructure"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "MixinChestRenderer",
     "client.gui.screens.MixinTitleScreen",
     "client.gui.screens.worldselection.MixinCreateWorldScreen"
   ]

@@ -9,8 +9,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.SwordItem;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockBreakerMenu extends AbstractEnergyContainerMenu {
@@ -118,7 +119,7 @@ public class BlockBreakerMenu extends AbstractEnergyContainerMenu {
 
         @Override
         public boolean mayPlace(ItemStack itemStack) {
-            return !itemStack.isEmpty() && itemStack.getItem() instanceof TieredItem;
+            return !itemStack.isEmpty() && (itemStack.getItem() instanceof DiggerItem || itemStack.getItem() instanceof SwordItem);
         }
     }
 }

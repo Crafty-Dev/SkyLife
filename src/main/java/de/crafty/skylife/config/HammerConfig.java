@@ -10,8 +10,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
@@ -32,7 +31,7 @@ public class HammerConfig extends AbstractSkyLifeConfig {
         //Recipe encoding in Data-JsonObject
         this.encodeRecipes();
         //At which hammer-tier items should start dropping together
-        this.data().addProperty("precisionDropTier", String.valueOf(Tiers.GOLD).toLowerCase());
+        this.data().addProperty("precisionDropTier", "GOLD".toLowerCase());
     }
 
     @Override
@@ -41,8 +40,16 @@ public class HammerConfig extends AbstractSkyLifeConfig {
         this.decodeRecipes();
     }
 
-    public Tier getPrecisionDropTier(){
-        return Tiers.valueOf(this.data().get("precisionDropTier").getAsString().toUpperCase());
+    public ToolMaterial getPrecisionDropTier() {
+        String tierString = this.data().get("precisionDropTier").getAsString().toUpperCase();
+        return switch (tierString) {
+            case "STONE" -> ToolMaterial.STONE;
+            case "IRON" -> ToolMaterial.IRON;
+            case "GOLD" -> ToolMaterial.GOLD;
+            case "DIAMOND" -> ToolMaterial.DIAMOND;
+            case "NETHERITE" -> ToolMaterial.NETHERITE;
+            default -> ToolMaterial.WOOD;
+        };
     }
 
     private void decodeRecipes() {
@@ -60,11 +67,11 @@ public class HammerConfig extends AbstractSkyLifeConfig {
 
             blockGroup.forEach(e1 -> {
                 String id = e1.getAsString();
-                blocks.add(BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(id)));
+                blocks.add(BuiltInRegistries.BLOCK.getValue(ResourceLocation.tryParse(id)));
             });
             outputs.forEach(e1 -> {
                 JsonObject output = e1.getAsJsonObject();
-                Item item = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(output.get("item").getAsString()));
+                Item item = BuiltInRegistries.ITEM.getValue(ResourceLocation.tryParse(output.get("item").getAsString()));
                 float chance = output.get("chance").getAsFloat();
                 int min = output.get("min").getAsInt();
                 int max = output.get("max").getAsInt();
@@ -178,7 +185,6 @@ public class HammerConfig extends AbstractSkyLifeConfig {
 
         this.registerDrops(Blocks.NETHERRACK,
                 new HammerDrop(ItemRegistry.GLOWSTONE_ORE_DUST, 0.65F, 1, 3, 0.5F),
-                new HammerDrop(ItemRegistry.QUARTZ_ORE_DUST, 0.3F, 1, 4, 0.2F),
                 new HammerDrop(ItemRegistry.NETHERITE_ORE_DUST, 0.05F, 1, 1, 0.0F),
                 new HammerDrop(ItemRegistry.NETHERRACK_PIECE, 0.75F, 1, 2, 0.5F)
         );
@@ -192,13 +198,17 @@ public class HammerConfig extends AbstractSkyLifeConfig {
                 Blocks.ACACIA_LOG,
                 Blocks.JUNGLE_LOG,
                 Blocks.MANGROVE_LOG,
+                Blocks.CHERRY_LOG,
+                Blocks.PALE_OAK_LOG,
                 Blocks.OAK_WOOD,
                 Blocks.BIRCH_WOOD,
                 Blocks.SPRUCE_WOOD,
                 Blocks.DARK_OAK_WOOD,
                 Blocks.ACACIA_WOOD,
                 Blocks.JUNGLE_WOOD,
-                Blocks.MANGROVE_WOOD
+                Blocks.MANGROVE_WOOD,
+                Blocks.CHERRY_WOOD,
+                Blocks.PALE_OAK_WOOD
         ), new HammerDrop(ItemRegistry.WOOD_DUST, 1.0F, 2, 4, 0.5F));
 
         this.registerDrops(List.of(
@@ -208,7 +218,9 @@ public class HammerConfig extends AbstractSkyLifeConfig {
                 Blocks.DARK_OAK_PLANKS,
                 Blocks.ACACIA_PLANKS,
                 Blocks.JUNGLE_PLANKS,
-                Blocks.MANGROVE_PLANKS
+                Blocks.MANGROVE_PLANKS,
+                Blocks.CHERRY_PLANKS,
+                Blocks.PALE_OAK_PLANKS
         ), new HammerDrop(ItemRegistry.WOOD_DUST, 1.0F, 1, 3, 0.5F));
 
         this.registerDrops(Blocks.ROOTED_DIRT,

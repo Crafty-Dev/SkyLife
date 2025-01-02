@@ -34,7 +34,7 @@ public class BriquetteGeneratorBlockEntity extends AbstractEnergyProvider {
 
 
     private ItemStack briquetteStack = ItemStack.EMPTY;
-    private long currentTick = 0;
+    private int currentTick = 0;
 
     public BriquetteGeneratorBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(BlockEntityRegistry.BRIQUETTE_GENERATOR, blockPos, blockState, BlockRegistry.BRIQUETTE_GENERATOR.getCapacity());
@@ -68,15 +68,19 @@ public class BriquetteGeneratorBlockEntity extends AbstractEnergyProvider {
         super.saveAdditional(tag, provider);
 
         tag.put("briquette", this.briquetteStack.saveOptional(provider));
-        tag.putLong("currentTick", this.currentTick);
+        tag.putInt("currentTick", this.currentTick);
+
+        System.out.println("Saved: " + tag);
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
         super.loadAdditional(tag, provider);
 
+        System.out.println("Loading: " + tag);
+
         this.briquetteStack = ItemStack.parseOptional(provider, tag.getCompound("briquette"));
-        this.currentTick = tag.getLong("currentTick");
+        this.currentTick = tag.getInt("currentTick");
     }
 
     @Override

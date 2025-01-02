@@ -6,12 +6,8 @@
     "#S#"
   ],
   "key": {
-    "#": {
-      "item": "skylife:birch_leaf"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "#": "skylife:birch_leaf",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "minecraft:birch_leaves",

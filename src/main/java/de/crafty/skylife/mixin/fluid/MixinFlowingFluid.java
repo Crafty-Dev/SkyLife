@@ -26,7 +26,7 @@ public abstract class MixinFlowingFluid extends Fluid {
 
 
     @Inject(method = "canHoldFluid", at = @At("HEAD"), cancellable = true)
-    private void injectPortalWaterDestroyLogic(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid, CallbackInfoReturnable<Boolean> cir) {
+    private static void injectPortalWaterDestroyLogic(BlockGetter world, BlockPos pos, BlockState state, Fluid fluid, CallbackInfoReturnable<Boolean> cir) {
         if (state.getBlock() instanceof EndPortalBlock && world instanceof Level w && w.dimension() != Level.END && fluid.isSame(Fluids.LAVA))
             cir.setReturnValue(true);
     }

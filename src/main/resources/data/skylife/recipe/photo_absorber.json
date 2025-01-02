@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "SCS",
+        "#S#"
+    ],
+    "key": {
+        "#": "skylife:vp_resistant_metal",
+        "S": "#c:glass_panes",
+        "C": "skylife:copper_coil"
+    },
+    "result": {
+        "id": "skylife:photo_absorber",
+        "count": 1
+    }
+}

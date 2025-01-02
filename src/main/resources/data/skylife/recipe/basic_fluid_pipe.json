@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "TTT",
+        "SBS",
+        "TTT"
+    ],
+    "key": {
+        "T": "minecraft:polished_tuff",
+        "B": "minecraft:bucket",
+        "S": "skylife:sturdy_iron"
+    },
+    "result": {
+        "id": "skylife:basic_fluid_pipe",
+        "count": 6
+    }
+}

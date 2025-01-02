@@ -18,7 +18,7 @@ public class SkyLifeServer implements DedicatedServerModInitializer {
 
         Path path2 = Paths.get("server.properties");
         this.serverSettings = new DedicatedServerSettings(path2);
-        this.serverSettings.getProperties().get("islandCount", 10);
+        SkyLife.ISLAND_COUNT = this.serverSettings.getProperties().get("islandCount", 10);
         this.serverSettings.forceSave();
     }
 

@@ -69,7 +69,7 @@ public class OilProcessingConfig extends AbstractSkyLifeConfig {
     public void load() {
         super.load();
 
-        this.noPI_result = BuiltInRegistries.ITEM.get(ResourceLocation.parse(this.data().get("noPI_result").getAsString()));
+        this.noPI_result = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(this.data().get("noPI_result").getAsString()));
         this.decodeRecipes();
     }
 
@@ -97,11 +97,11 @@ public class OilProcessingConfig extends AbstractSkyLifeConfig {
 
         this.data().getAsJsonObject("recipes").keySet().forEach(key -> {
 
-            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.parse(key));
+            Item item = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(key));
             JsonObject recipeJson = this.data().getAsJsonObject("recipes").getAsJsonObject(key);
 
             this.recipes.put(item, new ProcessingRecipe(item,
-                    BuiltInRegistries.ITEM.get(ResourceLocation.parse(recipeJson.get("output").getAsString())),
+                    BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(recipeJson.get("output").getAsString())),
                     recipeJson.get("outputCount").getAsInt(),
                     recipeJson.get("requiredLiquid").getAsInt(),
                     recipeJson.get("processingTime").getAsInt()

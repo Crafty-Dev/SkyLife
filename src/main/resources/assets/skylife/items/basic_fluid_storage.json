@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "skylife:block/basic_fluid_storage"
+  }
+}

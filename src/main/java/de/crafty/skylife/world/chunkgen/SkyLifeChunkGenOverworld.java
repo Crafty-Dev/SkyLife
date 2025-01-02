@@ -58,7 +58,11 @@ public class SkyLifeChunkGenOverworld extends AbstractSkyLifeChunkGenerator {
     public void applyBiomeDecoration(WorldGenLevel world, ChunkAccess chunk, StructureManager structureAccessor) {
         ChunkPos chunkPos = chunk.getPos();
 
-        int islandCount = world.getLevel().getServer().isDedicatedServer() ? SkyLifeServer.getInstance().getIslandCountOnServers() : SkyLifeClient.getInstance().getCurrentIslandCount();
+        super.applyBiomeDecoration(world, chunk, structureAccessor);
+    }
+
+
+    public boolean isAllowedToSpawn(int islandCount, ChunkPos chunkPos) {
 
         double distance = 75.0F;
         double circumference = (islandCount - 1) * distance;
@@ -66,9 +70,9 @@ public class SkyLifeChunkGenOverworld extends AbstractSkyLifeChunkGenerator {
 
         int structureFreeRadius = (int) (radius + 50);
 
-        if (chunkPos.getMinBlockX() > -structureFreeRadius && chunkPos.getMinBlockX() < structureFreeRadius && chunkPos.getMinBlockZ() > -structureFreeRadius && chunkPos.getMinBlockZ() < structureFreeRadius)
-            return;
+        if (chunkPos.getMinBlockX() > -structureFreeRadius && chunkPos.getMaxBlockX() < structureFreeRadius && chunkPos.getMaxBlockZ() > -structureFreeRadius && chunkPos.getMinBlockZ() < structureFreeRadius)
+            return false;
 
-        super.applyBiomeDecoration(world, chunk, structureAccessor);
+        return true;
     }
 }

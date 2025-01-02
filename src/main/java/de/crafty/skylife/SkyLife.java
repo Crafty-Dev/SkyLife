@@ -5,6 +5,7 @@ import de.crafty.lifecompat.api.event.EventManager;
 import de.crafty.lifecompat.api.fluid.FluidCompatibility;
 import de.crafty.lifecompat.events.BaseEvents;
 import de.crafty.skylife.advancements.SkyLifeCriteriaTriggers;
+import de.crafty.skylife.command.SkyLifeCommand;
 import de.crafty.skylife.config.SkyLifeConfigs;
 import de.crafty.skylife.events.listener.*;
 import de.crafty.skylife.registry.*;
@@ -12,15 +13,15 @@ import de.crafty.skylife.network.SkyLifeNetworkManager;
 import de.crafty.skylife.network.SkyLifeNetworkServer;
 import de.crafty.skylife.structure.resource_island.ResourceIslandStructure;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
-import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SkyLife implements ModInitializer {
+
+    public static int ISLAND_COUNT = 1;
 
     public static final String MODID = "skylife";
     public static final Logger LOGGER = LoggerFactory.getLogger("Skylife");
@@ -34,8 +35,8 @@ public class SkyLife implements ModInitializer {
         instance = this;
         LOGGER.info("Hello Minecraft!");
 
-        ItemRegistry.perform();
-        BlockRegistry.perform();
+        ItemRegistry.load();
+        BlockRegistry.load();
         ChunkGenRegistry.perform();
         ItemGroupRegistry.perform();
         BlockEntityRegistry.perform();
@@ -66,13 +67,7 @@ public class SkyLife implements ModInitializer {
         FluidCompatibility.addCauldronSupport(FluidRegistry.MOLTEN_OBSIDIAN, BlockRegistry.MOLTEN_OBSIDIAN_CAULDRON, SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA);
         FluidCompatibility.addCauldronSupport(FluidRegistry.OIL, BlockRegistry.OIL_CAULDRON, SoundEvents.BUCKET_FILL_LAVA, SoundEvents.BUCKET_EMPTY_LAVA);
 
-        SkyLifeConfigs.HAMMER.load();
-        SkyLifeConfigs.BLOCK_TRANSFORMATION.load();
-        SkyLifeConfigs.SAPLING_GROWTH_CONFIG.load();
-        SkyLifeConfigs.BLOCK_MELTING.load();
-        SkyLifeConfigs.LEAF_DROP.load();
-        SkyLifeConfigs.FLUID_CONVERSION.load();
-        SkyLifeConfigs.OIL_PROCESSING.load();
+        this.loadConfigs();
 
         SkyLifeNetworkManager.registerPackets();
         SkyLifeNetworkServer.registerServerReceivers();
@@ -91,8 +86,20 @@ public class SkyLife implements ModInitializer {
         EventManager.registerListener(BaseEvents.ITEM_TICK, new ItemTickListener());
 
         EventManager.registerListener(BaseEvents.BLOCK_ENTITY_LOAD, new BlockEntityLoadListener());
+
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> SkyLifeCommand.register(dispatcher));
     }
 
+    public void loadConfigs(){
+        SkyLifeConfigs.HAMMER.load();
+        SkyLifeConfigs.BLOCK_TRANSFORMATION.load();
+        SkyLifeConfigs.SAPLING_GROWTH_CONFIG.load();
+        SkyLifeConfigs.BLOCK_MELTING.load();
+        SkyLifeConfigs.LEAF_DROP.load();
+        SkyLifeConfigs.FLUID_CONVERSION.load();
+        SkyLifeConfigs.OIL_PROCESSING.load();
+        SkyLifeConfigs.LOOT_GEM.load();
+    }
 
     public static SkyLife getInstance() {
         return instance;

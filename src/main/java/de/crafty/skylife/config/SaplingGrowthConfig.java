@@ -63,7 +63,7 @@ public class SaplingGrowthConfig extends AbstractSkyLifeConfig {
 
         JsonArray excluded = this.data().getAsJsonArray("excludedSaplings");
         excluded.forEach(id -> {
-            excludedSaplings.add(BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(id.getAsString())));
+            excludedSaplings.add(BuiltInRegistries.BLOCK.getValue(ResourceLocation.tryParse(id.getAsString())));
         });
         this.excludedSaplings = excludedSaplings;
     }

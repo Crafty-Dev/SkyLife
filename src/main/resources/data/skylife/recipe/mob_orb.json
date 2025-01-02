@@ -6,15 +6,9 @@
     "SIS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:ender_eye"
-    },
-    "S": {
-      "item": "minecraft:glass"
-    },
-    "I": {
-      "item": "minecraft:iron_ingot"
-    }
+    "#": "minecraft:ender_eye",
+    "S": "minecraft:glass",
+    "I": "minecraft:iron_ingot"
   },
   "result": {
     "id": "skylife:mob_orb",

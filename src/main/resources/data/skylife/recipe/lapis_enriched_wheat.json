@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:lapis_lazuli"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:lapis_lazuli",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:lapis_enriched_wheat"

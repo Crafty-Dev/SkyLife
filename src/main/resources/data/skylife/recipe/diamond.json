@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.7,
-  "ingredient": {
-    "item": "skylife:diamond_dust"
-  },
+  "ingredient": "skylife:diamond_dust",
   "result": {
     "id": "minecraft:diamond"
   }

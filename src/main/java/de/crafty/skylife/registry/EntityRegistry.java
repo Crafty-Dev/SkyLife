@@ -6,6 +6,8 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,8 +37,11 @@ public class EntityRegistry {
     public static final EntityType<ResourceSheepEntity> COBBLESTONE_SHEEP = registerResourceSheep("cobblestone_sheep", ResourceSheepEntity.Type.COBBLESTONE);
     public static final EntityType<ResourceSheepEntity> DIRT_SHEEP = registerResourceSheep("dirt_sheep", ResourceSheepEntity.Type.DIRT);
 
+    public static final EntityType<ResourceSheepEntity> OIL_SHEEP = registerResourceSheep("oil_sheep", ResourceSheepEntity.Type.OIL);
+
+
     private static <T extends LivingEntity> EntityType<T> registerLivingEntity(String id, EntityType.Builder<T> builder, AttributeSupplier.Builder attributes) {
-        EntityType<T> type = builder.build(id);
+        EntityType<T> type = builder.build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, id)));
         LIVING_ENTITY_TYPES.put(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, id), type);
         ATTRIBUTES.put(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, id), attributes.build());
         return type;
@@ -60,6 +65,9 @@ public class EntityRegistry {
         //Entity
         public static final ModelLayerLocation RESOURCE_SHEEP = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "resourcesheep"), "main");
         public static final ModelLayerLocation RESOURCE_SHEEP_FUR = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "resourcesheep"), "fur");
+        public static final ModelLayerLocation RESOURCE_SHEEP_BABY = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "resourcesheep_baby"), "main");
+        public static final ModelLayerLocation RESOURCE_SHEEP_BABY_FUR = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "resourcesheep_baby"), "fur");
+
 
         //BlockEntity
         public static final ModelLayerLocation ENERGY_STORAGE_CORE = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "energystorage"), "core");

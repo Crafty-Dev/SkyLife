@@ -54,19 +54,19 @@ public class BlockTransformationConfig extends AbstractSkyLifeConfig {
     private void decodeTransformations() {
         LinkedHashMap<Item, List<BlockTransformation>> blockTransformations = new LinkedHashMap<>();
         this.data().keySet().forEach(itemid -> {
-            Item item = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(itemid));
+            Item item = BuiltInRegistries.ITEM.getValue(ResourceLocation.tryParse(itemid));
             List<BlockTransformation> transformations = new ArrayList<>();
 
             this.data().getAsJsonArray(itemid).forEach(e -> {
                 JsonObject transformation = e.getAsJsonObject();
 
-                Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(transformation.get("block").getAsString()));
+                Block block = BuiltInRegistries.BLOCK.getValue(ResourceLocation.tryParse(transformation.get("block").getAsString()));
                 BlockState result = BlockState.CODEC.decode(JsonOps.INSTANCE, transformation.get("result").getAsJsonObject()).getOrThrow().getFirst();
                 List<TransformCondition> conditions = new ArrayList<>();
                 transformation.getAsJsonArray("conditions").forEach(e1 -> {
                     conditions.add(TransformCondition.decodeCondition(e1.getAsJsonObject()));
                 });
-                SoundEvent sound = BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.tryParse(transformation.get("sound").getAsString()));
+                SoundEvent sound = BuiltInRegistries.SOUND_EVENT.getValue(ResourceLocation.tryParse(transformation.get("sound").getAsString()));
                 ItemStack remainder = transformation.get("remainder").getAsJsonObject().isEmpty() ? ItemStack.EMPTY : ItemStack.CODEC.decode(JsonOps.INSTANCE, transformation.get("remainder").getAsJsonObject()).getOrThrow().getFirst();
                 ItemStack representable = transformation.has("representable") ? ItemStack.CODEC.decode(JsonOps.INSTANCE, transformation.getAsJsonObject("representable")).getOrThrow().getFirst() : null;
                 transformations.add(new BlockTransformation(block, result, conditions, sound, remainder, representable));
@@ -171,7 +171,48 @@ public class BlockTransformationConfig extends AbstractSkyLifeConfig {
                         SoundEvents.PHANTOM_AMBIENT,
                         new ItemStack(ItemRegistry.MOB_ORB),
                         createDisplayableMobOrb(EntityType.PHANTOM)
-                ));
+                ),
+                new BlockTransformation(
+                        Blocks.OAK_LOG,
+                        Blocks.PALE_OAK_LOG.defaultBlockState(),
+                        List.of(TransformCondition.mobOrb(EntityType.SKELETON)),
+                        SoundEvents.SKELETON_AMBIENT,
+                        new ItemStack(ItemRegistry.MOB_ORB),
+                        createDisplayableMobOrb(EntityType.SKELETON)
+                ),
+                new BlockTransformation(
+                        Blocks.OAK_WOOD,
+                        Blocks.PALE_OAK_WOOD.defaultBlockState(),
+                        List.of(TransformCondition.mobOrb(EntityType.SKELETON)),
+                        SoundEvents.SKELETON_AMBIENT,
+                        new ItemStack(ItemRegistry.MOB_ORB),
+                        createDisplayableMobOrb(EntityType.SKELETON)
+                ),
+                new BlockTransformation(
+                        Blocks.OAK_PLANKS,
+                        Blocks.PALE_OAK_PLANKS.defaultBlockState(),
+                        List.of(TransformCondition.mobOrb(EntityType.SKELETON)),
+                        SoundEvents.SKELETON_AMBIENT,
+                        new ItemStack(ItemRegistry.MOB_ORB),
+                        createDisplayableMobOrb(EntityType.SKELETON)
+                ),
+                new BlockTransformation(
+                        Blocks.OAK_SAPLING,
+                        Blocks.PALE_OAK_SAPLING.defaultBlockState(),
+                        List.of(TransformCondition.mobOrb(EntityType.SKELETON)),
+                        SoundEvents.SKELETON_AMBIENT,
+                        new ItemStack(ItemRegistry.MOB_ORB),
+                        createDisplayableMobOrb(EntityType.SKELETON)
+                ),
+                new BlockTransformation(
+                        Blocks.MOSS_BLOCK,
+                        Blocks.PALE_MOSS_BLOCK.defaultBlockState(),
+                        List.of(TransformCondition.mobOrb(EntityType.SKELETON)),
+                        SoundEvents.SKELETON_AMBIENT,
+                        new ItemStack(ItemRegistry.MOB_ORB),
+                        createDisplayableMobOrb(EntityType.SKELETON)
+                )
+        );
     }
 
     private static ItemStack createDisplayableMobOrb(EntityType<?> entityType){
@@ -338,7 +379,7 @@ public class BlockTransformationConfig extends AbstractSkyLifeConfig {
 
         @Override
         void decode(JsonObject encoded) {
-            this.type = BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.tryParse(encoded.get("mobType").getAsString()));
+            this.type = BuiltInRegistries.ENTITY_TYPE.getValue(ResourceLocation.tryParse(encoded.get("mobType").getAsString()));
         }
 
         @Override

@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:redstone"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:redstone",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:redstone_enriched_wheat"

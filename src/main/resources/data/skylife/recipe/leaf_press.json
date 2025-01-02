@@ -6,18 +6,10 @@
         "#P#"
     ],
     "key": {
-        "#": {
-            "tag": "minecraft:logs"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        },
-        "X": {
-            "tag": "minecraft:wooden_slabs"
-        },
-        "P": {
-            "tag": "minecraft:planks"
-        }
+        "#": "#minecraft:logs",
+        "S": "minecraft:stick",
+        "X": "#minecraft:wooden_slabs",
+        "P": "#minecraft:planks"
     },
     "result": {
         "id": "skylife:leaf_press",

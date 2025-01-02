@@ -176,7 +176,6 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
         this.meltingStack = ItemStack.parseOptional(provider, tag.getCompound("meltingStack"));
 
-        System.out.println("Loaded");
         this.meltingProgress = tag.getInt("meltingProgress");
         this.totalMeltingTime = tag.getInt("totalMeltingTime");
         this.upgraded = tag.getBoolean("upgraded");

@@ -6,15 +6,9 @@
     "III"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:redstone"
-    },
-    "G": {
-      "tag": "c:glass_panes"
-    },
-    "I": {
-      "item": "skylife:sturdy_iron"
-    }
+    "#": "minecraft:redstone",
+    "G": "#c:glass_panes",
+    "I": "skylife:sturdy_iron"
   },
   "result": {
     "id": "skylife:basic_energy_cable",

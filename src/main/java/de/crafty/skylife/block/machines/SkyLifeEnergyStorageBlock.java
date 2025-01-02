@@ -13,7 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -22,13 +22,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class SkyLifeEnergyStorageBlock extends BaseEnergyBlock {
 
-    public static final DirectionProperty FACING = BaseEnergyBlock.HORIZONTAL_FACING;
+    public static final EnumProperty<Direction> FACING = BaseEnergyBlock.HORIZONTAL_FACING;
 
 
     public SkyLifeEnergyStorageBlock(Properties properties, Tier tier) {
@@ -69,9 +69,9 @@ public abstract class SkyLifeEnergyStorageBlock extends BaseEnergyBlock {
             return result;
 
         if(level.getBlockEntity(blockPos) instanceof IEnergyHolder holder && level.isClientSide())
-            player.sendSystemMessage(Component.translatable("energy.lifecompat.stored.container").append(": ").withStyle(ChatFormatting.GRAY).append(Component.literal(EnergyUnitConverter.format(holder.getStoredEnergy())).withStyle(ChatFormatting.DARK_PURPLE)));
+            player.displayClientMessage(Component.translatable("energy.lifecompat.stored.container").append(": ").withStyle(ChatFormatting.GRAY).append(Component.literal(EnergyUnitConverter.format(holder.getStoredEnergy())).withStyle(ChatFormatting.DARK_PURPLE)), false);
 
-        return InteractionResult.sidedSuccess(level.isClientSide());
+        return InteractionResult.SUCCESS;
     }
 
 
@@ -92,8 +92,8 @@ public abstract class SkyLifeEnergyStorageBlock extends BaseEnergyBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        return itemStack.is(ItemRegistry.MACHINE_KEY) && this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+    protected InteractionResult useItemOn(ItemStack itemStack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        return itemStack.is(ItemRegistry.MACHINE_KEY) && this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? InteractionResult.SUCCESS : InteractionResult.PASS;
     }
 
     public enum Tier {

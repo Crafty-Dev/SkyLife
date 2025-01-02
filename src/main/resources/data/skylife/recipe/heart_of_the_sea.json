@@ -6,24 +6,12 @@
     "HSI"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:glow_ink_sac"
-    },
-    "S": {
-      "item": "minecraft:ink_sac"
-    },
-    "F": {
-      "item": "minecraft:cod"
-    },
-    "G": {
-      "item": "minecraft:salmon"
-    },
-    "H": {
-      "item": "minecraft:tropical_fish"
-    },
-    "I": {
-      "item": "minecraft:pufferfish"
-    }
+    "#": "minecraft:glow_ink_sac",
+    "S": "minecraft:ink_sac",
+    "F": "minecraft:cod",
+    "G": "minecraft:salmon",
+    "H": "minecraft:tropical_fish",
+    "I": "minecraft:pufferfish"
   },
   "result": {
     "id": "minecraft:heart_of_the_sea",

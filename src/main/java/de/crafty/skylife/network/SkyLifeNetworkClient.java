@@ -86,7 +86,17 @@ public class SkyLifeNetworkClient {
                 break;
             case BM_PLACE_ITEM:
                 level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.BLOCKS, 1.0F, 0.5F, true);
+                break;
 
+            case MACHINE_UPGRADED:
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.COPPER_GRATE_PLACE, SoundSource.BLOCKS, 1.0F, 0.25F, true);
+                break;
+
+            case LOOT_GEM_NORMAL:
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 0.25F, 1.5F, true);
+                break;
+            case LOOT_GEM_RARE:
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.PLAYER_LEVELUP, SoundSource.PLAYERS, 1.0F, 1.0F, true);
             default:
         }
     }

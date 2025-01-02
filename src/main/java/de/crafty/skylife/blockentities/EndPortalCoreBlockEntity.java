@@ -6,6 +6,7 @@ import de.crafty.skylife.registry.BlockRegistry;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.core.BlockPos;
@@ -144,15 +145,16 @@ public class EndPortalCoreBlockEntity extends BlockEntity {
 
             for(float x = 0; x < 3.0F; x += 0.25F){
                 Vector3f particlePos = new Vector3f(pos.getX() - 1 + x, pos.getY() + 1.0F - 0.1875F, pos.getZ() - 1);
-                level.addParticle(new DustParticleOptions(new Vector3f(50 / 255.0F, 65 / 255.0F, 130 / 255.0F), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
+
+                level.addParticle(new DustParticleOptions(new Color(50, 65, 130).getRGB(), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
                 particlePos.add(0.0F, 0.0F, 3.0F);
-                level.addParticle(new DustParticleOptions(new Vector3f(50 / 255.0F, 65 / 255.0F, 130 / 255.0F), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
+                level.addParticle(new DustParticleOptions(new Color(50, 65, 130).getRGB(), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
             }
             for(float z = 0; z < 3.0F; z += 0.25F){
                 Vector3f particlePos = new Vector3f(pos.getX() - 1, pos.getY() + 1.0F - 0.1875F, pos.getZ() - 1 + z);
-                level.addParticle(new DustParticleOptions(new Vector3f(50 / 255.0F, 65 / 255.0F, 130 / 255.0F), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
+                level.addParticle(new DustParticleOptions(new Color(50, 65, 130).getRGB(), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
                 particlePos.add(3.0F, 0.0F, 0.0F);
-                level.addParticle(new DustParticleOptions(new Vector3f(50 / 255.0F, 65 / 255.0F, 130 / 255.0F), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
+                level.addParticle(new DustParticleOptions(new Color(50, 65, 130).getRGB(), 1), particlePos.x(), particlePos.y(), particlePos.z(), 0.0D, 0.0D, 0.0D);
             }
         }
     }

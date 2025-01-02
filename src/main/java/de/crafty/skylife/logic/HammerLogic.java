@@ -11,13 +11,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,16 +28,16 @@ import java.util.List;
 
 public class HammerLogic {
 
-    private static final LinkedList<Tier> TIER_ORDER = new LinkedList<>(List.of(
-            Tiers.WOOD,
-            Tiers.STONE,
-            Tiers.IRON,
-            Tiers.GOLD,
-            Tiers.DIAMOND,
-            Tiers.NETHERITE
+    private static final LinkedList<ToolMaterial> TIER_ORDER = new LinkedList<>(List.of(
+            ToolMaterial.WOOD,
+            ToolMaterial.STONE,
+            ToolMaterial.IRON,
+            ToolMaterial.GOLD,
+            ToolMaterial.DIAMOND,
+            ToolMaterial.NETHERITE
     ));
 
-    public static void onBlockHammering(Player player, Level level, BlockPos blockPos, BlockState state){
+    public static void onBlockHammering(Player player, Level level, BlockPos blockPos, BlockState state) {
 
         ItemStack heldStack = player.getItemInHand(InteractionHand.MAIN_HAND);
 
@@ -50,10 +51,13 @@ public class HammerLogic {
             return;
 
 
+        level.setBlock(blockPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
+        heldStack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+
         HammerLogic.handleEffects(serverLevel, serverPlayer, blockPos, state);
 
         for (ItemStack stack : HammerLogic.getRandomDrop(state.getBlock(), serverLevel)) {
-            if(HammerLogic.isGoodHammer(hammer)){
+            if (HammerLogic.isGoodHammer(hammer)) {
                 ItemEntity item = new ItemEntity(serverLevel, blockPos.getX() + 0.5D, blockPos.getY() + 0.125D, blockPos.getZ() + 0.5D, stack);
                 item.setDeltaMovement(0.0D, 0.0D, 0.0D);
                 serverLevel.addFreshEntity(item);
@@ -65,12 +69,12 @@ public class HammerLogic {
 
     }
 
-    private static boolean isGoodHammer(HammerItem item){
-        return TIER_ORDER.indexOf(item.getTier()) >= TIER_ORDER.indexOf(SkyLifeConfigs.HAMMER.getPrecisionDropTier());
+    private static boolean isGoodHammer(HammerItem item) {
+        return TIER_ORDER.indexOf(item.getMaterial()) >= TIER_ORDER.indexOf(SkyLifeConfigs.HAMMER.getPrecisionDropTier());
     }
 
-    public static void handleEffects(ServerLevel serverWorld, @Nullable ServerPlayer serverPlayer, BlockPos blockPos, BlockState state){
-        if(serverPlayer != null)
+    public static void handleEffects(ServerLevel serverWorld, @Nullable ServerPlayer serverPlayer, BlockPos blockPos, BlockState state) {
+        if (serverPlayer != null)
             serverPlayer.playNotifySound(state.getSoundType().getBreakSound(), SoundSource.BLOCKS, 0.5F, 0.5F);
 
         int xParticles = 3;

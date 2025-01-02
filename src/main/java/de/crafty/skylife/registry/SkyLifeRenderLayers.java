@@ -8,6 +8,7 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.TriState;
 
 public class SkyLifeRenderLayers {
 
@@ -21,7 +22,7 @@ public class SkyLifeRenderLayers {
                     true,
                     RenderType.CompositeState.builder()
                             .setShaderState(RenderStateShard.RENDERTYPE_TEXT_SHADER)
-                            .setTextureState(new RenderStateShard.TextureStateShard(texture, false, false))
+                            .setTextureState(new RenderStateShard.TextureStateShard(texture, TriState.FALSE, false))
                             .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                             .setLightmapState(RenderStateShard.LIGHTMAP)
                             .createCompositeState(false)

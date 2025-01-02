@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "skylife:netherite_ore_dust"
-    }
+    "#": "skylife:netherite_ore_dust"
   },
   "result": {
     "id": "skylife:netherite_dust",

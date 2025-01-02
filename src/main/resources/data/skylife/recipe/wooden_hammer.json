@@ -6,12 +6,8 @@
     "#  "
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "tag": "minecraft:planks"
-    }
+    "#": "minecraft:stick",
+    "S": "#minecraft:planks"
   },
   "result": {
     "id": "skylife:wooden_hammer",

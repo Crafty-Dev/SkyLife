@@ -6,15 +6,9 @@
     "#S#"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:bone"
-    },
-    "S": {
-      "item": "minecraft:rotten_flesh"
-    },
-    "F": {
-      "item": "minecraft:fermented_spider_eye"
-    }
+    "#": "minecraft:bone",
+    "S": "minecraft:rotten_flesh",
+    "F": "minecraft:fermented_spider_eye"
   },
   "result": {
     "id": "skylife:rotten_mixture",

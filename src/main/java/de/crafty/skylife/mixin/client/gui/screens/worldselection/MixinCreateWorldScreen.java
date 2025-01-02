@@ -1,6 +1,7 @@
 package de.crafty.skylife.mixin.client.gui.screens.worldselection;
 
 
+import de.crafty.skylife.SkyLife;
 import de.crafty.skylife.SkyLifeClient;
 import de.crafty.skylife.registry.WorldPresetKeys;
 import net.minecraft.client.Minecraft;
@@ -58,8 +59,8 @@ public abstract class MixinCreateWorldScreen extends GridLayoutTab {
     }
 
 
-    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/worldselection/SwitchGrid$Builder;build(Ljava/util/function/Consumer;)Lnet/minecraft/client/gui/screens/worldselection/SwitchGrid;"))
-    private SwitchGrid addIslandWidget(SwitchGrid.Builder instance, Consumer<LayoutElement> widgetConsumer){
+    @Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/worldselection/SwitchGrid$Builder;build()Lnet/minecraft/client/gui/screens/worldselection/SwitchGrid;"))
+    private SwitchGrid addIslandWidget(SwitchGrid.Builder instance){
         SkyLifeClient skyClient = SkyLifeClient.getInstance();
 
         CreateWorldScreen screen = (CreateWorldScreen) Minecraft.getInstance().screen;
@@ -69,7 +70,7 @@ public abstract class MixinCreateWorldScreen extends GridLayoutTab {
         islandCountText = new StringWidget(Component.translatable("selectLevel.islandCount"), Minecraft.getInstance().font);
 
         islandCountField = new EditBox(Minecraft.getInstance().font, 40, 20, Component.nullToEmpty(""));
-        islandCountField.setValue(String.valueOf(skyClient.getCurrentIslandCount()));
+        islandCountField.setValue(String.valueOf(SkyLife.ISLAND_COUNT));
         islandCountField.setResponder(s -> {
 
             if(s.isEmpty())
@@ -79,13 +80,13 @@ public abstract class MixinCreateWorldScreen extends GridLayoutTab {
             NumberFormat.getInstance().parseObject(s, parsePosition);
 
             if(parsePosition.getIndex() != s.length() || s.length() > 2)
-                islandCountField.setValue(String.valueOf(skyClient.getCurrentIslandCount()));
+                islandCountField.setValue(String.valueOf(SkyLife.ISLAND_COUNT));
             else
                 skyClient.setCurrentIslandCount(Integer.parseInt(s));
 
         });
 
-        SwitchGrid grid = instance.build(widget -> adder.addChild(widget, 2));
+        SwitchGrid grid = instance.build();
 
         adder.addChild(islandCountText, 2);
         adder.addChild(islandCountField, 2);

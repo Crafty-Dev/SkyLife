@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "skylife:redstone_ore_dust"
-    }
+    "#": "skylife:redstone_ore_dust"
   },
   "result": {
     "id": "minecraft:redstone",

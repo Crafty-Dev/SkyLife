@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:deepslate"
-    },
-    "S": {
-      "item": "skylife:iron_dust"
-    }
+    "#": "minecraft:deepslate",
+    "S": "skylife:iron_dust"
   },
   "result": {
     "id": "minecraft:deepslate_iron_ore",

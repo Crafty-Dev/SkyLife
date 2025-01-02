@@ -24,15 +24,26 @@ public class GraveStoneBlockEntity extends BlockEntity {
 
     private GameProfile gameProfile;
     private List<ItemStack> items = new ArrayList<>();
-
+    private long timestamp;
 
     public GraveStoneBlockEntity(BlockPos pos, BlockState state) {
         super(BlockEntityRegistry.GRAVE_STONE, pos, state);
+
+        this.timestamp = 0;
     }
 
     public void setPlayerProfile(GameProfile gameProfile){
         this.gameProfile = gameProfile;
 
+        this.setChanged();
+    }
+
+    public long getTimestamp(){
+        return this.timestamp;
+    }
+
+    public void setTimestamp(long timestamp){
+        this.timestamp = timestamp;
         this.setChanged();
     }
 
@@ -64,6 +75,8 @@ public class GraveStoneBlockEntity extends BlockEntity {
 
         if(tag.contains("owner"))
             this.gameProfile = ExtraCodecs.GAME_PROFILE.decode(NbtOps.INSTANCE, tag.getCompound("owner")).getOrThrow().getFirst();
+
+        this.timestamp = tag.getLong("timestamp");
     }
 
     @Override
@@ -79,6 +92,8 @@ public class GraveStoneBlockEntity extends BlockEntity {
 
         CompoundTag encodedProfile = (CompoundTag) ExtraCodecs.GAME_PROFILE.encode(this.gameProfile, NbtOps.INSTANCE, new CompoundTag()).getOrThrow();
         tag.put("owner", encodedProfile);
+
+        tag.putLong("timestamp", this.timestamp);
     }
 
     @Nullable

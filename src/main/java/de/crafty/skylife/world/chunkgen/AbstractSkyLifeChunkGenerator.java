@@ -1,6 +1,8 @@
 package de.crafty.skylife.world.chunkgen;
 
 import com.google.common.base.Suppliers;
+import de.crafty.skylife.SkyLifeClient;
+import de.crafty.skylife.SkyLifeServer;
 import de.crafty.skylife.registry.TagRegistry;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -35,6 +37,7 @@ import net.minecraft.world.level.levelgen.XoroshiroRandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -63,12 +66,12 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
         return feature.value().feature().is(TagRegistry.SKYBLOCK_FEATURES);
     }
 
-    public List<HolderSet<PlacedFeature>> filterFeatures(List<HolderSet<PlacedFeature>> featureList){
+    public List<HolderSet<PlacedFeature>> filterFeatures(List<HolderSet<PlacedFeature>> featureList) {
         List<HolderSet<PlacedFeature>> skyblockAvailableFeatures = new ArrayList<>();
 
         featureList.forEach(registryEntries -> {
             HolderSet<PlacedFeature> list = HolderSet.direct(registryEntries.stream().filter(AbstractSkyLifeChunkGenerator::isSkyblockFeature).toList());
-            if(list.size() > 0)
+            if (list.size() > 0)
                 skyblockAvailableFeatures.add(list);
         });
         return skyblockAvailableFeatures;
@@ -85,9 +88,9 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
     public void applyBiomeDecoration(WorldGenLevel world, ChunkAccess chunk, StructureManager structureAccessor) {
         ChunkPos chunkPos = chunk.getPos();
         if (!SharedConstants.debugVoidTerrain(chunkPos)) {
-            SectionPos chunkSectionPos = SectionPos.of(chunkPos, world.getMinSection());
+            SectionPos chunkSectionPos = SectionPos.of(chunkPos, world.getMinSectionY());
             BlockPos blockPos = chunkSectionPos.origin();
-            Registry<Structure> registry = world.registryAccess().registryOrThrow(Registries.STRUCTURE);
+            Registry<Structure> registry = world.registryAccess().lookupOrThrow(Registries.STRUCTURE);
             Map<Integer, List<Structure>> map = registry.stream()
                     .collect(Collectors.groupingBy(structureType -> structureType.step().ordinal()));
             List<FeatureSorter.StepFeatureData> list = this.indexedFeaturesListGetter.get();
@@ -105,7 +108,7 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
             int i = list.size();
 
             try {
-                Registry<PlacedFeature> registry2 = world.registryAccess().registryOrThrow(Registries.PLACED_FEATURE);
+                Registry<PlacedFeature> registry2 = world.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE);
                 int j = Math.max(GenerationStep.Decoration.values().length, i);
 
                 for (int k = 0; k < j; k++) {
@@ -117,8 +120,9 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
 
                             try {
                                 world.setCurrentlyGenerating(supplier);
-                                structureAccessor.startsForStructure(chunkSectionPos, structure)
-                                        .forEach(start -> start.placeInChunk(world, structureAccessor, this, chunkRandom, getWritableArea(chunk), chunkPos));
+
+                                List<StructureStart> starts = structureAccessor.startsForStructure(chunkSectionPos, structure);
+                                starts.forEach(start -> start.placeInChunk(world, structureAccessor, this, chunkRandom, getWritableArea(chunk), chunkPos));
                             } catch (Exception var29) {
                                 CrashReport crashReport = CrashReport.forThrowable(var29, "Feature placement");
                                 crashReport.addCategory("Feature").setDetail("Description", supplier::get);
@@ -172,6 +176,7 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
             }
         }
     }
+
 
 
 }

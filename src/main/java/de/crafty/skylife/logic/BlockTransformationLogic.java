@@ -18,7 +18,8 @@ import java.util.List;
 public class BlockTransformationLogic {
 
 
-    public static InteractionResult onBlockTransformation(Player player, Level level, InteractionHand hand, BlockHitResult hitResult){
+    public static InteractionResult onBlockTransformation(Player player, Level level, InteractionHand hand, BlockHitResult hitResult) {
+
 
         ItemStack stack = player.getItemInHand(hand);
         BlockPos pos = hitResult.getBlockPos();
@@ -33,8 +34,8 @@ public class BlockTransformationLogic {
             if (transformation.block() != state.getBlock())
                 continue;
 
-            for(BlockTransformationConfig.TransformCondition condition : transformation.conditions()){
-                if(!condition.check(player, hand, level, state, hitResult.getDirection()))
+            for (BlockTransformationConfig.TransformCondition condition : transformation.conditions()) {
+                if (!condition.check(player, hand, level, state, hitResult.getDirection()))
                     return InteractionResult.PASS;
             }
 
@@ -42,8 +43,8 @@ public class BlockTransformationLogic {
             level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), transformation.sound(), SoundSource.BLOCKS, 1.0F, 1.0F, false);
 
             if (transformation.remainder() != ItemStack.EMPTY)
-                player.setItemInHand(hand, transformation.remainder());
-            else if(!player.hasInfiniteMaterials())
+                player.setItemInHand(hand, transformation.remainder().copy());
+            else if (!player.hasInfiniteMaterials())
                 stack.consume(1, player);
 
             return InteractionResult.SUCCESS;

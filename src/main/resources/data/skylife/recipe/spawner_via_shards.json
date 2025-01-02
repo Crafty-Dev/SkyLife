@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "skylife:spawner_shard"
-    }
+    "#": "skylife:spawner_shard"
   },
   "result": {
     "id": "minecraft:spawner",

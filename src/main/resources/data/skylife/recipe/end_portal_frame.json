@@ -6,12 +6,8 @@
     "OOO"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:deepslate_tiles"
-    },
-    "O": {
-      "item": "minecraft:obsidian"
-    }
+    "#": "minecraft:deepslate_tiles",
+    "O": "minecraft:obsidian"
   },
   "result": {
     "id": "skylife:end_portal_frame",

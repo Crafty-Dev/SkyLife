@@ -10,6 +10,9 @@ import net.minecraft.data.worldgen.features.*;
 import net.minecraft.data.worldgen.placement.VegetationPlacements;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Shulker;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -32,7 +35,7 @@ public class IslandDecorators {
 
 
     private static void placeFeatureConfigured(ResourceKey<ConfiguredFeature<?, ?>> feature, WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos featurePos) {
-        Holder<ConfiguredFeature<?, ?>> holder = level.registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE).getHolder(feature).orElse(null);
+        Holder<ConfiguredFeature<?, ?>> holder = level.registryAccess().lookupOrThrow(Registries.CONFIGURED_FEATURE).getOrThrow(feature);
         if (holder != null) {
             holder.value().place(level, chunkGenerator, random, featurePos);
         }
@@ -40,17 +43,15 @@ public class IslandDecorators {
     }
 
     private static void placeFeature(ResourceKey<PlacedFeature> feature, WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource random, BlockPos featurePos) {
-        Holder<PlacedFeature> holder = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolder(feature).orElse(null);
-        if (holder != null) {
-            holder.value().place(level, chunkGenerator, random, featurePos);
-        }
+        Holder<PlacedFeature> holder = level.registryAccess().lookupOrThrow(Registries.PLACED_FEATURE).getOrThrow(feature);
+        holder.value().place(level, chunkGenerator, random, featurePos);
 
     }
 
     private static void decorateGrass(WorldGenLevel level, ChunkGenerator chunkGenerator, RandomSource randomSource, BlockPos pos) {
         Optional<Holder.Reference<PlacedFeature>> optional = level.registryAccess()
-                .registryOrThrow(Registries.PLACED_FEATURE)
-                .getHolder(VegetationPlacements.GRASS_BONEMEAL);
+                .lookupOrThrow(Registries.PLACED_FEATURE)
+                .get(VegetationPlacements.GRASS_BONEMEAL);
 
         BlockState state = level.getBlockState(pos);
         if (state.isAir()) {
@@ -100,7 +101,7 @@ public class IslandDecorators {
 
             topBlocks.forEach(blockPos -> {
                 if (random.nextFloat() < 1.0F / (templateSize.getX() * templateSize.getZ()) * 2) {
-                    placeFeatureConfigured(TreeFeatures.OAK, level, chunkGenerator, random, blockPos.above());
+                    placeFeatureConfigured(TreeFeatures.OAK_BEES_005, level, chunkGenerator, random, blockPos.above());
                 } else if (random.nextFloat() < 0.75F)
                     decorateGrass(level, chunkGenerator, random, blockPos.above());
             });
@@ -115,7 +116,7 @@ public class IslandDecorators {
 
             topBlocks.forEach(blockPos -> {
                 if (random.nextFloat() < 1.0F / (templateSize.getX() * templateSize.getZ()) * 2) {
-                    placeFeatureConfigured(TreeFeatures.BIRCH, level, chunkGenerator, random, blockPos.above());
+                    placeFeatureConfigured(random.nextFloat() < 0.05F ? TreeFeatures.SUPER_BIRCH_BEES : TreeFeatures.BIRCH_BEES_005, level, chunkGenerator, random, blockPos.above());
                 } else if (random.nextFloat() < 0.75F)
                     decorateGrass(level, chunkGenerator, random, blockPos.above());
             });
@@ -423,6 +424,28 @@ public class IslandDecorators {
                 if (random.nextFloat() < 0.0625)
                     placeFeatureConfigured(EndFeatures.CHORUS_PLANT, level, chunkGenerator, random, topPos.above());
 
+                if(random.nextFloat() < 0.0625F / 3.0F){
+                    BlockPos aboveTop = topPos.above();
+                    Shulker shulker = EntityType.SHULKER.create(level.getLevel(), EntitySpawnReason.STRUCTURE);
+                    if(shulker != null){
+                        shulker.moveTo(aboveTop.getX(), aboveTop.getY(), aboveTop.getZ(), random.nextFloat() * 360.0F, 0.0F);
+                        shulker.finalizeSpawn(level.getLevel(), level.getCurrentDifficultyAt(aboveTop), EntitySpawnReason.STRUCTURE, null);
+                        level.addFreshEntityWithPassengers(shulker);
+                    }
+                }
+            });
+
+            bottomBlocks.forEach(blockPos -> {
+                if(random.nextFloat() < 0.0625F / 4.0F){
+                    BlockPos belowBottom = blockPos.below();
+                    Shulker shulker = EntityType.SHULKER.create(level.getLevel(), EntitySpawnReason.STRUCTURE);
+                    if(shulker != null){
+                        shulker.moveTo(belowBottom.getX(), belowBottom.getY(), belowBottom.getZ(), random.nextFloat() * 360.0F, 0.0F);
+                        shulker.setXRot(180.0F);
+                        shulker.finalizeSpawn(level.getLevel(), level.getCurrentDifficultyAt(belowBottom), EntitySpawnReason.STRUCTURE, null);
+                        level.addFreshEntityWithPassengers(shulker);
+                    }
+                }
             });
 
         }
@@ -449,6 +472,29 @@ public class IslandDecorators {
                 }else if (random.nextFloat() < 0.0625 / 2.0F)
                         placeFeatureConfigured(EndFeatures.CHORUS_PLANT, level, chunkGenerator, random, topPos.above());
 
+
+                if(random.nextFloat() < 0.0625F / 3.0F){
+                    BlockPos aboveTop = topPos.above();
+                    Shulker shulker = EntityType.SHULKER.create(level.getLevel(), EntitySpawnReason.STRUCTURE);
+                    if(shulker != null){
+                        shulker.moveTo(aboveTop.getX(), aboveTop.getY(), aboveTop.getZ(), random.nextFloat() * 360.0F, 0.0F);
+                        shulker.finalizeSpawn(level.getLevel(), level.getCurrentDifficultyAt(aboveTop), EntitySpawnReason.STRUCTURE, null);
+                        level.addFreshEntityWithPassengers(shulker);
+                    }
+                }
+            });
+
+            bottomBlocks.forEach(blockPos -> {
+                if(random.nextFloat() < 0.0625F / 4.0F){
+                    BlockPos belowBottom = blockPos.below();
+                    Shulker shulker = EntityType.SHULKER.create(level.getLevel(), EntitySpawnReason.STRUCTURE);
+                    if(shulker != null){
+                        shulker.moveTo(belowBottom.getX(), belowBottom.getY(), belowBottom.getZ(), random.nextFloat() * 360.0F, 0.0F);
+                        shulker.setXRot(180.0F);
+                        shulker.finalizeSpawn(level.getLevel(), level.getCurrentDifficultyAt(belowBottom), EntitySpawnReason.STRUCTURE, null);
+                        level.addFreshEntityWithPassengers(shulker);
+                    }
+                }
             });
 
         }

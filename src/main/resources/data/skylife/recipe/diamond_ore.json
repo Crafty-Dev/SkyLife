@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stone"
-    },
-    "S": {
-      "item": "skylife:diamond_dust"
-    }
+    "#": "minecraft:stone",
+    "S": "skylife:diamond_dust"
   },
   "result": {
     "id": "minecraft:diamond_ore",

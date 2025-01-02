@@ -6,6 +6,7 @@
     "skylife:magical_workbench",
     "skylife:end_diamond_ore",
     "skylife:end_netherite_ore",
+    "skylife:oily_stone",
 
     "skylife:briquette_generator",
     "skylife:block_breaker",
@@ -14,8 +15,14 @@
     "skylife:hc_vp_storage",
     "skylife:solar_panel",
     "skylife:flux_furnace",
+    "skylife:block_melter",
+    "skylife:solid_fluid_merger",
+    "skylife:fluid_pump",
+    "skylife:basic_fluid_storage",
+    "skylife:oil_processor",
 
     "skylife:melting_cobblestone",
-    "skylife:melting_stone"
+    "skylife:melting_stone",
+    "skylife:melting_obsidian"
   ]
 }

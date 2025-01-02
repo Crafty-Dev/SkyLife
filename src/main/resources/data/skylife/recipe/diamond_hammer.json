@@ -6,12 +6,8 @@
     "#  "
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stick"
-    },
-    "S": {
-      "item": "minecraft:diamond"
-    }
+    "#": "minecraft:stick",
+    "S": "minecraft:diamond"
   },
   "result": {
     "id": "skylife:diamond_hammer",

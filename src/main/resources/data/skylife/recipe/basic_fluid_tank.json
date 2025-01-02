@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "GGG",
+        "PGP",
+        "DDD"
+    ],
+    "key": {
+        "P": "skylife:basic_fluid_pipe",
+        "G": "#c:glass_blocks",
+        "D": "minecraft:deepslate_tiles"
+    },
+    "result": {
+        "id": "skylife:basic_fluid_storage",
+        "count": 1
+    }
+}

@@ -3,6 +3,7 @@ package de.crafty.skylife.util;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -24,7 +25,7 @@ public class RenderUtils {
         float u1 = u0 + texWidth * texture.contents().width() / 16.0F;
         float v1 = v0 + texHeight * texture.contents().height() / 16.0F;
 
-        Vec3i normal = facing.getNormal();
+        Vec3i normal = facing.getUnitVec3i();
         float xNormal = normal.getX();
         float yNormal = normal.getY();
         float zNormal = normal.getZ();
@@ -89,7 +90,7 @@ public class RenderUtils {
 
         guiGraphics.pose().pushPose();
         Matrix4f matrix4f = guiGraphics.pose().last().pose();
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(CoreShaders.POSITION_TEX);
         RenderSystem.setShaderTexture(0, sprite.atlasLocation());
 
         BufferBuilder bufferBuilder = Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);

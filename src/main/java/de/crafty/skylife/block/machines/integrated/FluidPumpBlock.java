@@ -5,15 +5,21 @@ import de.crafty.lifecompat.fluid.block.BaseFluidEnergyBlock;
 import de.crafty.lifecompat.util.EnergyUnitConverter;
 import de.crafty.skylife.block.machines.AbstractUpgradableFluidMachine;
 import de.crafty.skylife.blockentities.machines.integrated.FluidPumpBlockEntity;
+import de.crafty.skylife.network.SkyLifeNetworkClient;
+import de.crafty.skylife.network.SkyLifeNetworkServer;
+import de.crafty.skylife.network.payload.SkyLifeClientEventPayload;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.FluidRegistry;
 import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -30,6 +36,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -102,11 +109,11 @@ public class FluidPumpBlock extends AbstractUpgradableFluidMachine<FluidPumpBloc
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        ItemInteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+        InteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        if(result == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION && stack.is(ItemRegistry.MACHINE_KEY))
-            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? ItemInteractionResult.sidedSuccess(level.isClientSide()) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        if(!result.consumesAction() && stack.is(ItemRegistry.MACHINE_KEY))
+            return this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()) ? InteractionResult.SUCCESS : InteractionResult.TRY_WITH_EMPTY_HAND;
 
 
         return result;
@@ -126,7 +133,8 @@ public class FluidPumpBlock extends AbstractUpgradableFluidMachine<FluidPumpBloc
     public void onUpgrade(Level level, BlockState machine, BlockPos blockPos, ItemStack upgradeStack, FluidPumpBlockEntity blockEntity) {
         blockEntity.setUpgraded(true);
         level.setBlock(blockPos, machine.setValue(UPGRADED, true), Block.UPDATE_ALL);
-        //TODO Add sound to block and when upgrade applied
+        if(level instanceof ServerLevel serverLevel)
+            SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.MACHINE_UPGRADED, blockPos, serverLevel);
     }
 
     @Override

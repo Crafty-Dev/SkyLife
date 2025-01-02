@@ -5,11 +5,14 @@ import de.crafty.lifecompat.fluid.block.BaseFluidEnergyBlock;
 import de.crafty.lifecompat.util.EnergyUnitConverter;
 import de.crafty.skylife.block.machines.AbstractUpgradableFluidMachine;
 import de.crafty.skylife.blockentities.machines.integrated.BlockMelterBlockEntity;
+import de.crafty.skylife.network.SkyLifeNetworkServer;
+import de.crafty.skylife.network.payload.SkyLifeClientEventPayload;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.FluidRegistry;
 import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.*;
@@ -96,34 +99,33 @@ public class BlockMelterBlock extends AbstractUpgradableFluidMachine<BlockMelter
 
         if (level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity melter && !melter.getMeltingStack().isEmpty() && blockHitResult.getDirection() != Direction.DOWN) {
             if (!player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty())
-                return InteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
 
             ItemStack stack = melter.getMeltingStack().copy();
             melter.setMeltingStack(ItemStack.EMPTY);
             player.addItem(stack);
             player.playSound(SoundEvents.ITEM_PICKUP, 1.0F, 1.0F);
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
         }
 
         return super.useWithoutItem(blockState, level, blockPos, player, blockHitResult);
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
+    protected @NotNull InteractionResult useItemOn(ItemStack stack, BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand interactionHand, BlockHitResult blockHitResult) {
         if (stack.isEmpty())
             return super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        ItemInteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
+        InteractionResult result = super.useItemOn(stack, blockState, level, blockPos, player, interactionHand, blockHitResult);
 
-        if (result != ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION)
+        if (result.consumesAction())
             return result;
 
         if (stack.is(ItemRegistry.MACHINE_KEY) && this.tryChangeIO(level, blockPos, blockState, player, blockHitResult.getDirection()))
-            return ItemInteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.SUCCESS;
 
         if (level.getBlockEntity(blockPos) instanceof BlockMelterBlockEntity melter) {
 
-            //TODO add sounds
             if (stack.getCount() == 1 && !melter.getMeltingStack().isEmpty()) {
                 ItemStack prevStack = melter.getMeltingStack().copy();
                 ItemStack copied = stack.copy();
@@ -131,7 +133,7 @@ public class BlockMelterBlock extends AbstractUpgradableFluidMachine<BlockMelter
                 melter.setMeltingStack(copied);
                 player.setItemInHand(interactionHand, prevStack);
                 player.playSound(SoundEvents.ITEM_PICKUP, 1.0F, 0.5F);
-                return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
             }
 
             if (melter.getMeltingStack().isEmpty()) {
@@ -141,12 +143,12 @@ public class BlockMelterBlock extends AbstractUpgradableFluidMachine<BlockMelter
                 melter.setMeltingStack(copied);
                 stack.shrink(1);
                 player.playSound(SoundEvents.ITEM_PICKUP, 1.0F, 0.5F);
-                return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                return InteractionResult.SUCCESS;
             }
 
         }
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return InteractionResult.TRY_WITH_EMPTY_HAND;
     }
 
     @Override
@@ -193,7 +195,8 @@ public class BlockMelterBlock extends AbstractUpgradableFluidMachine<BlockMelter
     public void onUpgrade(Level level, BlockState machine, BlockPos blockPos, ItemStack upgradeStack, BlockMelterBlockEntity blockEntity) {
         blockEntity.setUpgraded(true);
         level.setBlock(blockPos, machine.setValue(UPGRADED, true), Block.UPDATE_ALL);
-        //TODO Add sound to block and when upgrade applied
+        if (level instanceof ServerLevel serverLevel)
+            SkyLifeNetworkServer.sendUpdate(SkyLifeClientEventPayload.ClientEventType.MACHINE_UPGRADED, blockPos, serverLevel);
     }
 
     @Override

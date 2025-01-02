@@ -1,7 +1,11 @@
 package de.crafty.skylife.block.fluid;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerEntity;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,5 +23,8 @@ public class LiquidOilBlock extends LiquidBlock {
     @Override
     protected void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
         entity.makeStuckInBlock(blockState, new Vec3(0.75F, 0.75F, 0.75F));
+
+        if(entity instanceof LivingEntity livingEntity)
+            livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20 * 18, 1));
     }
 }

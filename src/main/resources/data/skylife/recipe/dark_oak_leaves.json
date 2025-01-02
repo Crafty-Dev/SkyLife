@@ -6,12 +6,8 @@
         "#S#"
     ],
     "key": {
-        "#": {
-            "item": "skylife:dark_oak_leaf"
-        },
-        "S": {
-            "item": "minecraft:stick"
-        }
+        "#": "skylife:dark_oak_leaf",
+        "S": "minecraft:stick"
     },
     "result": {
         "id": "minecraft:dark_oak_leaves",

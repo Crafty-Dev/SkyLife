@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "minecraft:blaze_powder"
-    },
-    "S": {
-      "item": "minecraft:stick"
-    }
+    "#": "minecraft:blaze_powder",
+    "S": "minecraft:stick"
   },
   "result": {
     "id": "minecraft:blaze_rod",

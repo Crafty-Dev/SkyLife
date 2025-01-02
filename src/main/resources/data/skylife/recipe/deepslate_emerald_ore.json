@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:deepslate"
-    },
-    "S": {
-      "item": "skylife:emerald_dust"
-    }
+    "#": "minecraft:deepslate",
+    "S": "skylife:emerald_dust"
   },
   "result": {
     "id": "minecraft:deepslate_emerald_ore",

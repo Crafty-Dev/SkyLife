@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DOD",
+        "O#O",
+        "VIV"
+    ],
+    "key": {
+        "#": "skylife:input_module",
+        "D": "minecraft:deepslate_tiles",
+        "O": "skylife:oil_bucket",
+        "V": "skylife:vp_resistant_metal",
+        "I": "skylife:internal_machine_tank"
+    },
+    "result": {
+        "id": "skylife:solid_fluid_merger",
+        "count": 1
+    }
+}

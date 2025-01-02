@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:dirt",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:dirt_enriched_wheat"

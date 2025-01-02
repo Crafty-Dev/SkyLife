@@ -11,6 +11,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.rendering.fluid.FluidRenderHandlerRegistryImpl;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -48,15 +49,15 @@ public class SolidFluidMergerScreen extends AbstractEnergyContainerScreen<SolidF
         int x = (this.width - this.imageWidth) / 2;
         int y = (this.height - this.imageHeight) / 2;
 
-        guiGraphics.blit(SF_MERGER_LOCATION, x, y, 0, 0, this.imageWidth, this.imageHeight);
+        guiGraphics.blit(RenderType::guiTextured, SF_MERGER_LOCATION, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         if (this.getMenu().isWorking())
-            guiGraphics.blit(SF_MERGER_LOCATION, x + 20, y + 22, 0, 182, 136, 57);
+            guiGraphics.blit(RenderType::guiTextured, SF_MERGER_LOCATION, x + 20, y + 22, 0, 182, 136, 57, 256, 256);
 
 
         float progression = (float) this.getMenu().getProgress() / (float) this.getMenu().getTotalMergingTime();
         if (progression > 0)
-            guiGraphics.blit(SF_MERGER_LOCATION, x + 80, y + 36, 176, 0, 16, Math.round(8 * progression));
+            guiGraphics.blit(RenderType::guiTextured, SF_MERGER_LOCATION, x + 80, y + 36, 176, 0, 16, Math.round(8 * progression), 256, 256);
 
         this.renderHorizontalEnergyBar(guiGraphics, x, y, partialTicks);
         this.renderLiquid(guiGraphics, x, y, partialTicks);

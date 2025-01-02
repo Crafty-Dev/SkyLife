@@ -8,6 +8,7 @@ import de.crafty.skylife.blockentities.MeltingBlockEntity;
 import de.crafty.skylife.jei.SkyLifeRecipeTypes;
 import de.crafty.skylife.jei.recipes.block_melting.IJeiBlockMeltingRecipe;
 import de.crafty.skylife.mixin.world.level.block.LiquidBlockAccessor;
+import de.crafty.skylife.registry.BlockRegistry;
 import de.crafty.skylife.util.SkyLifeConstants;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -34,7 +35,7 @@ public class BlockMeltingRecipeCategory implements IRecipeCategory<IJeiBlockMelt
     private final IDrawable icon;
     private final IDrawable background;
 
-    public BlockMeltingRecipeCategory(IGuiHelper guiHelper){
+    public BlockMeltingRecipeCategory(IGuiHelper guiHelper) {
 
         this.background = guiHelper.drawableBuilder(SkyLife.JEI_RECIPE_GUI, 0, 72, 98, 54).setTextureSize(512, 512).build();
 
@@ -77,11 +78,12 @@ public class BlockMeltingRecipeCategory implements IRecipeCategory<IJeiBlockMelt
         builder.addSlot(RecipeIngredientRole.INPUT, 9, 1).addItemStack(new ItemStack(recipe.getMeltable()));
 
 
-        if(recipe.getHeatSource() instanceof LiquidBlock liquidBlock){
-            builder.addSlot(RecipeIngredientRole.INPUT, 9, 37).addFluidStack(((LiquidBlockAccessor)liquidBlock).getFluid().getFlowing(), SkyLifeConstants.FABRIC_BUCKET_VOLUME);
-        }else
+        if (recipe.getHeatSource() instanceof LiquidBlock liquidBlock) {
+            builder.addSlot(RecipeIngredientRole.INPUT, 9, 37).addFluidStack(((LiquidBlockAccessor) liquidBlock).getFluid().getFlowing(), SkyLifeConstants.FABRIC_BUCKET_VOLUME);
+        } else
             builder.addSlot(RecipeIngredientRole.INPUT, 9, 37).addItemStack(recipe.getRepresentable());
 
+        builder.addInvisibleIngredients(RecipeIngredientRole.INPUT).addItemStack(new ItemStack(BlockRegistry.BLOCK_MELTER));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 77, 19).addFluidStack(recipe.getMeltingResult(), SkyLifeConstants.FABRIC_BUCKET_VOLUME);
     }

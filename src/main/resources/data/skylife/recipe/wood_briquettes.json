@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "skylife:wood_briquette"
-    }
+    "#": "skylife:wood_briquette"
   },
   "result": {
     "id": "skylife:wood_briquettes",

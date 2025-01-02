@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "VIV",
+        "INI",
+        "VIV"
+    ],
+    "key": {
+        "V": "skylife:vp_resistant_metal",
+        "I": "skylife:improved_energy_cable",
+        "N": "skylife:netherite_dust"
+    },
+    "result": {
+        "id": "skylife:advanced_energy_cable",
+        "count": 4
+    }
+}

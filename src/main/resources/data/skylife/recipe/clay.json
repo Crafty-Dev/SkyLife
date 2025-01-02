@@ -6,15 +6,9 @@
     "SDS"
   ],
   "key": {
-    "S": {
-      "item": "minecraft:sand"
-    },
-    "D": {
-      "item": "minecraft:mud"
-    },
-    "B": {
-      "tag": "skylife:water_buckets"
-    }
+    "S": "minecraft:sand",
+    "D": "minecraft:mud",
+    "B": "#skylife:water_buckets"
   },
   "result": {
     "id": "minecraft:clay",

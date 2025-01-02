@@ -6,15 +6,9 @@
     "#S#"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:ender_pearl"
-    },
-    "S": {
-      "item": "minecraft:end_crystal"
-    },
-    "F": {
-      "item": "minecraft:heart_of_the_sea"
-    }
+    "#": "minecraft:ender_pearl",
+    "S": "minecraft:end_crystal",
+    "F": "minecraft:heart_of_the_sea"
   },
   "result": {
     "id": "skylife:ender_core",

@@ -2,9 +2,7 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.7,
-  "ingredient": {
-    "item": "skylife:end_diamond_ore"
-  },
+  "ingredient": "skylife:end_diamond_ore",
   "result": {
     "id": "minecraft:diamond"
   }

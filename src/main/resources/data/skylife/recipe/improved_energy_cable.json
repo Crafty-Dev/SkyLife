@@ -1,0 +1,17 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "QQQ",
+        "BSB",
+        "QQQ"
+    ],
+    "key": {
+        "B": "skylife:basic_energy_cable",
+        "Q": "skylife:quartz_dust",
+        "S": "skylife:sturdy_iron"
+    },
+    "result": {
+        "id": "skylife:improved_energy_cable",
+        "count": 2
+    }
+}

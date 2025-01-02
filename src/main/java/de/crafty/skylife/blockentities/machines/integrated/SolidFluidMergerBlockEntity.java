@@ -333,7 +333,6 @@ public class SolidFluidMergerBlockEntity extends AbstractFluidEnergyConsumerBloc
 
     @Override
     public @NotNull ItemStack removeItemNoUpdate(int slot) {
-        System.out.println("Servus Moin");
         return ContainerHelper.takeItem(this.items, slot);
     }
 
@@ -356,7 +355,6 @@ public class SolidFluidMergerBlockEntity extends AbstractFluidEnergyConsumerBloc
         if(this.level instanceof ServerLevel serverLevel){
             serverLevel.sendBlockUpdated(this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
             serverLevel.gameEvent(GameEvent.BLOCK_CHANGE, this.getBlockPos(), GameEvent.Context.of(this.getBlockState()));
-            System.out.println("Moln");
         }
     }
 

@@ -20,7 +20,7 @@ public class GraveStoneLogic {
             return;
 
         ServerLevel level = player.serverLevel();
-        BlockPos pos = new BlockPos(player.getBlockX(), Math.max(player.getBlockY(), level.getMinBuildHeight() + 1), player.getBlockZ());
+        BlockPos pos = new BlockPos(player.getBlockX(), Math.max(player.getBlockY(), level.getMinY() + 1), player.getBlockZ());
 
         level.setBlock(pos, BlockRegistry.GRAVE_STONE.defaultBlockState(), 3);
         if(level.getBlockState(pos.below()).isAir() || level.getBlockState(pos.below()).liquid())
@@ -37,6 +37,8 @@ public class GraveStoneLogic {
 
         blockEntity.setContent(items);
         blockEntity.setPlayerProfile(player.getGameProfile());
+        blockEntity.setTimestamp(level.getGameTime());
+
         if(!level.getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).get())
             player.getInventory().clearContent();
 

@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 1.4,
-  "ingredient": {
-    "item": "skylife:netherite_dust"
-  },
+  "ingredient": "skylife:netherite_dust",
   "result": {
     "id": "minecraft:netherite_scrap"
   }

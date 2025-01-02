@@ -5,9 +5,7 @@
     "##"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:soul_sand"
-    }
+    "#": "minecraft:soul_sand"
   },
   "result": {
     "id": "minecraft:soul_soil",

@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:copper_ingot"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:copper_ingot",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:copper_enriched_wheat"

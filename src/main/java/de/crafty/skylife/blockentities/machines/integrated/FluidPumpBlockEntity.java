@@ -16,7 +16,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 
@@ -99,7 +98,7 @@ public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity
         List<Direction> directions = new ArrayList<>();
 
         for (Direction side : Direction.values()) {
-            DirectionProperty facingProp = state.hasProperty(BaseEnergyBlock.FACING) ? BaseEnergyBlock.FACING : state.hasProperty(BaseEnergyBlock.HORIZONTAL_FACING) ? BaseEnergyBlock.HORIZONTAL_FACING : null;
+            EnumProperty<Direction> facingProp = state.hasProperty(BaseEnergyBlock.FACING) ? BaseEnergyBlock.FACING : state.hasProperty(BaseEnergyBlock.HORIZONTAL_FACING) ? BaseEnergyBlock.HORIZONTAL_FACING : null;
             EnumProperty<BaseEnergyBlock.IOMode> sideMode = BaseEnergyBlock.calculateIOSide(facingProp != null ? state.getValue(facingProp) : Direction.NORTH, side);
 
             if (state.hasProperty(sideMode) && state.getValue(sideMode).isInput())
@@ -131,8 +130,6 @@ public class FluidPumpBlockEntity extends AbstractFluidEnergyConsumerBlockEntity
     public static void tick(Level level, BlockPos pos, BlockState state, FluidPumpBlockEntity blockEntity) {
         if (level.isClientSide())
             return;
-
-        //System.out.println(blockEntity.getInputDirections((ServerLevel) level, pos, state));
 
         if (!level.getFluidState(pos.below()).isSource() && blockEntity.suckingProgress > 0) {
             blockEntity.suckingProgress = 0;

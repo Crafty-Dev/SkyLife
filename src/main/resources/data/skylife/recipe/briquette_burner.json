@@ -6,18 +6,10 @@
     "D#D"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:coarse_dirt"
-    },
-    "D": {
-      "item": "minecraft:deepslate_tiles"
-    },
-    "O": {
-      "item": "skylife:output_module"
-    },
-    "C": {
-      "item": "minecraft:campfire"
-    }
+    "#": "minecraft:coarse_dirt",
+    "D": "minecraft:deepslate_tiles",
+    "O": "skylife:output_module",
+    "C": "minecraft:campfire"
   },
   "result": {
     "id": "skylife:briquette_generator",

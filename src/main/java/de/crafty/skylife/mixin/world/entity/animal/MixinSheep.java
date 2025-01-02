@@ -7,10 +7,7 @@ import de.crafty.skylife.item.ResourceWheatItem;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.Shearable;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
 import net.minecraft.world.entity.ai.goal.TemptGoal;
 import net.minecraft.world.entity.animal.Animal;
@@ -21,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -34,8 +32,6 @@ public abstract class MixinSheep extends Animal implements Shearable {
 
 
     @Shadow public abstract DyeColor getColor();
-
-    @Shadow protected abstract DyeColor getOffspringColor(Animal animal, Animal animal2);
 
     protected MixinSheep(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
@@ -54,27 +50,5 @@ public abstract class MixinSheep extends Animal implements Shearable {
     @Redirect(method = "isFood", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z"))
     private boolean injectResourceWheat(ItemStack instance, TagKey<Item> tag) {
         return instance.is(tag) || instance.is(TagRegistry.RESSOURCE_WHEAT);
-    }
-
-    @Inject(method = "getBreedOffspring(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/AgeableMob;)Lnet/minecraft/world/entity/animal/Sheep;", at = @At("HEAD"), cancellable = true)
-    private void injectResourceSheeps(ServerLevel world, AgeableMob other, CallbackInfoReturnable<AgeableMob> cir){
-
-        if(other instanceof ResourceSheepEntity resourceSheep && world.getRandom().nextFloat() <= resourceSheep.getResourceType().getBait().getSpawnChance(true)){
-            cir.setReturnValue(resourceSheep.getResourceType().getBait().getSheepType().create(world));
-            return;
-        }
-        if(other instanceof Sheep sheepEntity && ((IMixinAnimalEntity) sheepEntity).skyLife$getLastFood().getItem() instanceof ResourceWheatItem bait && world.getRandom().nextFloat() <= bait.getSpawnChance()){
-            cir.setReturnValue(bait.getSheepType().create(world));
-            return;
-        }
-
-        Sheep baby = EntityType.SHEEP.create(world);
-        if(other instanceof Sheep sheep && baby != null)
-            baby.setColor(this.getOffspringColor(this, sheep));
-
-        if(!(other instanceof Sheep && baby != null))
-            baby.setColor(this.getColor());
-
-        cir.setReturnValue(baby);
     }
 }

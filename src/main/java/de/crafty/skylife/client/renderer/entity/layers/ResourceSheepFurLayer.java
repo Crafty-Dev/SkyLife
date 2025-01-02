@@ -4,42 +4,55 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import de.crafty.skylife.client.model.entity.ResourceSheepEntityFurModel;
 import de.crafty.skylife.client.model.entity.ResourceSheepEntityModel;
+import de.crafty.skylife.client.renderer.entity.state.ResourceSheepRenderState;
 import de.crafty.skylife.entity.ResourceSheepEntity;
 import de.crafty.skylife.registry.EntityRegistry;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.SheepFurModel;
+import net.minecraft.client.model.SheepModel;
 import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.SheepRenderState;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.item.DyeColor;
 
 @Environment(EnvType.CLIENT)
-public class ResourceSheepFurLayer extends RenderLayer<ResourceSheepEntity, ResourceSheepEntityModel<ResourceSheepEntity>> {
-    private final ResourceSheepEntityFurModel<ResourceSheepEntity> model;
+public class ResourceSheepFurLayer extends RenderLayer<ResourceSheepRenderState, ResourceSheepEntityModel> {
+    private final EntityModel<ResourceSheepRenderState> adultModel;
+    private final EntityModel<ResourceSheepRenderState> babyModel;
 
-    public ResourceSheepFurLayer(RenderLayerParent<ResourceSheepEntity, ResourceSheepEntityModel<ResourceSheepEntity>> context, EntityModelSet loader) {
-        super(context);
-        this.model = new ResourceSheepEntityFurModel<>(loader.bakeLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP_FUR));
+    public ResourceSheepFurLayer(RenderLayerParent<ResourceSheepRenderState, ResourceSheepEntityModel> renderLayerParent, EntityModelSet entityModelSet) {
+        super(renderLayerParent);
+        this.adultModel = new ResourceSheepEntityModel(entityModelSet.bakeLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP_FUR));
+        this.babyModel = new ResourceSheepEntityModel(entityModelSet.bakeLayer(EntityRegistry.ModelLayers.RESOURCE_SHEEP_BABY_FUR));
     }
 
-    public void render(PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, ResourceSheepEntity resourceSheep, float f, float g, float h, float j, float k, float l) {
-        if (!resourceSheep.isSheared()) {
-            if (resourceSheep.isInvisible()) {
-                Minecraft minecraftClient = Minecraft.getInstance();
-                boolean bl = minecraftClient.shouldEntityAppearGlowing(resourceSheep);
+
+    @Override
+    public void render(PoseStack poseStack, MultiBufferSource multiBufferSource, int i, ResourceSheepRenderState entityRenderState, float f, float g) {
+        if (!entityRenderState.isSheared) {
+            EntityModel<ResourceSheepRenderState> entityModel = entityRenderState.isBaby ? this.babyModel : this.adultModel;
+
+            if (entityRenderState.isInvisible) {
+                boolean bl = entityRenderState.appearsGlowing;
                 if (bl) {
-                    this.getParentModel().copyPropertiesTo(this.model);
-                    this.model.animateModel(resourceSheep, f, g, h);
-                    this.model.setAngles(resourceSheep, f, g, j, k, l);
-                    VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.outline(resourceSheep.getResourceType().getFurTexture()));
-                    this.model.renderToBuffer(matrixStack, vertexConsumer, i, LivingEntityRenderer.getOverlayCoords(resourceSheep, 0.0F), -16777216);
+                    entityModel.setupAnim(entityRenderState);
+                    VertexConsumer vertexConsumer = multiBufferSource.getBuffer(RenderType.outline(entityRenderState.resourceType.getFurTexture()));
+                    entityModel.renderToBuffer(poseStack, vertexConsumer, i, LivingEntityRenderer.getOverlayCoords(entityRenderState, 0.0F), -16777216);
                 }
-                return;
+            } else {
+                coloredCutoutModelCopyLayerRender(entityModel, entityRenderState.resourceType.getFurTexture(), poseStack, multiBufferSource, i, entityRenderState, -1);
             }
-            coloredCutoutModelCopyLayerRender(this.getParentModel(), this.model, resourceSheep.getResourceType().getFurTexture(), matrixStack, vertexConsumerProvider, i, resourceSheep, f, g, j, k, l, h, -1);
 
         }
     }

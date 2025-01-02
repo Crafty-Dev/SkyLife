@@ -6,15 +6,9 @@
     "I#I"
   ],
   "key": {
-    "#": {
-      "item": "skylife:enhanced_copper_coil"
-    },
-    "I": {
-      "item": "skylife:sturdy_diamond"
-    },
-    "M": {
-      "item": "skylife:lc_vp_storage"
-    }
+    "#": "skylife:enhanced_copper_coil",
+    "I": "skylife:sturdy_diamond",
+    "M": "skylife:lc_vp_storage"
   },
   "result": {
     "id": "skylife:mc_vp_storage",

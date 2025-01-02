@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:deepslate"
-    },
-    "S": {
-      "item": "minecraft:coal"
-    }
+    "#": "minecraft:deepslate",
+    "S": "minecraft:coal"
   },
   "result": {
     "id": "minecraft:deepslate_coal_ore",

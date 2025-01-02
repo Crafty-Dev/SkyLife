@@ -6,12 +6,8 @@
     "FCF"
   ],
   "key": {
-    "F": {
-      "item": "skylife:plastic"
-    },
-    "C": {
-      "item": "minecraft:copper_ingot"
-    }
+    "F": "skylife:plastic",
+    "C": "minecraft:copper_ingot"
   },
   "result": {
     "id": "skylife:copper_coil",

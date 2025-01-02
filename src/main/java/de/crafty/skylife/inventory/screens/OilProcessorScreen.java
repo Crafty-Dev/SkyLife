@@ -9,6 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.impl.client.rendering.fluid.FluidRenderHandlerRegistryImpl;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -62,23 +63,23 @@ public class OilProcessorScreen extends AbstractEnergyContainerScreen<OilProcess
         int y = (this.height - this.imageHeight) / 2;
 
         if (this.getMenu().getMode() == OilProcessorBlockEntity.Mode.BURNING)
-            guiGraphics.blit(BURNING_LOCATION, x, y, 0, 0, this.imageWidth, this.imageHeight);
+            guiGraphics.blit(RenderType::guiTextured, BURNING_LOCATION, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
         else
-            guiGraphics.blit(PROCESSING_LOCATION, x, y, 0, 0, this.imageWidth, this.imageHeight);
+            guiGraphics.blit(RenderType::guiTextured, PROCESSING_LOCATION, x, y, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
         this.renderHorizontalEnergyBar(guiGraphics, x, y, partialTicks);
 
         //Processing
         if (this.getMenu().getMode() == OilProcessorBlockEntity.Mode.PROCESSING) {
             float progress = (float) this.getMenu().getProgress() / (float) this.getMenu().getTotalProcessingTime();
-            guiGraphics.blit(PROCESSING_LOCATION, x + 65, y + 33, 176, 0, Math.round(34 * progress), 22);
+            guiGraphics.blit(RenderType::guiTextured, PROCESSING_LOCATION, x + 65, y + 33, 176, 0, Math.round(34 * progress), 22, 256, 256);
         }
 
         //Burning
         if(this.getMenu().getMode() == OilProcessorBlockEntity.Mode.BURNING && this.getMenu().getVolume() > 0 && this.getMenu().getStoredEnergy() < this.getMenu().getCapacity()){
-            guiGraphics.blitSprite(LIT_PROGRESS_SPRITE, 14, 14, 0, 14 - Math.round(14 * (this.animTick / 80.0F)), x + 58, y +  43 + 14 - Math.round(14 * (this.animTick / 80.0F)), 14, Math.round(14 * (this.animTick / 80.0F)));
-            guiGraphics.blitSprite(LIT_PROGRESS_SPRITE, 14, 14, 0, 14 - Math.round(14 * (this.animTick / 80.0F)), x + 80, y +  43 + 14 - Math.round(14 * (this.animTick / 80.0F)), 14, Math.round(14 * (this.animTick / 80.0F)));
-            guiGraphics.blitSprite(LIT_PROGRESS_SPRITE, 14, 14, 0, 14 - Math.round(14 * (this.animTick / 80.0F)), x + 102, y +  43 + 14 - Math.round(14 * (this.animTick / 80.0F)), 14, Math.round(14 * (this.animTick / 80.0F)));
+            guiGraphics.blitSprite(RenderType::guiTextured, LIT_PROGRESS_SPRITE, 14, 14, 0, 14 - Math.round(14 * (this.animTick / 80.0F)), x + 58, y +  43 + 14 - Math.round(14 * (this.animTick / 80.0F)), 14, Math.round(14 * (this.animTick / 80.0F)));
+            guiGraphics.blitSprite(RenderType::guiTextured, LIT_PROGRESS_SPRITE, 14, 14, 0, 14 - Math.round(14 * (this.animTick / 80.0F)), x + 80, y +  43 + 14 - Math.round(14 * (this.animTick / 80.0F)), 14, Math.round(14 * (this.animTick / 80.0F)));
+            guiGraphics.blitSprite(RenderType::guiTextured, LIT_PROGRESS_SPRITE, 14, 14, 0, 14 - Math.round(14 * (this.animTick / 80.0F)), x + 102, y +  43 + 14 - Math.round(14 * (this.animTick / 80.0F)), 14, Math.round(14 * (this.animTick / 80.0F)));
 
         }
 

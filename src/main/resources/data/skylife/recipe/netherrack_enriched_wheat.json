@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:netherrack"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:netherrack",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:netherrack_enriched_wheat"

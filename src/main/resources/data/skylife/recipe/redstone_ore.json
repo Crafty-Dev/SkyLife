@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:stone"
-    },
-    "S": {
-      "item": "minecraft:redstone"
-    }
+    "#": "minecraft:stone",
+    "S": "minecraft:redstone"
   },
   "result": {
     "id": "minecraft:redstone_ore",

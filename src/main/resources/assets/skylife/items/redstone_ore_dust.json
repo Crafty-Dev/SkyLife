@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "skylife:item/redstone_ore_dust"
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DID",
+        "S#S",
+        "DPD"
+    ],
+    "key": {
+        "#": "skylife:input_module",
+        "S": "skylife:sturdy_iron",
+        "D": "minecraft:deepslate_tiles",
+        "P": "skylife:basic_fluid_pipe",
+        "I": "skylife:internal_machine_tank"
+    },
+    "result": {
+        "id": "skylife:fluid_pump",
+        "count": 1
+    }
+}

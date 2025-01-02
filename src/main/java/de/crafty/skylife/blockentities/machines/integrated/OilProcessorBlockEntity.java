@@ -276,7 +276,7 @@ public class OilProcessorBlockEntity extends AbstractFluidEnergyContainerBlockEn
         this.progress = tag.getInt("progress");
         this.totalProcessingTime = tag.getInt("totalProcessingTime");
 
-        this.currentRecipeOutput = "null".equals(tag.getString("currentRecipeOutput")) ? null : BuiltInRegistries.ITEM.get(ResourceLocation.parse(tag.getString("currentRecipeOutput")));
+        this.currentRecipeOutput = "null".equals(tag.getString("currentRecipeOutput")) ? null : BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(tag.getString("currentRecipeOutput")));
         this.requiredLiquidAmount = tag.getInt("requiredLiquidAmount");
         this.outputCount = tag.getInt("outputCount");
 

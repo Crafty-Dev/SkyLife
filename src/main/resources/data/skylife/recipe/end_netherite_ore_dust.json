@@ -2,9 +2,7 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 1.4,
-  "ingredient": {
-    "item": "skylife:end_netherite_ore"
-  },
+  "ingredient": "skylife:end_netherite_ore",
   "result": {
     "id": "skylife:end_netherite_ore_dust"
   }

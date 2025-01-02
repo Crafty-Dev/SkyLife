@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:nether_star"
-    },
-    "S": {
-      "item": "minecraft:iron_bars"
-    }
+    "#": "minecraft:nether_star",
+    "S": "minecraft:iron_bars"
   },
   "result": {
     "id": "minecraft:spawner",

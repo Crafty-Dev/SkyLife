@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "skylife:sturdy_iron"
-    },
-    "S": {
-      "item": "minecraft:emerald"
-    }
+    "#": "skylife:sturdy_iron",
+    "S": "minecraft:emerald"
   },
   "result": {
     "id": "skylife:input_module",

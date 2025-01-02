@@ -36,7 +36,12 @@ public record SkyLifeClientEventPayload(BlockPos pos, ClientEventType eventType)
         //Block Melter
         BM_EXSTINGUISH,
         BM_MELTING_FINISHED,
-        BM_PLACE_ITEM;
+        BM_PLACE_ITEM,
+
+        MACHINE_UPGRADED,
+
+        LOOT_GEM_NORMAL,
+        LOOT_GEM_RARE;
 
         public static final StreamCodec<ByteBuf, ClientEventType> STREAM_CODEC = SkyLifeByteBufCodecs.createSimpleEnum(ClientEventType.class);
     }

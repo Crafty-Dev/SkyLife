@@ -7,7 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -24,15 +24,15 @@ public class DragonInfusedBedrockBlock extends Block {
 
 
 
-    public DragonInfusedBedrockBlock() {
-        super(Properties.ofFullCopy(Blocks.BEDROCK).lightLevel(value -> 10));
+    public DragonInfusedBedrockBlock(Properties properties) {
+        super(properties);
     }
 
 
     @Override
-    protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if(player.getItemInHand(hand).getItem() != Items.NETHERITE_AXE || hit.getDirection() != Direction.UP)
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            return InteractionResult.PASS;
 
         world.setBlock(pos, Blocks.BEDROCK.defaultBlockState(), 3);
         Block.popResource(world, pos.above(), new ItemStack(ItemRegistry.DRAGON_ARTIFACT));
@@ -41,7 +41,7 @@ public class DragonInfusedBedrockBlock extends Block {
             world.addDestroyBlockEffect(pos, BlockRegistry.DRAGON_INFUSED_BEDROCK.defaultBlockState());
         }
         stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand));
-        return ItemInteractionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
 }

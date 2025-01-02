@@ -1,0 +1,19 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "VVV",
+        "I#I",
+        "DOD"
+    ],
+    "key": {
+        "#": "skylife:input_module",
+        "V": "skylife:vp_resistant_metal",
+        "I": "skylife:internal_machine_tank",
+        "D": "minecraft:deepslate_tiles",
+        "O": "skylife:oil_bucket"
+    },
+    "result": {
+        "id": "skylife:block_melter",
+        "count": 1
+    }
+}

@@ -33,6 +33,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Container, MenuProvider {
@@ -145,13 +146,13 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
 
     private ItemStack getRecipeResult() {
         SingleRecipeInput input = new SingleRecipeInput(this.getItem(0));
-        Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> recipe = this.quickCheck.getRecipeFor(input, this.getLevel());
+        Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> recipe = this.quickCheck.getRecipeFor(input, (ServerLevel) this.getLevel());
         return recipe.map(recipeHolder -> recipeHolder.value().assemble(input, this.level.registryAccess())).orElse(ItemStack.EMPTY);
     }
 
     private int getRecipeSmeltingTime() {
-        Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> recipe = this.quickCheck.getRecipeFor(new SingleRecipeInput(this.getItem(0)), this.getLevel());
-        return recipe.map(recipeHolder -> recipeHolder.value().getCookingTime()).orElse(200);
+        Optional<? extends RecipeHolder<? extends AbstractCookingRecipe>> recipe = this.quickCheck.getRecipeFor(new SingleRecipeInput(this.getItem(0)), (ServerLevel) this.getLevel());
+        return recipe.map(recipeHolder -> recipeHolder.value().cookingTime()).orElse(200);
     }
 
     private void resetRecipe() {
@@ -169,10 +170,8 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
     @Override
     protected void performAction(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
         this.smeltingProgress += this.performanceMode ? 4 : 1;
-        //System.out.println(this.smeltingProgress);
         if (this.smeltingProgress >= this.smeltingTotalTime) {
             ItemStack result = this.getItem(1);
-            //System.out.println(this.getRecipeResult() + "/" + this.getItem(0));
             if (!result.isEmpty())
                 result.setCount(result.getCount() + 1);
             else
@@ -194,8 +193,6 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
 
         if (!blockState.getValue(FluxFurnaceBlock.ACTIVE) && blockEntity.getStoredEnergy() >= blockEntity.getConsumptionPerTick((ServerLevel) level, blockPos, blockState))
             level.setBlock(blockPos, blockState.setValue(FluxFurnaceBlock.ACTIVE, true), Block.UPDATE_CLIENTS);
-
-        //System.out.println((level.isClientSide() ? "Client: " : "Server: ") + blockEntity.getItem(0));
 
         blockEntity.energyTick((ServerLevel) level, blockPos, blockState);
     }
@@ -268,7 +265,7 @@ public class FluxFurnaceBlockEntity extends AbstractEnergyConsumer implements Co
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack itemStack) {
-        return slot != 1;
+        return slot != 1 && Objects.requireNonNull(this.getLevel()).recipeAccess().propertySet(RecipePropertySet.FURNACE_INPUT).test(itemStack);
     }
 
     @Override

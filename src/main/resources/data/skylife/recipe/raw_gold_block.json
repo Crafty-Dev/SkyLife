@@ -6,9 +6,7 @@
     "###"
   ],
   "key": {
-    "#": {
-      "item": "skylife:gold_dust"
-    }
+    "#": "skylife:gold_dust"
   },
   "result": {
     "id": "minecraft:raw_gold_block",

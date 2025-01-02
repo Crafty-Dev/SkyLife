@@ -9,6 +9,7 @@ import de.crafty.skylife.network.SkyLifeNetworkServer;
 import de.crafty.skylife.network.payload.SkyLifeClientEventPayload;
 import de.crafty.skylife.registry.BlockEntityRegistry;
 import de.crafty.skylife.registry.BlockRegistry;
+import de.crafty.skylife.registry.TagRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
@@ -16,12 +17,14 @@ import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
@@ -164,10 +167,28 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
 
 
     public ToolType getToolTypeOfTool(ItemStack stack) {
-        if (stack.isEmpty() || !(stack.getItem() instanceof TieredItem tieredItem))
+        if (stack.isEmpty())
             return ToolType.NONE;
 
-        return ToolType.valueOf(((Tiers) tieredItem.getTier()).name());
+        if(stack.is(TagRegistry.NETHERITE_TOOLS))
+            return ToolType.NETHERITE;
+
+        if(stack.is(TagRegistry.DIAMOND_TOOLS))
+            return ToolType.DIAMOND;
+
+        if(stack.is(TagRegistry.GOLD_TOOLS))
+            return ToolType.GOLD;
+
+        if(stack.is(TagRegistry.IRON_TOOLS))
+            return ToolType.IRON;
+
+        if(stack.is(TagRegistry.STONE_TOOLS))
+            return ToolType.STONE;
+
+        if(stack.is(TagRegistry.WOODEN_TOOLS))
+            return ToolType.WOOD;
+
+        return ToolType.NONE;
     }
 
     @Override
@@ -190,7 +211,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
         this.toolType = ToolType.valueOf(compoundTag.getString("toolType"));
         this.destroyProgress = compoundTag.getFloat("destroyProgress");
         this.lastSentProgress = compoundTag.getFloat("lastSentProgress");
-        this.targetBlock = BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(compoundTag.getString("targetBlock")));
+        this.targetBlock = BuiltInRegistries.BLOCK.getValue(ResourceLocation.tryParse(compoundTag.getString("targetBlock")));
         this.destroyTicks = compoundTag.getInt("destroyTicks");
 
         ContainerHelper.loadAllItems(compoundTag, this.items, provider);
@@ -303,8 +324,6 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
         if (target.getBlock() != blockBreakerBlockEntity.getTargetBlock())
             blockBreakerBlockEntity.setTargetBlock(target);
 
-        //System.out.println((level.isClientSide() ? "Client: " : "Server: ") + blockBreakerBlockEntity.getItem(0));
-
         blockBreakerBlockEntity.energyTick((ServerLevel) level, blockPos, blockState);
     }
 
@@ -365,7 +384,7 @@ public class BlockBreakerBlockEntity extends AbstractEnergyConsumer implements C
 
     @Override
     public boolean canPlaceItem(int slot, ItemStack itemStack) {
-        return slot == 0 && itemStack.getItem() instanceof TieredItem;
+        return slot == 0 && this.getToolTypeOfTool(itemStack) != ToolType.NONE;
     }
 
     @Override

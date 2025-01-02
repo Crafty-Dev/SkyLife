@@ -44,7 +44,7 @@ public class SkyLifeRenderUtils {
             List<BakedQuad> quads = blockRenderer.getBlockModel(state).getQuads(state, direction, random);
 
             //Stop when culling says No :D
-            if (!Block.shouldRenderFace(state, world, pos, direction, pos.relative(direction)))
+            if (!Block.shouldRenderFace(state, world.getBlockState(pos.relative(direction)), direction))
                 continue;
             //Default light used when ambientOcclusion is deactivated
             int light = LevelRenderer.getLightColor(world, state, pos.relative(direction));

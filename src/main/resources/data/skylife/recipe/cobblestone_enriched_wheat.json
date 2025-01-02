@@ -1,12 +1,8 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    {
-      "item": "minecraft:cobblestone"
-    },
-    {
-      "item": "minecraft:wheat"
-    }
+    "minecraft:cobblestone",
+    "minecraft:wheat"
   ],
   "result": {
     "id": "skylife:cobblestone_enriched_wheat"

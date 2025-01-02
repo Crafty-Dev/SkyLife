@@ -26,3 +26,6 @@ accessible field net/minecraft/client/renderer/block/ModelBlockRenderer$AmbientO
 accessible field net/minecraft/client/renderer/block/ModelBlockRenderer$AmbientOcclusionFace lightmap [I
 
 accessible class net/minecraft/world/level/block/ComposterBlock$InputContainer
+
+#Block Entity
+accessible class net/minecraft/world/level/block/entity/BlockEntityType$BlockEntitySupplier

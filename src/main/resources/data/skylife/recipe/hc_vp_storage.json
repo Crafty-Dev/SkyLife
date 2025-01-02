@@ -1,0 +1,18 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#N#",
+        "EME",
+        "#E#"
+    ],
+    "key": {
+        "#": "minecraft:reinforced_deepslate",
+        "E": "skylife:enhanced_copper_coil",
+        "N": "minecraft:nether_star",
+        "M": "skylife:mc_vp_storage"
+    },
+    "result": {
+        "id": "skylife:hc_vp_storage",
+        "count": 1
+    }
+}

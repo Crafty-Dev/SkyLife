@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        " ##",
+        "#I#",
+        "## "
+    ],
+    "key": {
+        "#": "skylife:hardened_oil_fragment",
+        "I": "minecraft:iron_ingot"
+    },
+    "result": {
+        "id": "skylife:vp_resistant_metal",
+        "count": 1
+    }
+}

@@ -1,6 +1,7 @@
 package de.crafty.skylife.loot;
 
 import de.crafty.skylife.registry.BlockRegistry;
+import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -16,6 +17,8 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -50,12 +53,20 @@ public class SkyLifeBlockLootProvider extends BlockLootSubProvider {
         this.dropSelf(BlockRegistry.SOLAR_PANEL);
         this.dropSelf(BlockRegistry.BLOCK_BREAKER);
         this.dropSelf(BlockRegistry.FLUX_FURNACE);
+        this.dropSelf(BlockRegistry.BLOCK_MELTER);
+        this.dropSelf(BlockRegistry.SOLID_FLUID_MERGER);
+        this.dropSelf(BlockRegistry.FLUID_PUMP);
+        this.dropSelf(BlockRegistry.OIL_PROCESSOR);
         this.dropSelf(BlockRegistry.LC_VP_STORAGE);
         this.dropSelf(BlockRegistry.MC_VP_STORAGE);
         this.dropSelf(BlockRegistry.HC_VP_STORAGE);
         this.dropSelf(BlockRegistry.BASIC_ENERGY_CABLE);
         this.dropSelf(BlockRegistry.IMPROVED_ENERGY_CABLE);
         this.dropSelf(BlockRegistry.ADVANCED_ENERGY_CABLE);
+        this.add(BlockRegistry.OILY_STONE, this::createOilyStoneDrops);
+
+        this.dropSelf(BlockRegistry.BASIC_FLUID_STORAGE);
+        this.dropSelf(BlockRegistry.BASIC_FLUID_PIPE);
 
         this.dropOther(BlockRegistry.MELTING_COBBLESTONE, Blocks.COBBLESTONE);
         this.dropOther(BlockRegistry.MELTING_STONE, Blocks.STONE);
@@ -77,19 +88,22 @@ public class SkyLifeBlockLootProvider extends BlockLootSubProvider {
         Set<ResourceKey<LootTable>> set = new HashSet<>();
 
         for (Block block : BlockRegistry.getBlockList()) {
-            if (!block.isEnabled(this.enabledFeatures))
-                return;
+            if (block.isEnabled(this.enabledFeatures)) {
+                block.getLootTable()
+                        .ifPresent(
+                                resourceKey -> {
+                                    if (set.add(resourceKey)) {
+                                        LootTable.Builder builder = this.map.remove(resourceKey);
+                                        if (builder == null) {
+                                            throw new IllegalStateException(
+                                                    String.format(Locale.ROOT, "Missing loottable '%s' for '%s'", resourceKey.location(), BuiltInRegistries.BLOCK.getKey(block))
+                                            );
+                                        }
 
-            ResourceKey<LootTable> resourceKey = block.getLootTable();
-            if (resourceKey != BuiltInLootTables.EMPTY && set.add(resourceKey)) {
-                LootTable.Builder builder = this.map.remove(resourceKey);
-                if (builder == null) {
-                    throw new IllegalStateException(
-                            String.format(Locale.ROOT, "Missing loottable '%s' for '%s'", resourceKey.location(), BuiltInRegistries.BLOCK.getKey(block))
-                    );
-                }
-
-                biConsumer.accept(resourceKey, builder);
+                                        biConsumer.accept(resourceKey, builder);
+                                    }
+                                }
+                        );
             }
 
         }
@@ -111,6 +125,19 @@ public class SkyLifeBlockLootProvider extends BlockLootSubProvider {
                                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
                                 ).when(BonusLevelTableCondition.bonusLevelFlatChance(registryLookup.getOrThrow(Enchantments.FORTUNE), NORMAL_LEAVES_SAPLING_CHANCES))
                         )
+        );
+    }
+
+    public LootTable.Builder createOilyStoneDrops(Block block) {
+        HolderLookup.RegistryLookup<Enchantment> registryLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return this.createSilkTouchDispatchTable(
+                block,
+                this.applyExplosionDecay(
+                        block,
+                        LootItem.lootTableItem(ItemRegistry.HARDENED_OIL_FRAGMENT)
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                                .apply(ApplyBonusCount.addUniformBonusCount(registryLookup.getOrThrow(Enchantments.FORTUNE)))
+                )
         );
     }
 }

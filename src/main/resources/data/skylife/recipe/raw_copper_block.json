@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": "skylife:copper_dust"
+  },
+  "result": {
+    "id": "minecraft:raw_copper_block",
+    "count": 1
+  }
+}

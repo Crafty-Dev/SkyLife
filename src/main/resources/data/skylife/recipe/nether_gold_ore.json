@@ -6,12 +6,8 @@
     "SSS"
   ],
   "key": {
-    "#": {
-      "item": "minecraft:netherrack"
-    },
-    "S": {
-      "item": "skylife:gold_dust"
-    }
+    "#": "minecraft:netherrack",
+    "S": "skylife:gold_dust"
   },
   "result": {
     "id": "minecraft:nether_gold_ore",

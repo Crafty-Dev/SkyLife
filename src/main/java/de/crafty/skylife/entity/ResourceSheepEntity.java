@@ -39,12 +39,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ResourceSheepEntity extends Animal implements Shearable {
+
+
     private static final int MAX_GRASS_TIMER = 40;
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(ResourceSheepEntity.class, EntityDataSerializers.BOOLEAN);
     private int eatGrassTimer;
@@ -87,12 +90,24 @@ public class ResourceSheepEntity extends Animal implements Shearable {
     }
 
     @Nullable
-    public Animal getBreedOffspring(ServerLevel serverWorld, AgeableMob other) {
+    public Animal getBreedOffspring(ServerLevel serverLevel, AgeableMob other) {
 
-        if(!(other instanceof Sheep sheep) || serverWorld.getRandom().nextFloat() <= this.getResourceType().getBait().getSpawnChance(true))
-            return this.sheepType.create(serverWorld);
+        if (!(((IMixinAnimalEntity) this).skyLife$getLastFood().getItem() instanceof ResourceWheatItem resourceWheat))
+            return EntityType.SHEEP.create(serverLevel, EntitySpawnReason.BREEDING);
 
-        Sheep baby = EntityType.SHEEP.create(serverWorld);
+        //Dimension checks
+        if (resourceWheat.getRequiredDimension() == ResourceWheatItem.DimensionCriteria.NETHER && serverLevel.dimension() != ServerLevel.NETHER)
+            return EntityType.SHEEP.create(serverLevel, EntitySpawnReason.BREEDING);
+
+        if (resourceWheat.getRequiredDimension() == ResourceWheatItem.DimensionCriteria.END && serverLevel.dimension() != ServerLevel.END)
+            return EntityType.SHEEP.create(serverLevel, EntitySpawnReason.BREEDING);
+
+        float f = serverLevel.getRandom().nextFloat();
+
+        if (!(other instanceof Sheep sheep) || f <= this.getResourceType().getBait().getSpawnChance(true))
+            return this.sheepType.create(serverLevel, EntitySpawnReason.BREEDING);
+
+        Sheep baby = EntityType.SHEEP.create(serverLevel, EntitySpawnReason.BREEDING);
         baby.setColor(sheep.getColor());
         return baby;
 
@@ -114,11 +129,6 @@ public class ResourceSheepEntity extends Animal implements Shearable {
         }
     }
 
-    @Nullable
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType spawnReason, @Nullable SpawnGroupData entityData) {
-        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
-    }
 
     @Override
     public void setBaby(boolean baby) {
@@ -145,12 +155,12 @@ public class ResourceSheepEntity extends Animal implements Shearable {
         return this.isInLove() && other.isInLove() && !(other instanceof ResourceSheepEntity resourceSheep && resourceSheep.getResourceType() != this.getResourceType());
     }
 
-
     @Override
-    protected void customServerAiStep() {
+    protected void customServerAiStep(ServerLevel serverLevel) {
         this.eatGrassTimer = this.eatGrassGoal.getEatAnimationTick();
-        super.customServerAiStep();
+        super.customServerAiStep(serverLevel);
     }
+
 
     @Override
     public void aiStep() {
@@ -203,6 +213,25 @@ public class ResourceSheepEntity extends Animal implements Shearable {
         return SoundEvents.SHEEP_DEATH;
     }
 
+    public float getHeadEatPositionScale(float f) {
+        if (this.eatGrassTimer <= 0) {
+            return 0.0F;
+        } else if (this.eatGrassTimer >= 4 && this.eatGrassTimer <= 36) {
+            return 1.0F;
+        } else {
+            return this.eatGrassTimer < 4 ? ((float)this.eatGrassTimer - f) / 4.0F : -((float)(this.eatGrassTimer - 40) - f) / 4.0F;
+        }
+    }
+
+    public float getHeadEatAngleScale(float f) {
+        if (this.eatGrassTimer > 4 && this.eatGrassTimer <= 36) {
+            float g = ((float)(this.eatGrassTimer - 4) - f) / 32.0F;
+            return (float) (Math.PI / 5) + 0.21991149F * Mth.sin(g * 28.7F);
+        } else {
+            return this.eatGrassTimer > 0 ? (float) (Math.PI / 5) : this.getXRot() * (float) (Math.PI / 180.0);
+        }
+    }
+
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
@@ -223,48 +252,29 @@ public class ResourceSheepEntity extends Animal implements Shearable {
     }
 
     @Override
-    public void shear(SoundSource shearedSoundCategory) {
-        this.level().playSound(null, this, SoundEvents.SHEEP_SHEAR, shearedSoundCategory, 1.0F, 1.0F);
-        this.level().playSound(null, this, this.resourceType.getSound(), shearedSoundCategory, 0.5F, 1.0F);
+    public void shear(ServerLevel serverLevel, SoundSource soundSource, ItemStack itemStack) {
+        this.level().playSound(null, this, SoundEvents.SHEEP_SHEAR, soundSource, 1.0F, 1.0F);
+        this.level().playSound(null, this, this.resourceType.getSound(), soundSource, 0.5F, 1.0F);
 
+        this.resourceSheared(serverLevel, EnchantmentHelper.getItemEnchantmentLevel(this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), itemStack));
     }
 
     public static AttributeSupplier.Builder createSheepAttributes(Type type) {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0 * type.getStrength()).add(Attributes.MOVEMENT_SPEED, 0.23F);
+        return Animal.createAnimalAttributes().add(Attributes.MAX_HEALTH, 8.0 * type.getStrength()).add(Attributes.MOVEMENT_SPEED, 0.23F);
     }
 
 
-    public float getNeckAngle(float delta) {
-        if (this.eatGrassTimer <= 0) {
-            return 0.0F;
-        } else if (this.eatGrassTimer >= 4 && this.eatGrassTimer <= 36) {
-            return 1.0F;
-        } else {
-            return this.eatGrassTimer < 4 ? ((float) this.eatGrassTimer - delta) / 4.0F : -((float) (this.eatGrassTimer - 40) - delta) / 4.0F;
-        }
-    }
-
-    public float getHeadAngle(float delta) {
-        if (this.eatGrassTimer > 4 && this.eatGrassTimer <= 36) {
-            float f = ((float) (this.eatGrassTimer - 4) - delta) / 32.0F;
-            return (float) (Math.PI / 5) + 0.21991149F * Mth.sin(f * 28.7F);
-        } else {
-            return this.eatGrassTimer > 0 ? (float) (Math.PI / 5) : this.getXRot() * (float) (Math.PI / 180.0);
-        }
-    }
-
-    private void resourceSheared(Player player, ItemStack shear, Level world, BlockPos pos, int fortune) {
+    private void resourceSheared(ServerLevel serverLevel, int fortune) {
         this.setSheared(true);
-        this.spawnAtLocation(new ItemStack(this.getResourceType().getResource(), this.getResourceType().isFortuneEffective() ? 1 + world.getRandom().nextInt(1 + fortune) : 1));
+        this.spawnAtLocation(serverLevel, new ItemStack(this.getResourceType().getResource(), this.getResourceType().isFortuneEffective() ? 1 + serverLevel.getRandom().nextInt(1 + fortune) : 1));
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(Items.SHEARS)) {
             if (!this.level().isClientSide && this.readyForShearing()) {
-                this.shear(SoundSource.PLAYERS);
-                this.resourceSheared(player, itemStack, player.level(), this.blockPosition(), EnchantmentHelper.getItemEnchantmentLevel(this.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FORTUNE), itemStack));
+                this.shear((ServerLevel) this.level(), SoundSource.PLAYERS, player.getItemInHand(hand));
                 this.gameEvent(GameEvent.SHEAR, player);
                 itemStack.hurtAndBreak(1, player, getSlotForHand(hand));
                 return InteractionResult.SUCCESS;
@@ -292,7 +302,8 @@ public class ResourceSheepEntity extends Animal implements Shearable {
         GLOWSTONE(() -> ItemRegistry.GLOWSTONE_ORE_DUST, () -> ItemRegistry.GLOWSTONE_ENRICHED_WHEAT, 1.25F, "nether_ore_sheep", SoundEvents.GLASS_BREAK, true),
         NETHERRACK(() -> Items.NETHERRACK, () -> ItemRegistry.NETHERRACK_ENRICHED_WHEAT, 1.0F, "nether_ore_sheep", SoundEvents.NETHERRACK_BREAK, false),
         COBBLESTONE(() -> Items.COBBLESTONE, () -> ItemRegistry.COBBLESTONE_ENRICHED_WHEAT, 1.0F, "ore_sheep", SoundEvents.STONE_BREAK, false),
-        DIRT(() -> Items.DIRT, () -> ItemRegistry.DIRT_ENRICHED_WHEAT, 1.0F, "overworld_sheep", SoundEvents.GRASS_BREAK, false);
+        DIRT(() -> Items.DIRT, () -> ItemRegistry.DIRT_ENRICHED_WHEAT, 1.0F, "overworld_sheep", SoundEvents.GRASS_BREAK, false),
+        OIL(() -> ItemRegistry.HARDENED_OIL_FRAGMENT, () -> ItemRegistry.OIL_ENRICHED_WHEAT, 4.0F, "ore_sheep", SoundEvents.STONE_BREAK, true);
 
 
         private final Supplier<Item> resource;

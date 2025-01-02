@@ -6,12 +6,8 @@
     " # "
   ],
   "key": {
-    "#": {
-      "item": "skylife:sturdy_iron"
-    },
-    "S": {
-      "item": "minecraft:redstone"
-    }
+    "#": "skylife:sturdy_iron",
+    "S": "minecraft:redstone"
   },
   "result": {
     "id": "skylife:output_module",

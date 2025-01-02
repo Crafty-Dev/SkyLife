@@ -67,12 +67,12 @@ public class FluidConversionConfig extends AbstractSkyLifeConfig {
     private void decodeConversions() {
         LinkedHashMap<Item, List<FluidDrop>> conversions = new LinkedHashMap<>();
         this.data().keySet().forEach(inputId -> {
-            Item input = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(inputId));
+            Item input = BuiltInRegistries.ITEM.getValue(ResourceLocation.tryParse(inputId));
             List<FluidDrop> drops = new LinkedList<>();
             this.data().getAsJsonArray(inputId).forEach(element -> {
                 JsonObject singleConfig = element.getAsJsonObject();
-                Fluid requiredFluid = BuiltInRegistries.FLUID.get(ResourceLocation.tryParse(singleConfig.get("requiredFluid").getAsString()));
-                Item output = BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(singleConfig.get("output").getAsString()));
+                Fluid requiredFluid = BuiltInRegistries.FLUID.getValue(ResourceLocation.tryParse(singleConfig.get("requiredFluid").getAsString()));
+                Item output = BuiltInRegistries.ITEM.getValue(ResourceLocation.tryParse(singleConfig.get("output").getAsString()));
                 float chance = singleConfig.get("chance").getAsFloat();
                 int min = singleConfig.get("min").getAsInt();
                 int max = singleConfig.get("max").getAsInt();
@@ -108,6 +108,8 @@ public class FluidConversionConfig extends AbstractSkyLifeConfig {
 
         this.registerDrop(Items.IRON_INGOT, new FluidDrop(FluidRegistry.MOLTEN_OBSIDIAN, ItemRegistry.STURDY_IRON, 1.0F, 1, 1, 0.0F, false));
         this.registerDrop(Items.DIAMOND, new FluidDrop(FluidRegistry.MOLTEN_OBSIDIAN, ItemRegistry.STURDY_DIAMOND, 1.0F, 1, 1, 0.0F, false));
+
+        this.registerDrop(Items.WHEAT, new FluidDrop(FluidRegistry.OIL, ItemRegistry.OIL_ENRICHED_WHEAT, 1.0F, 1, 1, 0.0F, false));
     }
 
     //Idea: Merge drops together when calling registerDrops(); multiple times

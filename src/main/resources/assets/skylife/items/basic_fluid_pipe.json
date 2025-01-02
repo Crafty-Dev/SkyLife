@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "skylife:block/fluid_pipe_core"
+  }
+}
