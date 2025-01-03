@@ -1,6 +1,7 @@
 package de.crafty.skylife.mixin.world.entity.animal;
 
 
+import de.crafty.skylife.SkyLife;
 import de.crafty.skylife.entity.ResourceSheepEntity;
 import de.crafty.skylife.item.ResourceWheatItem;
 import de.crafty.skylife.registry.TagRegistry;
@@ -34,6 +35,8 @@ public abstract class MixinAnimal extends AgeableMob implements IMixinAnimalEnti
     @Shadow
     public abstract boolean isInLove();
 
+    @Shadow protected abstract void usePlayerItem(Player player, InteractionHand interactionHand, ItemStack itemStack);
+
     protected MixinAnimal(EntityType<? extends AgeableMob> entityType, Level world) {
         super(entityType, world);
     }
@@ -53,12 +56,12 @@ public abstract class MixinAnimal extends AgeableMob implements IMixinAnimalEnti
         cir.setReturnValue(this.isInLove() && other.isInLove() && !(other instanceof Sheep sheepEntity && ((IMixinAnimalEntity) sheepEntity).skyLife$getLastFood().getItem() != this.skyLife$getLastFood().getItem()));
     }
 
-
-    @Inject(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/Animal;setInLove(Lnet/minecraft/world/entity/player/Player;)V", shift = At.Shift.AFTER))
-    private void rememberLastFood(Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> cir) {
-        ItemStack stack = player.getItemInHand(hand).copy();
-        stack.setCount(1);
-        this.lastFood = stack;
+    @Redirect(method = "mobInteract", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/Animal;usePlayerItem(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/item/ItemStack;)V", ordinal = 0))
+    private void rememberLastFood(Animal instance, Player player, InteractionHand interactionHand, ItemStack itemStack){
+        ItemStack saved = itemStack.copy();
+        saved.setCount(1);
+        this.lastFood = saved;
+        this.usePlayerItem(player, interactionHand, itemStack);
     }
 
     @Override
@@ -94,4 +97,6 @@ public abstract class MixinAnimal extends AgeableMob implements IMixinAnimalEnti
 
         return instance.getBreedOffspring(serverLevel, other instanceof ResourceSheepEntity ? thisSheep : other);
     }
+
+
 }

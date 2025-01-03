@@ -68,6 +68,7 @@ public class MobOrbItem extends Item {
         if(result.consumesAction())
             return result;
 
+
         BlockPos pos = ctx.getClickedPos();
         Direction direction = ctx.getClickedFace();
         Player player = ctx.getPlayer();

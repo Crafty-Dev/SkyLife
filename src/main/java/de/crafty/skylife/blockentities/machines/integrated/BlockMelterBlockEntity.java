@@ -84,7 +84,7 @@ public class BlockMelterBlockEntity extends AbstractFluidEnergyConsumerBlockEnti
 
     @Override
     public int getConsumptionPerTick(ServerLevel serverLevel, BlockPos blockPos, BlockState blockState) {
-        return this.isUpgraded() ? 160 : 100;
+        return this.isUpgraded() ? 100 : 50;
     }
 
 
