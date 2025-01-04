@@ -16,6 +16,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
@@ -87,6 +88,10 @@ public class BlockRegistry {
     //Fluid Blocks
     public static final Block BASIC_FLUID_STORAGE = registerDefault("basic_fluid_storage", BasicFluidStorageBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_GRAY).strength(3.0F, 4.0F).requiresCorrectToolForDrops().noOcclusion());
     public static final Block BASIC_FLUID_PIPE = registerDefault("basic_fluid_pipe", BasicFluidPipeBlock::new, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(0.5F).noOcclusion());
+
+
+    //Sky Update
+    public static final Block CLOUD = registerDefault("cloud", CloudBlock::new, BlockBehaviour.Properties.of().mapColor(DyeColor.WHITE).strength(0.15F).noOcclusion().sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY));
 
 
     private static <T extends Block> T registerBlock(String id, Function<BlockBehaviour.Properties, T> blockFactory, BlockBehaviour.Properties properties) {

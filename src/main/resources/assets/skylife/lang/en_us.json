@@ -147,6 +147,10 @@
   "item.skylife.basic_fluid_storage": "Small Fluid Tank",
   "item.skylife.basic_fluid_pipe": "Basic Fluid Pipe",
 
+  "item.skylife.cloud": "Cloud",
+
+  "enchantment.skylife.cloud_walker": "Cloud Walker",
+
   "entity.skylife.coal_sheep": "Coal Sheep",
   "entity.skylife.iron_sheep": "Iron Sheep",
   "entity.skylife.copper_sheep": "Copper Sheep",

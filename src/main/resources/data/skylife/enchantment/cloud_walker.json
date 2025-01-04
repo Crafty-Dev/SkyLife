@@ -1,0 +1,22 @@
+{
+  "anvil_cost": 12,
+  "description": {
+    "translate": "enchantment.skylife.cloud_walker"
+  },
+  "effects": {},
+  "max_cost": {
+    "base": 75,
+    "per_level_above_first": 25
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 25,
+    "per_level_above_first": 25
+  },
+  "slots": [
+    "feet"
+  ],
+  "supported_items": "#minecraft:enchantable/foot_armor",
+  "primary_items": [],
+  "weight": 1
+}

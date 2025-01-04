@@ -76,7 +76,9 @@ public class SkyLifeClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BASIC_FLUID_STORAGE, RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.BASIC_FLUID_PIPE, RenderType.cutout());
 
+        BlockRenderLayerMap.INSTANCE.putBlock(BlockRegistry.CLOUD, RenderType.translucent());
 
+        //Fluids
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.MOLTEN_OBSIDIAN, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.MOLTEN_OBSIDIAN_FLOWING, RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putFluid(FluidRegistry.OIL, RenderType.translucent());
