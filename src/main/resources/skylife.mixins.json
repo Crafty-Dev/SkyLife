@@ -3,8 +3,12 @@
   "package": "de.crafty.skylife.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "MixinTest",
     "core.dispenser.MixinShearsDispenseItemBehavior",
     "fluid.MixinFlowingFluid",
+    "gametest.framework.MixinGameTestInfo",
+    "server.commands.MixinPlaceCommand",
+    "server.level.MixinWorldgenRegion",
     "world.entity.animal.MixinAnimal",
     "world.entity.animal.MixinLivingEntity",
     "world.entity.animal.MixinSheep",

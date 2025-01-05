@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 public class CloudBlock extends HalfTransparentBlock {
 
 
-
     public CloudBlock(Properties properties) {
         super(properties);
     }
@@ -28,7 +28,10 @@ public class CloudBlock extends HalfTransparentBlock {
 
     @Override
     protected @NotNull VoxelShape getCollisionShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
-        if(collisionContext instanceof EntityCollisionContext ctx && ctx.getEntity() instanceof LivingEntity entity)
+        if (collisionContext instanceof EntityCollisionContext ctx && ctx.getEntity() instanceof ItemEntity item && item.getItem().getEnchantments().getLevel(item.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentRegistry.CLOUD_WALKER)) > 0)
+            return Shapes.block();
+
+        if (collisionContext instanceof EntityCollisionContext ctx && ctx.getEntity() instanceof LivingEntity entity)
             return EnchantmentHelper.getEnchantmentLevel(entity.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(EnchantmentRegistry.CLOUD_WALKER), entity) > 0 ? Shapes.block() : Shapes.empty();
 
         return Shapes.empty();
@@ -43,13 +46,12 @@ public class CloudBlock extends HalfTransparentBlock {
     @Override
     protected void entityInside(BlockState blockState, Level level, BlockPos blockPos, Entity entity) {
 
-        entity.makeStuckInBlock(blockState, new Vec3(1.0F, 0.95F, 1.0F));
+        entity.makeStuckInBlock(blockState, new Vec3(1.0F, 2.0F, 1.0F));
     }
 
 
     @Override
     public void stepOn(Level level, BlockPos blockPos, BlockState blockState, Entity entity) {
-        System.out.println("Stepped on");
         super.stepOn(level, blockPos, blockState, entity);
     }
 

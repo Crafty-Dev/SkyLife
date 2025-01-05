@@ -1,10 +1,8 @@
 package de.crafty.skylife.world;
 
 import de.crafty.skylife.SkyLife;
-import de.crafty.skylife.SkyLifeClient;
-import de.crafty.skylife.SkyLifeServer;
 import de.crafty.skylife.util.VectorUtils;
-import de.crafty.skylife.world.chunkgen.SkyLifeChunkGenOverworld;
+import de.crafty.skylife.world.chunkgen.skylife.SkyLifeChunkGenOverworld;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.server.level.ServerLevel;

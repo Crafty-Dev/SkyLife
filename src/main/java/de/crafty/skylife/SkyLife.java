@@ -14,8 +14,26 @@ import de.crafty.skylife.network.SkyLifeNetworkServer;
 import de.crafty.skylife.structure.resource_island.ResourceIslandStructure;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
+import net.minecraft.world.level.storage.loot.predicates.InvertedLootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
+import net.minecraft.world.level.storage.loot.predicates.MatchTool;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +56,14 @@ public class SkyLife implements ModInitializer {
         ItemRegistry.load();
         BlockRegistry.load();
         ChunkGenRegistry.perform();
+        //WorldGen
+        DimensionRegistry.perform();
+        DimensionRegistry.MultiNoiseRegistry.perform();
+        DimensionRegistry.LevelStem.perform();
+        DimensionRegistry.BiomeNoise.perform();
+        DimensionRegistry.NoiseSettings.perform();
+        DimensionRegistry.Level.perform();
+
         ItemGroupRegistry.perform();
         BlockEntityRegistry.perform();
         EntityRegistry.perform();
@@ -46,6 +72,7 @@ public class SkyLife implements ModInitializer {
         InventoryRegistry.perform();
         StructureRegistry.perform();
         StructureRegistry.Pieces.perform();
+        FeatureRegistry.perform();
 
         for (ResourceIslandStructure.ResourceType type : ResourceIslandStructure.ResourceType.values()) {
             LOGGER.info("Known Resource Island Type: {}", type.name().toLowerCase());
@@ -88,9 +115,35 @@ public class SkyLife implements ModInitializer {
         EventManager.registerListener(BaseEvents.BLOCK_ENTITY_LOAD, new BlockEntityLoadListener());
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> SkyLifeCommand.register(dispatcher));
+
+
+        LootTableEvents.REPLACE.register((registryKey, builder, lootTableSource, wrapperLookup) -> {
+            if (Blocks.DIRT.getLootTable().isPresent() && Blocks.DIRT.getLootTable().get().equals(registryKey)) {
+
+                LootPool.Builder lootPoolBuilder = LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(
+                                LootItem.lootTableItem(Items.REDSTONE)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
+                                        .when(LootItemRandomChanceCondition.randomChance(0.25F))
+                                        .otherwise(LootItem.lootTableItem(Items.GOLD_INGOT)
+                                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
+                                                .when(LootItemRandomChanceCondition.randomChance(0.25F))
+                                        )
+                                        .when(MatchTool.toolMatches(ItemPredicate.Builder.item().of(wrapperLookup.lookupOrThrow(Registries.ITEM), ItemTags.SHOVELS)))
+                        )
+                        .add(LootItem.lootTableItem(Items.DIRT)
+                                .when(InvertedLootItemCondition.invert(MatchTool.toolMatches(ItemPredicate.Builder.item().of(wrapperLookup.lookupOrThrow(Registries.ITEM), ItemTags.SHOVELS))))
+                        );
+
+                return LootTable.lootTable().withPool(lootPoolBuilder).build();
+            }
+
+            return builder;
+        });
     }
 
-    public void loadConfigs(){
+    public void loadConfigs() {
         SkyLifeConfigs.HAMMER.load();
         SkyLifeConfigs.BLOCK_TRANSFORMATION.load();
         SkyLifeConfigs.SAPLING_GROWTH_CONFIG.load();

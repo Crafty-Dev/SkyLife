@@ -31,6 +31,16 @@
         },
         "settings": "minecraft:nether"
       }
+    },
+    "skylife:endless_skies": {
+      "type": "skylife:endless_skies",
+      "generator": {
+        "type": "skylife:endless_skies",
+        "biome_source": {
+          "type": "skylife:endless_skies"
+        },
+        "settings": "skylife:endless_skies"
+      }
     }
   }
 }

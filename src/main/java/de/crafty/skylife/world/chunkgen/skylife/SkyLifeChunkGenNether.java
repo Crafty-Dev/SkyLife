@@ -1,10 +1,10 @@
-package de.crafty.skylife.world.chunkgen;
+package de.crafty.skylife.world.chunkgen.skylife;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import java.util.List;
+
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
+
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.StructureManager;

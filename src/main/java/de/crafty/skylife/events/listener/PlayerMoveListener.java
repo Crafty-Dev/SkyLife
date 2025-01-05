@@ -21,6 +21,5 @@ public class PlayerMoveListener implements EventListener<PlayerMoveEvent.Callbac
         //callback.player().displayClientMessage(Component.literal("Buffer: " + (cable.isBufferUnlocked() ? "Unlocked" : "Locked") + " [" + cable.getStoredEnergy() + "/" + cable.getCapacity() + "] " + "(last Update: " + cable.getLastTick() + ")"), true);
 
         SaplingGrowthLogic.onSaplingGrowthByMoving(callback.player(), callback.level(), prevPos.x(), prevPos.y(), prevPos.z(), pos.x(), pos.y(), pos.z());
-
     }
 }

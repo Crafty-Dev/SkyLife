@@ -1,8 +1,6 @@
-package de.crafty.skylife.world.chunkgen;
+package de.crafty.skylife.world.chunkgen.skylife;
 
 import com.google.common.base.Suppliers;
-import de.crafty.skylife.SkyLifeClient;
-import de.crafty.skylife.SkyLifeServer;
 import de.crafty.skylife.registry.TagRegistry;
 import it.unimi.dsi.fastutil.ints.IntArraySet;
 import it.unimi.dsi.fastutil.ints.IntSet;
@@ -17,7 +15,6 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
@@ -58,11 +55,11 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
         );
     }
 
-    public static boolean isSkyblockStructureSet(Holder.Reference<StructureSet> structureSetReference) {
+    public boolean isSkyblockStructureSet(Holder.Reference<StructureSet> structureSetReference) {
         return structureSetReference.is(TagRegistry.SKYBLOCK_STRUCTURES);
     }
 
-    public static boolean isSkyblockFeature(Holder<PlacedFeature> feature) {
+    public boolean isSkyblockFeature(Holder<PlacedFeature> feature) {
         return feature.value().feature().is(TagRegistry.SKYBLOCK_FEATURES);
     }
 
@@ -70,7 +67,7 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
         List<HolderSet<PlacedFeature>> skyblockAvailableFeatures = new ArrayList<>();
 
         featureList.forEach(registryEntries -> {
-            HolderSet<PlacedFeature> list = HolderSet.direct(registryEntries.stream().filter(AbstractSkyLifeChunkGenerator::isSkyblockFeature).toList());
+            HolderSet<PlacedFeature> list = HolderSet.direct(registryEntries.stream().filter(this::isSkyblockFeature).toList());
             if (list.size() > 0)
                 skyblockAvailableFeatures.add(list);
         });
@@ -80,7 +77,7 @@ public abstract class AbstractSkyLifeChunkGenerator extends NoiseBasedChunkGener
     @Override
     public @NotNull ChunkGeneratorStructureState createState(HolderLookup<StructureSet> structureSetRegistry, RandomState noiseConfig, long seed) {
 
-        List<Holder<StructureSet>> list = structureSetRegistry.listElements().filter(AbstractSkyLifeChunkGenerator::isSkyblockStructureSet).collect(Collectors.toUnmodifiableList());
+        List<Holder<StructureSet>> list = structureSetRegistry.listElements().filter(this::isSkyblockStructureSet).collect(Collectors.toUnmodifiableList());
         return ChunkGeneratorStructureState.createForFlat(noiseConfig, seed, this.biomeSource, list.stream());
     }
 

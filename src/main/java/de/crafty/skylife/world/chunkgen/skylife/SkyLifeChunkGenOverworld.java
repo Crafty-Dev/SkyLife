@@ -1,17 +1,13 @@
-package de.crafty.skylife.world.chunkgen;
+package de.crafty.skylife.world.chunkgen.skylife;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.BiomeSource;
-import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
@@ -20,18 +16,22 @@ import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import org.jetbrains.annotations.NotNull;
 
-public class SkyLifeChunkGenEnd extends AbstractSkyLifeChunkGenerator {
+import java.util.concurrent.CompletableFuture;
+
+public class SkyLifeChunkGenOverworld extends AbstractSkyLifeChunkGenerator {
 
     public static final MapCodec<NoiseBasedChunkGenerator> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
                             BiomeSource.CODEC.fieldOf("biome_source").forGetter(ChunkGenerator::getBiomeSource),
                             NoiseGeneratorSettings.CODEC.fieldOf("settings").forGetter(NoiseBasedChunkGenerator::generatorSettings)
                     )
-                    .apply(instance, instance.stable(SkyLifeChunkGenEnd::new))
+                    .apply(instance, instance.stable(SkyLifeChunkGenOverworld::new))
     );
 
-    public SkyLifeChunkGenEnd(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
+
+    public SkyLifeChunkGenOverworld(BiomeSource biomeSource, Holder<NoiseGeneratorSettings> settings) {
         super(biomeSource, settings);
+
     }
 
     @Override
@@ -39,25 +39,37 @@ public class SkyLifeChunkGenEnd extends AbstractSkyLifeChunkGenerator {
         return CODEC;
     }
 
+
     @Override
     public void buildSurface(WorldGenRegion region, StructureManager structures, RandomState noiseConfig, ChunkAccess chunk) {
-        if(region.getBiome(new BlockPos(chunk.getPos().getMinBlockX(), 64, chunk.getPos().getMinBlockZ())).is(Biomes.THE_END))
-            super.buildSurface(region, structures, noiseConfig, chunk);
 
     }
 
-    //Only generate World when we talk about the end island
     @Override
     public @NotNull CompletableFuture<ChunkAccess> fillFromNoise(Blender blender, RandomState noiseConfig, StructureManager structureAccessor, ChunkAccess chunk) {
-        if (blender.getBiomeResolver(this.biomeSource).getNoiseBiome(chunk.getPos().getMinBlockX(), 64, chunk.getPos().getMinBlockZ(), noiseConfig.sampler()).is(Biomes.THE_END))
-            return super.fillFromNoise(blender, noiseConfig, structureAccessor, chunk);
-
         return CompletableFuture.completedFuture(chunk);
     }
 
 
     @Override
     public void applyBiomeDecoration(WorldGenLevel world, ChunkAccess chunk, StructureManager structureAccessor) {
+        ChunkPos chunkPos = chunk.getPos();
+
         super.applyBiomeDecoration(world, chunk, structureAccessor);
+    }
+
+
+    public boolean isAllowedToSpawn(int islandCount, ChunkPos chunkPos) {
+
+        double distance = 75.0F;
+        double circumference = (islandCount - 1) * distance;
+        double radius = circumference / (Math.PI * 2);
+
+        int structureFreeRadius = (int) (radius + 50);
+
+        if (chunkPos.getMinBlockX() > -structureFreeRadius && chunkPos.getMaxBlockX() < structureFreeRadius && chunkPos.getMaxBlockZ() > -structureFreeRadius && chunkPos.getMinBlockZ() < structureFreeRadius)
+            return false;
+
+        return true;
     }
 }

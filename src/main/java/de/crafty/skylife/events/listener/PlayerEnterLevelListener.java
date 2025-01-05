@@ -4,7 +4,7 @@ import de.crafty.lifecompat.api.event.EventListener;
 import de.crafty.lifecompat.events.player.PlayerEnterLevelEvent;
 import de.crafty.skylife.advancements.SkyLifeCriteriaTriggers;
 import de.crafty.skylife.world.SpawnGenerator;
-import de.crafty.skylife.world.chunkgen.SkyLifeChunkGenOverworld;
+import de.crafty.skylife.world.chunkgen.skylife.SkyLifeChunkGenOverworld;
 import net.minecraft.server.level.ServerPlayer;
 
 public class PlayerEnterLevelListener implements EventListener<PlayerEnterLevelEvent.Callback> {
