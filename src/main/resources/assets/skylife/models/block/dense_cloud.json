@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cube_all",
   "render_type": "translucent",
   "textures": {
-    "all": "skylife:block/cloud"
+    "all": "skylife:block/dense_cloud"
   }
 }

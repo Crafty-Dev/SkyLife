@@ -23,6 +23,7 @@
   },
   "client": [
     "client.gui.screens.MixinTitleScreen",
-    "client.gui.screens.worldselection.MixinCreateWorldScreen"
+    "client.gui.screens.worldselection.MixinCreateWorldScreen",
+    "client.renderer.MixinLevelRenderer"
   ]
 }

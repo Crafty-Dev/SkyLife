@@ -148,6 +148,8 @@
   "item.skylife.basic_fluid_pipe": "Basic Fluid Pipe",
 
   "item.skylife.cloud": "Cloud",
+  "item.skylife.dense_cloud": "Dense Cloud",
+  "item.skylife.small_cloud": "Small Cloud",
 
   "enchantment.skylife.cloud_walker": "Cloud Walker",
 

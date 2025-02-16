@@ -1,0 +1,57 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "skylife:block/small_cloud"
+      },
+      "when": {
+        "attached": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/small_cloud",
+        "y": 90
+      },
+      "when": {
+        "attached": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/small_cloud",
+        "y": 180
+      },
+      "when": {
+        "attached": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/small_cloud",
+        "y": 270
+      },
+      "when": {
+        "attached": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/small_cloud",
+        "x": 270
+      },
+      "when": {
+        "attached": "up"
+      }
+    },
+    {
+      "apply": {
+        "model": "skylife:block/small_cloud",
+        "x": 90
+      },
+      "when": {
+        "attached": "down"
+      }
+    }
+  ]
+}

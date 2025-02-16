@@ -92,7 +92,8 @@ public class BlockRegistry {
 
     //Sky Update
     public static final Block CLOUD = registerDefault("cloud", CloudBlock::new, BlockBehaviour.Properties.of().mapColor(DyeColor.WHITE).strength(0.15F).noOcclusion().sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY));
-
+    public static final Block DENSE_CLOUD = registerDefault("dense_cloud", CloudBlock::new, BlockBehaviour.Properties.of().mapColor(DyeColor.WHITE).strength(0.2F).noOcclusion().sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY));
+    public static final Block SMALL_CLOUD = registerDefault("small_cloud", SmallCloudBlock::new, BlockBehaviour.Properties.of().mapColor(DyeColor.WHITE).strength(0.1F).noOcclusion().instabreak().sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY));
 
     private static <T extends Block> T registerBlock(String id, Function<BlockBehaviour.Properties, T> blockFactory, BlockBehaviour.Properties properties) {
         ResourceLocation location = ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, id);

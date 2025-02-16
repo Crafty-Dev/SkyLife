@@ -2,6 +2,7 @@ package de.crafty.skylife.block;
 
 import de.crafty.skylife.registry.EnchantmentRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -55,4 +56,8 @@ public class CloudBlock extends HalfTransparentBlock {
         super.stepOn(level, blockPos, blockState, entity);
     }
 
+    @Override
+    protected boolean skipRendering(BlockState blockState, BlockState blockState2, Direction direction) {
+        return blockState2.getBlock() instanceof CloudBlock && !(blockState2.getBlock() instanceof SmallCloudBlock);
+    }
 }

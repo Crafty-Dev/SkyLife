@@ -1,8 +1,10 @@
 package de.crafty.skylife.world.feature;
 
 import com.mojang.serialization.Codec;
+import de.crafty.skylife.block.SmallCloudBlock;
 import de.crafty.skylife.registry.BlockRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
@@ -31,12 +33,14 @@ public class CloudFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos origin = featurePlaceContext.origin();
         RandomSource randomSource = featurePlaceContext.random();
 
+        boolean dense = randomSource.nextFloat() < 0.35F;
+
         BlockPos cloudPos = origin;
 
         for (int i = 0; i < randomSource.nextInt(15) + 1; i++) {
             int size = 2 + randomSource.nextInt(3);
 
-            this.genCloudCube(size, worldGenLevel, cloudPos, canReplace, origin);
+            this.genCloudCube(dense, size, worldGenLevel, cloudPos, canReplace, origin);
             cloudPos = origin.offset(1 - size + randomSource.nextInt(size), -1 + randomSource.nextInt(3), 1 - size + randomSource.nextInt(size));
         }
 
@@ -45,7 +49,9 @@ public class CloudFeature extends Feature<NoneFeatureConfiguration> {
     }
 
 
-    private void genCloudCube(int baseSize, WorldGenLevel worldGenLevel, BlockPos pos, Predicate<BlockState> canReplace, BlockPos origin) {
+    private void genCloudCube(boolean dense, int baseSize, WorldGenLevel worldGenLevel, BlockPos pos, Predicate<BlockState> canReplace, BlockPos origin) {
+        BlockState cloud = dense ? BlockRegistry.DENSE_CLOUD.defaultBlockState() : BlockRegistry.CLOUD.defaultBlockState();
+
         baseSize = Math.max(baseSize, 2);
         int height = 1;
 
@@ -99,7 +105,13 @@ public class CloudFeature extends Feature<NoneFeatureConfiguration> {
             return;
 
         cloudPositions.forEach(pos1 -> {
-            this.safeSetBlock(worldGenLevel, pos1, BlockRegistry.CLOUD.defaultBlockState(), canReplace);
+            this.safeSetBlock(worldGenLevel, pos1, cloud, canReplace);
+            for(Direction direction : Direction.values()) {
+                BlockPos relative = pos1.relative(direction);
+                if(!cloudPositions.contains(relative) && worldGenLevel.getBlockState(relative).isAir() && worldGenLevel.getRandom().nextFloat() < 0.3F) {
+                    this.safeSetBlock(worldGenLevel, relative, BlockRegistry.SMALL_CLOUD.defaultBlockState().setValue(SmallCloudBlock.ATTACHED, direction.getOpposite()), canReplace);
+                }
+            }
         });
     }
 
