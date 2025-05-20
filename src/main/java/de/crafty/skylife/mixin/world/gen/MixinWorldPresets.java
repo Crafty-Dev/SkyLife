@@ -33,18 +33,27 @@ import java.util.Map;
 public abstract class MixinWorldPresets {
 
 
-    @Shadow @Final private BootstrapContext<WorldPreset> context;
+    @Shadow
+    @Final
+    private BootstrapContext<WorldPreset> context;
 
-    @Shadow protected abstract LevelStem makeOverworld(ChunkGenerator chunkGenerator);
+    @Shadow
+    protected abstract LevelStem makeOverworld(ChunkGenerator chunkGenerator);
 
-    @Shadow @Final private HolderGetter<Biome> biomes;
+    @Shadow
+    @Final
+    private HolderGetter<Biome> biomes;
 
-    @Shadow @Final private HolderGetter<NoiseGeneratorSettings> noiseSettings;
+    @Shadow
+    @Final
+    private HolderGetter<NoiseGeneratorSettings> noiseSettings;
 
-    @Shadow @Final private HolderGetter<MultiNoiseBiomeSourceParameterList> multiNoiseBiomeSourceParameterLists;
+    @Shadow
+    @Final
+    private HolderGetter<MultiNoiseBiomeSourceParameterList> multiNoiseBiomeSourceParameterLists;
 
     @Inject(method = "registerOverworlds", at = @At("TAIL"))
-    private void addSkyLifePreset(BiomeSource biomeSource, CallbackInfo ci){
+    private void addSkyLifePreset(BiomeSource biomeSource, CallbackInfo ci) {
 
         HolderGetter<DimensionType> dimensionLookup = this.context.lookup(Registries.DIMENSION_TYPE);
         Holder<DimensionType> netherType = dimensionLookup.getOrThrow(BuiltinDimensionTypes.NETHER);

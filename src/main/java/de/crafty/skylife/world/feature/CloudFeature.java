@@ -109,7 +109,7 @@ public class CloudFeature extends Feature<NoneFeatureConfiguration> {
             for(Direction direction : Direction.values()) {
                 BlockPos relative = pos1.relative(direction);
                 if(!cloudPositions.contains(relative) && worldGenLevel.getBlockState(relative).isAir() && worldGenLevel.getRandom().nextFloat() < 0.3F) {
-                    this.safeSetBlock(worldGenLevel, relative, BlockRegistry.SMALL_CLOUD.defaultBlockState().setValue(SmallCloudBlock.ATTACHED, direction.getOpposite()), canReplace);
+                    //this.safeSetBlock(worldGenLevel, relative, BlockRegistry.SMALL_CLOUD.defaultBlockState().setValue(SmallCloudBlock.ATTACHED, direction.getOpposite()), canReplace);
                 }
             }
         });
