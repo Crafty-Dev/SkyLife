@@ -229,5 +229,6 @@
   "view.skylife.type.loot_gem.from": "Obtained by killing",
   "view.skylife.type.loot_gem.looting": "1 Lvl Looting",
   "view.skylife.type.item_melting": "Item Melting",
-  "commands.skylife.reloaded": "Reload success"
+  "commands.skylife.reloaded": "Reload success",
+  "skylife.leaf.obtaining": "Obtained by breaking leaves with a hoe"
 }

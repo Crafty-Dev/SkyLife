@@ -39,9 +39,8 @@ public class LootGemViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
-
-        slotFillContext.fillSlot(0, this.gem.next());
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+        slotFillContext.bindSlot(0, this.gem);
         slotFillContext.addAdditionalStackModifier(0, (itemStack, list) -> {
             list.add(Component.translatable("view.skylife.type.loot_gem.from").append(": ").withStyle(ChatFormatting.GRAY));
             list.add(Component.empty());
@@ -63,7 +62,7 @@ public class LootGemViewRecipe implements IEivViewRecipe {
             DecimalFormat format = new DecimalFormat("###.##");
             String s = format.format(chance * 100.0F);
 
-            slotFillContext.fillSlot(i + 1, content.next());
+            slotFillContext.bindSlot(i + 1, content);
             slotFillContext.addAdditionalStackModifier(i + 1, (itemStack, list) -> {
                 list.add(Component.translatable("vie.skylife.type.loot_gem.chance").append(": ").withStyle(ChatFormatting.GRAY).append(Component.literal(s).append("%").withStyle(ChatFormatting.DARK_PURPLE)));
 

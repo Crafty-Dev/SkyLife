@@ -5,6 +5,8 @@ import de.crafty.eiv.recipe.inventory.RecipeViewMenu;
 import de.crafty.skylife.SkyLife;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class BlockMeltingViewType implements IEivRecipeViewType {
 
@@ -53,5 +55,10 @@ public class BlockMeltingViewType implements IEivRecipeViewType {
     @Override
     public ResourceLocation getId() {
         return ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "melting");
+    }
+
+    @Override
+    public ItemStack getIcon() {
+        return new ItemStack(Items.LAVA_BUCKET);
     }
 }

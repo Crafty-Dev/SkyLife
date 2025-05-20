@@ -54,15 +54,15 @@ public class HammeringViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
 
         //Add Hammers
-        slotFillContext.fillSlot(0, this.hammers.next());
+        slotFillContext.bindSlot(0, this.hammers);
 
-        slotFillContext.fillSlot(1, this.inputBlocks.next());
+        slotFillContext.bindSlot(1, this.inputBlocks);
 
         for(int i = 0; i < this.drops.size(); i++){
-            slotFillContext.fillSlot(2 + i, this.drops.get(i).next());
+            slotFillContext.bindSlot(2 + i, this.drops.get(i));
 
             int j = i;
             slotFillContext.addAdditionalStackModifier(2 + i, (itemStack, tooltip) -> {

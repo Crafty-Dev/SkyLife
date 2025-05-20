@@ -101,7 +101,6 @@ public class BriquetteGeneratorBlockEntity extends AbstractEnergyProvider {
         if (!blockState.getValue(BriquetteGeneratorBlock.WORKING) || blockEntity.getBriquetteItem() == null)
             return;
 
-        System.out.println(blockEntity.currentTick);
         blockEntity.tick();
         if (blockEntity.currentTick >= blockEntity.getBriquetteItem().getBurnTime()) {
             blockEntity.setBriquett(ItemStack.EMPTY);

@@ -1,7 +1,6 @@
 package de.crafty.skylife.eiv.recipes.melting;
 
 import de.crafty.eiv.BuiltInEivIntegration;
-import de.crafty.eiv.api.recipe.IEivRecipe;
 import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.api.recipe.IEivViewRecipe;
 import de.crafty.eiv.extra.FluidStack;
@@ -42,11 +41,11 @@ public class BlockMeltingViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
 
-        slotFillContext.fillSlot(0, this.meltable.next());
-        slotFillContext.fillSlot(1, this.heatSource.next());
-        slotFillContext.fillSlot(2, this.moltenLiquid.next());
+        slotFillContext.bindSlot(0, this.meltable);
+        slotFillContext.bindSlot(1, this.heatSource);
+        slotFillContext.bindSlot(2, this.moltenLiquid);
     }
 
     @Override
