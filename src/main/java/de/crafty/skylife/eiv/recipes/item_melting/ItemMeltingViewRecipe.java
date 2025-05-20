@@ -40,10 +40,10 @@ public class ItemMeltingViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
 
-        slotFillContext.fillSlot(0, this.meltable.next());
-        slotFillContext.fillSlot(1, this.result.next());
+        slotFillContext.bindSlot(0, this.meltable);
+        slotFillContext.bindSlot(1, this.result);
 
     }
 

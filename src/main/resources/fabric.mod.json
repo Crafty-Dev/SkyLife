@@ -25,9 +25,6 @@
 		"fabric-datagen": [
 			"de.crafty.skylife.SkyLifeDataGenerator"
 		],
-		"jei_mod_plugin": [
-			"de.crafty.skylife.jei.JustEnoughItemsIntegration"
-		],
 		"eiv": [
 			"de.crafty.skylife.eiv.EivIntegration"
 		]
@@ -40,7 +37,8 @@
 		"fabricloader": ">=0.15.11",
 		"minecraft": "~1.21",
 		"java": ">=21",
-		"fabric-api": "*"
+		"fabric-api": "*",
+		"lifecompat": ">=2.0.1"
 	},
 	"suggests": {
 	}

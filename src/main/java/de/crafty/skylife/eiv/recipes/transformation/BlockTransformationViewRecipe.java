@@ -25,11 +25,11 @@ public class BlockTransformationViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
 
-        slotFillContext.fillSlot(0, this.base.next());
-        slotFillContext.fillSlot(1, this.converter.next());
-        slotFillContext.fillSlot(2, this.result.next());
+        slotFillContext.bindSlot(0, this.base);
+        slotFillContext.bindSlot(1, this.converter);
+        slotFillContext.bindSlot(2, this.result);
 
     }
 

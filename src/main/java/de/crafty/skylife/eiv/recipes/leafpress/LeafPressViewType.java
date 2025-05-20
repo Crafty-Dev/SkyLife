@@ -3,8 +3,12 @@ package de.crafty.skylife.eiv.recipes.leafpress;
 import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.recipe.inventory.RecipeViewMenu;
 import de.crafty.skylife.SkyLife;
+import de.crafty.skylife.registry.BlockRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
 
 public class LeafPressViewType implements IEivRecipeViewType {
 
@@ -57,5 +61,15 @@ public class LeafPressViewType implements IEivRecipeViewType {
     @Override
     public ResourceLocation getId() {
         return ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "leafpress");
+    }
+
+    @Override
+    public ItemStack getIcon() {
+        return new ItemStack(BlockRegistry.LEAF_PRESS);
+    }
+
+    @Override
+    public List<ItemStack> getCraftReferences() {
+        return List.of(new ItemStack(BlockRegistry.LEAF_PRESS));
     }
 }

@@ -35,15 +35,25 @@ public class SkyLife implements ModInitializer {
         instance = this;
         LOGGER.info("Hello Minecraft!");
 
+        LOGGER.info("Registering items...");
         ItemRegistry.load();
+        LOGGER.info("Registering blocks...");
         BlockRegistry.load();
+        LOGGER.info("Registering chunk generators...");
         ChunkGenRegistry.perform();
+        LOGGER.info("Registering item groups...");
         ItemGroupRegistry.perform();
+        LOGGER.info("Registering blockentities...");
         BlockEntityRegistry.perform();
+        LOGGER.info("Registering entities...");
         EntityRegistry.perform();
+        LOGGER.info("Registering data components...");
         DataComponentTypeRegistry.perform();
+        LOGGER.info("Registering fluids...");
         FluidRegistry.perform();
+        LOGGER.info("Registering menus...");
         InventoryRegistry.perform();
+        LOGGER.info("Registering structures...");
         StructureRegistry.perform();
         StructureRegistry.Pieces.perform();
 

@@ -3,8 +3,10 @@ package de.crafty.skylife.eiv.recipes.transformation;
 import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.recipe.inventory.RecipeViewMenu;
 import de.crafty.skylife.SkyLife;
+import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 public class BlockTransformationViewType implements IEivRecipeViewType {
 
@@ -52,5 +54,10 @@ public class BlockTransformationViewType implements IEivRecipeViewType {
     @Override
     public ResourceLocation getId() {
         return ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "block_transformation");
+    }
+
+    @Override
+    public ItemStack getIcon() {
+        return new ItemStack(ItemRegistry.ROTTEN_MIXTURE);
     }
 }

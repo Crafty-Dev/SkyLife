@@ -26,14 +26,14 @@ public class ItemRegistry {
     private static final LinkedList<Item> NO_GROUP = new LinkedList<>();
 
 
-    public static final Item OAK_LEAF = register("oak_leaf", new Item.Properties().food(Foods.DRIED_KELP));
-    public static final Item BIRCH_LEAF = register("birch_leaf", new Item.Properties().food(Foods.DRIED_KELP));
-    public static final Item SPRUCE_LEAF = register("spruce_leaf", new Item.Properties().food(Foods.DRIED_KELP));
-    public static final Item DARK_OAK_LEAF = register("dark_oak_leaf", new Item.Properties().food(Foods.DRIED_KELP));
-    public static final Item JUNGLE_LEAF = register("jungle_leaf", new Item.Properties().food(Foods.DRIED_KELP));
-    public static final Item ACACIA_LEAF = register("acacia_leaf", new Item.Properties().food(Foods.DRIED_KELP));
-    public static final Item MANGROVE_LEAF = register("mangrove_leaf", new Item.Properties().food(Foods.DRIED_KELP));
-    public static final Item CHERRY_LEAF = register("cherry_leaf", new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item OAK_LEAF = register("oak_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item BIRCH_LEAF = register("birch_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item SPRUCE_LEAF = register("spruce_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item DARK_OAK_LEAF = register("dark_oak_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item JUNGLE_LEAF = register("jungle_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item ACACIA_LEAF = register("acacia_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item MANGROVE_LEAF = register("mangrove_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
+    public static final Item CHERRY_LEAF = register("cherry_leaf", LeafItem::new, new Item.Properties().food(Foods.DRIED_KELP));
 
     public static final Item WOODEN_BUCKET = register("wooden_bucket", properties -> new BucketItem(Fluids.EMPTY, properties), new Item.Properties().stacksTo(16));
     public static final Item WOODEN_WATER_BUCKET = register("wooden_water_bucket", properties -> new BucketItem(Fluids.WATER, properties), new Item.Properties().stacksTo(1).craftRemainder(WOODEN_BUCKET));

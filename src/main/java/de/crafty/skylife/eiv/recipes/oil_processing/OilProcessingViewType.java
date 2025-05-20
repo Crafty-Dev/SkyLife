@@ -3,8 +3,13 @@ package de.crafty.skylife.eiv.recipes.oil_processing;
 import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.recipe.inventory.RecipeViewMenu;
 import de.crafty.skylife.SkyLife;
+import de.crafty.skylife.registry.BlockRegistry;
+import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+
+import java.util.List;
 
 public class OilProcessingViewType implements IEivRecipeViewType {
 
@@ -54,5 +59,15 @@ public class OilProcessingViewType implements IEivRecipeViewType {
     @Override
     public ResourceLocation getId() {
         return ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "oil_processing");
+    }
+
+    @Override
+    public ItemStack getIcon() {
+        return new ItemStack(ItemRegistry.OIL_BUCKET);
+    }
+
+    @Override
+    public List<ItemStack> getCraftReferences() {
+        return List.of(new ItemStack(BlockRegistry.OIL_PROCESSOR));
     }
 }

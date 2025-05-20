@@ -1,7 +1,6 @@
 package de.crafty.skylife.eiv.recipes.sheeps;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import de.crafty.eiv.api.recipe.IEivRecipe;
 import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.api.recipe.IEivViewRecipe;
 import de.crafty.eiv.recipe.inventory.RecipeViewMenu;
@@ -12,7 +11,6 @@ import de.crafty.skylife.SkyLife;
 import de.crafty.skylife.eiv.EivIntegration;
 import de.crafty.skylife.entity.ResourceSheepEntity;
 import de.crafty.skylife.item.ResourceWheatItem;
-import de.crafty.skylife.registry.TagRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -20,7 +18,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.MaceItem;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -47,10 +44,10 @@ public class ResourceSheepViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
 
-        slotFillContext.fillSlot(0, this.wheat.next());
-        slotFillContext.fillSlot(1, this.drop.next());
+        slotFillContext.bindSlot(0, this.wheat);
+        slotFillContext.bindSlot(1, this.drop);
 
     }
 

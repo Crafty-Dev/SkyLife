@@ -32,13 +32,13 @@ public class FluidConversionViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
 
-        slotFillContext.fillSlot(0, this.requiredFluid.next());
-        slotFillContext.fillSlot(1, this.cauldron.next());
-        slotFillContext.fillSlot(2, this.ingredient.next());
+        slotFillContext.bindSlot(0, this.requiredFluid);
+        slotFillContext.bindSlot(1, this.cauldron);
+        slotFillContext.bindSlot(2, this.ingredient);
 
-        slotFillContext.fillSlot(3, this.results.next());
+        slotFillContext.bindSlot(3, this.results);
     }
 
     @Override

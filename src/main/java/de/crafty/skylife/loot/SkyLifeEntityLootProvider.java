@@ -115,7 +115,7 @@ public class SkyLifeEntityLootProvider extends EntityLootSubProvider {
     }
 
     @Override
-    protected void add(EntityType<?> entityType, ResourceKey<LootTable> resourceKey, LootTable.Builder builder) {
+    public void add(EntityType<?> entityType, ResourceKey<LootTable> resourceKey, LootTable.Builder builder) {
         this.map.computeIfAbsent(entityType, entityTypex -> new HashMap<>()).put(resourceKey, builder);
     }
 

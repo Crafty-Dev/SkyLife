@@ -1,6 +1,5 @@
 package de.crafty.skylife.eiv.recipes.oil_processing;
 
-import de.crafty.eiv.api.recipe.IEivRecipe;
 import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.api.recipe.IEivViewRecipe;
 import de.crafty.eiv.extra.FluidStack;
@@ -9,7 +8,6 @@ import de.crafty.eiv.recipe.inventory.RecipeViewScreen;
 import de.crafty.eiv.recipe.inventory.SlotContent;
 import de.crafty.eiv.recipe.rendering.AnimationTicker;
 import de.crafty.skylife.SkyLife;
-import de.crafty.skylife.SkyLifeClient;
 import de.crafty.skylife.eiv.EivIntegration;
 import de.crafty.skylife.registry.FluidRegistry;
 import net.minecraft.client.gui.GuiGraphics;
@@ -45,10 +43,10 @@ public class OilProcessingViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
-        slotFillContext.fillSlot(0, this.oil.next());
-        slotFillContext.fillSlot(1, this.processingItem.next());
-        slotFillContext.fillSlot(2, this.result.next());
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+        slotFillContext.bindSlot(0, this.oil);
+        slotFillContext.bindSlot(1, this.processingItem);
+        slotFillContext.bindSlot(2, this.result);
     }
 
     @Override

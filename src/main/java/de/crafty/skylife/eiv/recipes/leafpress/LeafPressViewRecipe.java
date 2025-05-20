@@ -1,13 +1,11 @@
 package de.crafty.skylife.eiv.recipes.leafpress;
 
-import de.crafty.eiv.api.recipe.IEivRecipe;
 import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.api.recipe.IEivViewRecipe;
 import de.crafty.eiv.extra.FluidStack;
 import de.crafty.eiv.recipe.inventory.RecipeViewMenu;
 import de.crafty.eiv.recipe.inventory.SlotContent;
 import de.crafty.skylife.registry.BlockRegistry;
-import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -37,12 +35,12 @@ public class LeafPressViewRecipe implements IEivViewRecipe {
     }
 
     @Override
-    public void fillSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
+    public void bindSlots(RecipeViewMenu.SlotFillContext slotFillContext) {
 
-        slotFillContext.fillSlot(0, this.leafs.next());
-        slotFillContext.fillSlot(1, this.leafPress.next());
-        slotFillContext.fillSlot(2, this.itemOutput.next());
-        slotFillContext.fillSlot(3, this.fluidOutput.next());
+        slotFillContext.bindSlot(0, this.leafs);
+        slotFillContext.bindSlot(1, this.leafPress);
+        slotFillContext.bindSlot(2, this.itemOutput);
+        slotFillContext.bindSlot(3, this.fluidOutput);
     }
 
     @Override

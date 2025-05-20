@@ -4,9 +4,11 @@ import de.crafty.eiv.api.recipe.IEivRecipeViewType;
 import de.crafty.eiv.recipe.inventory.RecipeViewMenu;
 import de.crafty.eiv.recipe.inventory.RecipeViewScreen;
 import de.crafty.skylife.SkyLife;
+import de.crafty.skylife.registry.ItemRegistry;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 
 public class HammeringViewType implements IEivRecipeViewType {
 
@@ -58,5 +60,10 @@ public class HammeringViewType implements IEivRecipeViewType {
     @Override
     public ResourceLocation getId() {
         return ResourceLocation.fromNamespaceAndPath(SkyLife.MODID, "hammering");
+    }
+
+    @Override
+    public ItemStack getIcon() {
+        return new ItemStack(ItemRegistry.IRON_HAMMER);
     }
 }
